@@ -1,0 +1,39 @@
+body,
+p,
+div {
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd {
+    margin: 0;
+}
+
+a {
+    list-style: none;
+}
+
+ul,
+ol,
+li,
+dl,
+dd,
+dt {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+li{
+    border-radius:0px;
+    box-shadow:0;
+}
