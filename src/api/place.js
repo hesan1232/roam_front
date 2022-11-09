@@ -25,10 +25,34 @@ export const reqGetPlaceTypeList=()=>{
 }
 
 //根据类型查找地点列表 /place/getPlaceListByPlaceType
-export const reqGetPlaceListByPlaceType=(placeType)=>{
+export const reqGetPlaceListByPlaceType=(params)=>{
     return requests({
         url:'/place/getPlaceListByPlaceType',
         method:'get',
-        params:{placeType}
+        params
+    })
+}
+//增加地点
+export const reqAddPlace=(data)=>{
+    return requests({
+        url:'/place/addPlace',
+        method:'post',
+        data
+    })
+}
+//更新地点数据
+export const reqUpdatePlaceById=(data)=>{
+    return requests({
+        url:'/place/updatePlaceListById',
+        method:'post',
+        data
+    })
+}
+//根据id删除地点信息
+export const reqDeletePlaceById=(id)=>{
+    return requests({
+        url:'/place/deletePlaceById',
+        method:'post',
+        data:{id}
     })
 }
