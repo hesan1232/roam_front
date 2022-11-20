@@ -4,7 +4,10 @@ Vue.use(VueRouter)
 //引入组件
 import Login from '@/components/Login'
 import Home from '@/components/Home'
-  import HomePage from '@/components/Home/homepage'
+  import Academy from '@/pages/home/academy'
+  import History from '@/pages/home/history'
+  import HomePage from '@/pages/home/homePage'
+  import Place from '@/pages/home/place'
 import Map from "@/components/Map"
 import Backend from "@/components/Backend"
   import CommentsManage from "@/pages/backend/CommentsManage"
@@ -32,9 +35,21 @@ export default new VueRouter({
                     redirect: 'homepage' 
                 },
                 {
+                    path: 'academy',
+                    component: Academy,  
+                },
+                {
+                    path: 'history',
+                    component: History,  
+                },
+                {
                     path: 'homepage',
                     component: HomePage,  
-                }
+                },
+                {
+                    path: 'place',
+                    component: Place,  
+                },
             ]
         },
         {

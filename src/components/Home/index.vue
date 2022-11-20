@@ -1,30 +1,34 @@
 <template>
   <div>
-    <div id="app">
       <div class="main_head main_center">
         <div class="head_logo"></div>
         <div class="head_menu">
           <el-menu
-            :default-active="activeIndex2"
+            :default-active="activeIndex"
             mode="horizontal"
+            router
             @select="handleSelect"
-            background-color="#0a96eb"
-            text-color="#fff"
-            active-text-color="#04305c"
+           
           >
-            <el-menu-item index="1">首页</el-menu-item>
-            <el-menu-item index="2">校园风光</el-menu-item>
-            <el-menu-item index="3">校园历史</el-menu-item>
-            <el-menu-item index="4">专业介绍</el-menu-item>
-            <el-menu-item index="5">我的工作台</el-menu-item>
-            <el-menu-item index="6">新生指引</el-menu-item>
+            <el-menu-item index="homepage">首页</el-menu-item>
+            <el-menu-item index="place">校园风光</el-menu-item>
+            <el-menu-item index="history">校园历史</el-menu-item>
+            <el-menu-item index="academy">专业介绍</el-menu-item>
+            <el-menu-item index="/backend">我的工作台</el-menu-item>
+            <el-menu-item index="/map">新生指引</el-menu-item>
           </el-menu>
         </div>
         <div class="head_user">
           <el-avatar style="display: inline-block; margin: 10px 10px">
             无
           </el-avatar>
-          <div class="head_user_black">登录</div>
+          <div class="head_user_black">
+            <span>登录</span>
+            <span>|</span>
+            <span>注册</span>
+            
+          </div>
+
         </div>
       </div>
       <router-view></router-view>
@@ -66,14 +70,12 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
   data() {
     return {
         activeIndex: '1',
-        activeIndex2: '1'
             
     };
   },
@@ -103,9 +105,10 @@ body {
 .main_head {
   width: 1140px;
   height: 60px;
+  margin-top: 1px;
   padding: 0 20px;
   color: white;
-  background-color:#0a96eb;
+  /* background-color:#0a96eb; */
 }
 
 .head_logo {
@@ -124,7 +127,7 @@ body {
   border-radius: 0px;
 }
 .head_user {
-  width: 100px;
+  width: 200px;
   height: 100%;
   float: right;
   vertical-align: top;
@@ -134,9 +137,11 @@ body {
   height: 100%;
   line-height: 60px;
   display: inline-block;
-  
+  color: #000000;
 }
-
+.head_user_black span{
+  margin: 0 3px;
+}
 /* 轮播图 */
 
 /* 底部区域 */

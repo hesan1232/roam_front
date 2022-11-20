@@ -158,7 +158,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 /* 整个容器 */
 .main_container {
   background: #fafafa;
