@@ -13,6 +13,10 @@ export const reqUserRegister = (data) => {
 export const reqGetUserInfo = () => {
     return requests({ url: '/userInfo/getUserInfo', method: 'get' })
 }
+//获取用户列表
+export const reqGetUserList = () => {
+    return requests({ url: '/userInfo/getUserList', method: 'get' })
+}
 //获取用户权限
 export const reqGetMenuList = () => {
     return requests({ url: '/userInfo/getMenuList', method: 'get' })
@@ -20,4 +24,13 @@ export const reqGetMenuList = () => {
 //更新用户信息
 export const reqUpdateUserInfo = (data) => {
     return requests({ url: '/userInfo/updateUserInfo', method: 'post',data })
+}
+//重置密码
+export const reqResetUserPassword = (data) => {
+    return requests({ url: '/userInfo/resetUserPassword', method: 'post',data })
+}
+
+//删除用户
+export const reqDeleteUserInfo = (data) => {
+    return requests({ url: '/userInfo/deleteUserInfo', method: 'post',data })
 }

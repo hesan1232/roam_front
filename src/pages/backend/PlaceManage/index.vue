@@ -25,7 +25,7 @@
     <el-pagination background layout=" ->,total, prev, pager, next" :total="total"
       @current-change="handleCurrentChange">
     </el-pagination>
-    <el-dialog title="编辑" :visible.sync="dialogVisible" @close="dialogClose('ruleForm')">
+    <el-dialog :title="dialogType==1?'新增':'编辑'" :visible.sync="dialogVisible" @close="dialogClose('ruleForm')">
       <el-form :model="updateFormInfo" :rules="rules" ref="ruleForm" label-position="left" label-width="120px" >
         <el-form-item label="地点名称" prop="placeName">
           <el-input v-model="updateFormInfo.placeName"></el-input>
@@ -142,8 +142,9 @@ export default {
        this.$message.success('更新成功')
       }, err => { })
     },
+    //删除地点
     deletFormInfo(data) {
-      this.$confirm(`你确定删除${data.placeName}?`, "提示", {
+      this.$confirm(`你确定删除 ${data.placeName} ?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",

@@ -153,7 +153,7 @@ export default {
     },
     //根据分类查找地点列表
     getPlaceListByPlaceType(placeType){
-      reqGetPlaceListByPlaceType(placeType).then(res=>{
+      reqGetPlaceListByPlaceType({placeType}).then(res=>{
         this.searchPlaceList = res.data
       })
     },
