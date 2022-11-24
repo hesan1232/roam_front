@@ -82,28 +82,16 @@ export default {
   background-color: #3c3c3c;
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  line-height: 450px;
-  text-align: center;
-  margin: 0;
-}
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
 
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
+
+
+
 .carousel-img{
   width: 100%;
   height: 100%;
 }
-::v-deep .el-carousel__indicators li {
-  box-shadow: none !important;
-}
+
 
 /* 内容区域 */
 .main_content {
@@ -135,19 +123,8 @@ export default {
   background-repeat: no-repeat;
 }
 
-.content_essay {
-  width: 700px;
-  height: 1000px;
-  float: left;
-  background-color: #99a9bf;
-}
 
-.content_aside {
-  width: 300px;
-  height: 600px;
-  float: left;
-  background-color: white;
-}
+
 
 
 </style>

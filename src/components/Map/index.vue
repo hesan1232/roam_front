@@ -216,7 +216,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .icon {
   width: 1em;
   height: 1em;
