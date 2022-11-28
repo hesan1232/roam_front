@@ -71,9 +71,7 @@ body {
 .main_head {
   width: 1140px;
   height: 60px;
-  position: sticky;
-  
-  top: 0;
+
   margin-top: 1px;
   padding: 0 20px;
   color: white;
@@ -93,11 +91,9 @@ body {
   height: 100%;
   display: inline-block;
 }
-/* .head_menu li{
-  border-radius: 0px;
-} */
+
 .head_user {
-  width: 200px;
+  width: 250px;
   height: 100%;
   float: right;
   vertical-align: top;
@@ -105,8 +101,10 @@ body {
 
 .head_user_black {
   height: 100%;
+  width: 100px;
   line-height: 60px;
   display: inline-block;
+  vertical-align: top;
   color: #000000;
 }
 .head_user_black span{

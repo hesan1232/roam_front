@@ -256,7 +256,6 @@ export default {
 /* 右侧主内容盒子 */
 .main_right {
   flex: 1;
-  width: 100%;
   height: 100%;
 }
 
@@ -264,39 +263,24 @@ export default {
   width: 100%;
   height: 76px;
   line-height: 76px;
-  display: flex;
-  flex-direction: row;
-  vertical-align: middle;
-  justify-content: space-between;
-}
 
+}
 .el-breadcrumb {
   line-height: 76px;
+  display: inline-block;
+  float: left;
 }
-
 .head_user {
   margin-right: 20px;
+  width: 200px;
   font-size: 14px;
+  float: right;
 }
 
 .user_img {
   display: inline-block;
   vertical-align: middle;
   border-radius: 16px;
-}
-
-.user_dropdown {
-  padding: 0px;
-  margin: 0;
-  font-size: 14px;
-}
-
-.el-card {
-  height: 540px;
-}
-
-.el-select {
-  width: 100%;
 }
 
 /* 路由跳转动画 */
@@ -310,11 +294,9 @@ export default {
 .Skright-enter {
   transform: translate3d(-100%, 0, 0);
 }
-
 .Skright-leave-to {
   transform: translate3d(100%, 0, 0);
 }
-
 .Skleft-enter {
   transform: translate3d(100%, 0, 0);
 }
@@ -322,56 +304,10 @@ export default {
 .Skleft-leave-to {
   transform: translate3d(-100%, 0, 0);
 }
-
 /* 路由页面 */
 .right_main {
-  height: 540px;
-  /* width: 1120px; */
-  margin: 20px 20px 22px 0px;
-}
-
-.el-table {
-  width: 100% !important;
-  margin-top: 20px;
-}
-
-.el-table__header-wrapper table,
-.el-table__body-wrapper table {
-  width: 100% !important;
-}
-
-.el-table__header {
-  table-layout: auto;
-}
-
-.el-table__footer {
-  table-layout: auto;
-}
-
-.el-table__body {
-  table-layout: auto;
-}
-/* 设置label和输入框距离 */
-.el-form--label-top .el-form-item__label {
-  padding-bottom: 0px;
-}
-.el-table .el-table__cell {
-  text-align: center !important;
-}
-
-.form-search {
-  margin-top: 40px;
-}
-.customList .custom-repeat-card .el-table__body-wrapper .el-table__body,
-.customList .custom-repeat-card .el-table__fixed-body-wrapper .el-table__body,
-.customList
-  .custom-repeat-card
-  .el-table__fixed-header-wrapper
-  .el-table__header {
-  border-collapse: collapse;
-  table-layout: auto;
-}
-.deletecolor {
-  color: red;
+  width:1300px;
+  margin-top: 10px;
+  margin-right: 20px;
 }
 </style>

@@ -209,12 +209,11 @@ export default {
 };
 </script>
 
-<style>
-.card {
-  padding: 20px;
+<style scoped>
+.card{
+  height: 600px;
 }
-
-.el-table {
-  margin: 20px 0;
+.el-table{
+  margin: 10px 0;
 }
 </style>

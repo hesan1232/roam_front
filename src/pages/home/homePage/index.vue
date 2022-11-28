@@ -1,33 +1,31 @@
 <template>
   <div>
     <div class="main_carousel main_center">
-      <el-carousel height="500px">
+      <el-carousel height="600px">
         <el-carousel-item v-for="(item, index) in imageList" :key="index">
           <img class="carousel-img" :src="item.url" alt="">
           <h3 class="small">{{ item.url }}</h3>
         </el-carousel-item>
       </el-carousel>
-      <div class="carousel_right_black">wdewr</div>
+      <div class="carousel_right_black">
+        <el-input v-model="searchData.text" placeholder="请输入">
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </div>
     </div>
-    <el-card class="main_content main_center">
-      <div style="margin-left: 10px;">
+    <div class="main_content main_center">
+      <div class="content_total">
         <h2>地点分类</h2>
       </div>
-      <div class="content_entrys">
+      <div class="content_main">
+        <div v-for="item in classiFyList" :key="item.name" class="content_entrys classify_item">
+          <img class="classify_img" :src="item.url" alt="">
+          <p>{{item.name}}</p>
+        </div>
+        
       </div>
-      <div class="content_entrys">
-      </div>
-      <div class="content_entrys">
-      </div>
-      <div class="content_entrys">
-      </div>
-      <div class="content_entrys">
 
-      </div>
-      <div class="content_entrys">
-
-      </div>
-    </el-card>
+    </div>
     <div class="main_content main_center">
       <div style="margin-left: 10px;">
         <h2>地点推荐</h2>
@@ -49,14 +47,37 @@ export default {
     return {
       imageList: [
         {
-          url: 'https://cdn.jsdelivr.net/gh/hesan1232/picgoImage/image/home-5.jpg'
+          url: require('@/assets/images/home1.png')
         }, {
-          url: 'https://cdn.jsdelivr.net/gh/hesan1232/picgoImage/image/home-2.jpg'
+          url: require('@/assets/images/home2.png')
         }, {
-          url: 'https://cdn.jsdelivr.net/gh/hesan1232/picgoImage/image/home-3.jpg'
+          url: require('@/assets/images/home3.png')
+        },],
+      classiFyList: [
+        {
+          name:'教学楼',
+          url: require('@/assets/images/classify/edu.png')
         }, {
-          url: 'https://cdn.jsdelivr.net/gh/hesan1232/picgoImage/image/home-4.jpg'
-        },]
+          name:'运动场',
+          url: require('@/assets/images/classify/playground.png')
+        }, {
+          name:'自习室',
+          url: require('@/assets/images/classify/studyRoom.png')
+        },
+        {
+          name:'食堂',
+          url: require('@/assets/images/classify/eatRoom.png')
+        }, {
+          name:'办公室',
+          url: require('@/assets/images/classify/office.png')
+        },
+        {
+          name:'服务楼',
+          url: require('@/assets/images/classify/serviceRoom.png')
+        },],
+      searchData: {
+        text: ''
+      },
     }
   },
 }
@@ -70,51 +91,73 @@ export default {
 
 .main_carousel {
   position: relative;
+  height: 600px;
 }
 
 .carousel_right_black {
-  width: 110px;
-  height: 340px;
+  width: 500px;
+  height: 45px;
   position: absolute;
-  top: 40px;
-  right: 40px;
+  top: 60%;
+  right: 50%;
+  transform: translate3d(50%, 50%, 0);
+  padding: 0 20px;
   z-index: 10;
-  background-color: #3c3c3c;
+  line-height: 45px;
+  border-radius: 30px;
+  background-color: #3c3c3c76;
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  line-height: 450px;
-  text-align: center;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-.carousel-img{
+.carousel-img {
   width: 100%;
   height: 100%;
 }
-::v-deep .el-carousel__indicators li {
-  box-shadow: none !important;
-}
+
+/* 输入框颜色 */
+
+
 
 /* 内容区域 */
 .main_content {
   width: 1000px;
+  margin-top: 10px;
   margin-bottom: 10px;
-  background-color: pink;
   overflow: hidden;
+
+}
+
+.content_total {
+  margin-left: 10px;
+  font-size: 10px;
+  border-bottom: black solid 1px;
+}
+
+.content_main {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 分类 */
+.classify_item {
+  position: relative;
+}
+
+.classify_img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  float: left;
+}
+
+.classify_item p {
+  z-index: 10;
 }
 
 .content_entrys {
-  width: 130px;
+  width: 200px;
   height: 60px;
   margin: 5px;
   margin-right: 0;
@@ -122,6 +165,14 @@ export default {
   display: inline-block;
   background-color: white;
   background-repeat: no-repeat;
+  text-align: center;
+}
+
+.content_entrys p {
+  color: #fff;
+  position: absolute;
+  top: 20px;
+  right: 0;
 }
 
 .content_recommend {
@@ -148,6 +199,4 @@ export default {
   float: left;
   background-color: white;
 }
-
-
 </style>
