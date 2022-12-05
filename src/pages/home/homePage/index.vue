@@ -15,7 +15,7 @@
     </div>
     <div class="main_content main_center">
       <div class="content_total">
-        <h2>地点分类</h2>
+        <h3>地点分类</h3>
       </div>
       <div class="content_main">
         <div v-for="item in classiFyList" :key="item.name" class="content_entrys classify_item">
@@ -27,8 +27,8 @@
 
     </div>
     <div class="main_content main_center">
-      <div style="margin-left: 10px;">
-        <h2>地点推荐</h2>
+      <div class="recommend_total">
+        <h3>每日推荐</h3>
       </div>
       <div class="content_recommend">
       </div>
@@ -40,7 +40,6 @@
 
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -127,9 +126,7 @@ export default {
 }
 
 .content_total {
-  margin-left: 10px;
-  font-size: 10px;
-  border-bottom: black solid 1px;
+  font-size: 14px;
 }
 
 .content_main {
@@ -140,6 +137,8 @@ export default {
 /* 分类 */
 .classify_item {
   position: relative;
+  width: 150px;
+  height: 60px;
 }
 
 .classify_img {
@@ -157,11 +156,7 @@ export default {
 }
 
 .content_entrys {
-  width: 200px;
-  height: 60px;
-  margin: 5px;
   margin-right: 0;
-  border: 1px solid #e5e5e5;
   display: inline-block;
   background-color: white;
   background-repeat: no-repeat;
@@ -174,11 +169,12 @@ export default {
   top: 20px;
   right: 0;
 }
-
+.recommend_total{
+  font-size: 14px;
+}
 .content_recommend {
   width: 315px;
   height: 300px;
-  margin: 10px;
   margin-right: 0;
   border: 1px solid #e5e5e5;
   display: inline-block;

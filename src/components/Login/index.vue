@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <!-- 登录模块 -->
-    <div class="bg" ref="login">
+    <div class="bg login-bg" ref="login">
       <el-form
         :model="loginFormInfo"
         status-icon
@@ -30,7 +30,7 @@
       <button class="toRegister" @click="toRegister">没有账号，点此注册</button>
     </div>
     <!-- 注册模块 -->
-    <div class="reg-bg" ref="register">
+    <div class="bg reg-bg" ref="register">
       <el-form
         :model="registerFormInfo"
         status-icon
@@ -65,6 +65,8 @@
         完成注册
       </button>
     </div>
+    <!-- 代码雨背景 -->
+    <canvas id="bg"></canvas>
   </div>
 </template>
 
@@ -101,6 +103,9 @@ export default {
         checkPass: { validator: validatePass2, trigger: "change" },
       },
     };
+  },
+  mounted(){
+    this.drawBg()
   },
   methods: {
     //登录表单提交
@@ -173,6 +178,70 @@ export default {
         }
       );
     },
+    //代码雨背景
+    drawBg(){
+      const cvs=document.getElementById('bg')
+        const width=window.innerWidth
+        const height=window.innerHeight
+        
+        cvs.width=width
+        cvs.height=height
+
+        const ctx=cvs.getContext('2d')
+
+        // 列宽
+        const columnWidth=20
+       
+        //列数
+        const columnCount=Math.floor(window.innerWidth/columnWidth)
+        //记录每列写到了第几个文字
+        const columnNestIndexes=new Array(columnCount);
+        columnNestIndexes.fill(1)
+
+        //绘画的函数
+        function draw(){
+          ctx.fillStyle='rgba(240,240,240,0.1)'
+          ctx.fillRect(0,0,width,height)
+          const fz=20
+          ctx.fillStyle=getRandomColor()
+          ctx.font=`${fz}px "Roboto Mono"`
+          for(let i=0;i<columnCount;i++){
+           const x=i*columnWidth
+           const y=fz*columnNestIndexes[i]
+           ctx.fillText(getRandomChar(),x,y)
+           if(y>height&&Math.random()>0.99){
+            columnNestIndexes[i]=0
+           }
+           else{
+            columnNestIndexes[i]++
+           }
+          }
+         
+        }
+        //随机颜色 
+        function getRandomColor(){
+            const fontColors=[
+                '#33B5E5',
+                '#0099cc',
+                '#AA6655',
+                '#9933cc',
+                '#99cc00',
+                '#669900',
+                '#ffbb33',
+                '#ff8800',
+                '#ff8844',
+                '#cc0000',
+            ]
+            return  fontColors[Math.floor(Math.random()* fontColors.length)]
+        }
+         
+        //随机文字
+        function getRandomChar(){
+            const str='console.log("hello word")'
+            return str[Math.floor(Math.random()*str.length)]
+        }
+        setInterval(draw, 40);
+    }
   },
 };
 </script>
@@ -181,24 +250,29 @@ export default {
 #login {
   width: 100%;
   height: 100vh;
-  background-image: url("../../assets/bg1.jpg");
-  background-size: 100% 100%;
+  /* background-image: url("../../assets/bg1.jpg"); */
+  /* background-size: 100% 100%; */
   overflow: hidden;
   position: relative;
 }
-.bg {
+.bg{
   width: 500px;
-  height: 100%;
+  height: 500px;
   background-color: rgba(212, 228, 240, 0.5);
-  border-radius: 25px 0 0 25px;
-  padding: 180px auto;
+  border-radius: 10px;
+  padding-top: 40px;
   text-align: center;
   position: absolute;
-  z-index: 10;
-  right: 0;
-  box-shadow: -5px 5px 10px 0px rgb(107, 105, 105);
+  top: 50%;
+  right: 50%;
+  transform:translate(50%,-50%);
+  box-shadow: 0px 5px 5px 2px rgb(107, 105, 105);
   transition: opacity 0.8s linear;
 }
+.login-bg {
+  z-index: 10;
+}
+
 .demo-loginFormInfo {
   width: 300px;
   padding-top: 180px;
@@ -221,18 +295,8 @@ export default {
 }
 /* register模块 */
 .reg-bg {
-  width: 500px;
-  height: 100%;
-  background-color: rgba(212, 228, 240, 0.5);
-  border-radius: 25px 0 0 25px;
-  padding: 180px auto;
-  text-align: center;
-  position: absolute;
   z-index: 1;
-  right: 0;
-  box-shadow: -5px 5px 10px 0px rgb(107, 105, 105);
   opacity: 0;
-  transition: opacity 0.8s linear;
 }
 .btn {
   width: 150px;
