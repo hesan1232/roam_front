@@ -28,17 +28,40 @@
 
       <ul class="content_column">
         <div class="column_head">专栏</div>
+        <div class="column_list">
+          <h3>河南城建最新资讯</h3>
+          <ul>
+            <li>10月18日<a href="#">这是一条金报新闻</a></li>
+            <li>10月18日<a href="#">这是一条金报新闻</a></li>
+            <li>10月18日<a href="#">这是一条金报新闻</a></li>
+            <li>10月18日<a href="#">这是一条金报新闻</a></li>
+            <li>10月18日<a href="#">这是一条金报新闻</a></li>
+          </ul>
+        </div>
         <li class="column_aside">
           <div class="aside_hd">
-            <h2 class="hd-title">加入我们</h2>
-            <span class="hd-right">更多资讯</span>
+            <h2 class="hd-title"><a href="#">加入我们</a></h2>
+            <a href="#" class="hd-right">更多资讯</a>
           </div>
           <div class="aside_bd">
-            <img src="https://p1-q.mafengwo.net/s12/M00/4C/F0/wKgED1uvSMeAYV_QAAOg0xhjC5U96.jpeg?imageMogr2%2Fthumbnail%2F%21260x139r%2Fgravity%2FCenter%2Fcrop%2F%21260x139%2Fquality%2F100" alt="">
-            <h3>dsafasfaf</h3>
+            <img
+              src="https://p1-q.mafengwo.net/s12/M00/4C/F0/wKgED1uvSMeAYV_QAAOg0xhjC5U96.jpeg?imageMogr2%2Fthumbnail%2F%21260x139r%2Fgravity%2FCenter%2Fcrop%2F%21260x139%2Fquality%2F100"
+              alt="">
+            <a href="#">这是对图片的xfsfsssssssd绍</a>
           </div>
         </li>
-
+        <li class="column_aside">
+          <div class="aside_hd">
+            <h2 class="hd-title"><a href="#">加入我们</a></h2>
+            <a href="#" class="hd-right">更多资讯</a>
+          </div>
+          <div class="aside_bd">
+            <img
+              src="https://p1-q.mafengwo.net/s12/M00/4C/F0/wKgED1uvSMeAYV_QAAOg0xhjC5U96.jpeg?imageMogr2%2Fthumbnail%2F%21260x139r%2Fgravity%2FCenter%2Fcrop%2F%21260x139%2Fquality%2F100"
+              alt="">
+            <a href="#">这是对图片的xfsfsssssssd绍</a>
+          </div>
+        </li>
       </ul>
       <ul class="content_essay">
         <div class="content_essay_head">
@@ -64,7 +87,46 @@
           <img
             src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"
             alt="">
-          <div class="essay_item_info"></div>
+          <div class="essay_item_info">
+            <p class="item_info_total"><a href="">冰岛冬季环岛 | 世界若有尽头，应是一首孤独的蓝色散文诗</a></p>
+            <p class="item_info_text"> 关于出发，意料之外却又情理之中 我不知道有多少人，这个春天，跟我一样，被困囿于魔都的封城里。灵魂和身体，总...</p>
+            <div class="item_info_extra">
+
+              <span><i class="el-icon-location-outline"></i>图书馆</span>
+              <span>爱吃的仙姑噶才</span>
+              <span><i class="el-icon-view"></i><a href="">XXX已经阅读</a></span>
+            </div>
+          </div>
+        </li>
+        <li class="essay_item">
+          <img
+            src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"
+            alt="">
+          <div class="essay_item_info">
+            <p class="item_info_total"><a href="">冰岛冬季环岛 | 世界若有尽头，应是一首孤独的蓝色散文诗</a></p>
+            <p class="item_info_text"> 关于出发，意料之外却又情理之中 我不知道有多少人，这个春天，跟我一样，被困囿于魔都的封城里。灵魂和身体，总...</p>
+            <div class="item_info_extra">
+
+              <span><i class="el-icon-location-outline"></i>图书馆</span>
+              <span>爱吃的仙姑噶才</span>
+              <span><i class="el-icon-view"></i><a href="">XXX已经阅读</a></span>
+            </div>
+          </div>
+        </li>
+        <li class="essay_item">
+          <img
+            src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"
+            alt="">
+          <div class="essay_item_info">
+            <p class="item_info_total"><a href="">冰岛冬季环岛 | 世界若有尽头，应是一首孤独的蓝色散文诗</a></p>
+            <p class="item_info_text"> 关于出发，意料之外却又情理之中 我不知道有多少人，这个春天，跟我一样，被困囿于魔都的封城里。灵魂和身体，总...</p>
+            <div class="item_info_extra">
+
+              <span><i class="el-icon-location-outline"></i>图书馆</span>
+              <span>爱吃的仙姑噶才</span>
+              <span><i class="el-icon-view"></i><a href="">XXX已经阅读</a></span>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
@@ -150,7 +212,6 @@ export default {
   width: 1000px;
   margin-top: 10px;
   margin-bottom: 10px;
-  overflow: hidden;
 
 }
 
@@ -197,10 +258,9 @@ export default {
 }
 
 .content_column {
-  width: 300px;
-  height: 500px;
-  float: left;
-  background-color: #b999bf;
+  width: 280px;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .column_head {
@@ -210,16 +270,35 @@ export default {
   line-height: 20px;
 }
 
+.column_list {
+  display: block;
+  width: 100%;
+  height: 120px;
+}
+
+.column_list h3 {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 5px 0;
+}
+
+.column_list li {
+  font-size: 12px;
+}
+
+.column_list li a {
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .column_aside {
   width: 100%;
-  margin-bottom: 30px;
 
 }
 
 .aside_hd {
   height: 35px;
   line-height: 35px;
-  margin-bottom: 12px;
 }
 
 .hd-title {
@@ -230,19 +309,39 @@ export default {
 }
 
 .hd-right {
+  font-size: 10px;
   float: right;
 }
-.aside_bd{
-  
+
+.aside_bd {
+  width: 100%;
+  height: 200px;
 }
+
+.aside_bd img {
+  width: 100%;
+  height: 160px;
+}
+
+.aside_bd a {
+  display: block;
+  width: 100%;
+  height: 20px;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
 .content_essay {
-  width: 700px;
+  width: 680px;
   height: 500px;
-  float: left;
+  display: inline-block;
+  margin-left: 40px;
 }
 
 .content_essay_head {
-  width: 700px;
+  width: 100%;
   padding: 10px 10px;
   display: flex;
   justify-content: space-between;
@@ -265,7 +364,7 @@ export default {
 
 .essay_item {
   display: block;
-  width: 700px;
+  width: 680px;
   padding: 15px 10px;
   height: 150px;
   background-color: white;
