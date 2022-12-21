@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main_carousel main_center">
-      <el-carousel height="600px">
+      <el-carousel height="500px">
         <el-carousel-item v-for="(item, index) in imageList" :key="index">
           <img class="carousel-img" :src="item.url" alt="">
           <h3 class="small">{{ item.url }}</h3>
@@ -14,28 +14,59 @@
       </div>
     </div>
     <div class="main_content main_center">
-      <div class="content_total">
-        <h3>地点分类</h3>
-      </div>
+
       <div class="content_main">
         <div v-for="item in classiFyList" :key="item.name" class="content_entrys classify_item">
           <img class="classify_img" :src="item.url" alt="">
-          <p>{{item.name}}</p>
+          <p>{{ item.name }}</p>
         </div>
-        
+
       </div>
 
     </div>
     <div class="main_content main_center">
-      <div class="recommend_total">
-        <h3>每日推荐</h3>
-      </div>
-      <div class="content_recommend">
-      </div>
-      <div class="content_recommend">
-      </div>
-      <div class="content_recommend">
-      </div>
+
+      <ul class="content_column">
+        <div class="column_head">专栏</div>
+        <li class="column_aside">
+          <div class="aside_hd">
+            <h2 class="hd-title">加入我们</h2>
+            <span class="hd-right">更多资讯</span>
+          </div>
+          <div class="aside_bd">
+            <img src="https://p1-q.mafengwo.net/s12/M00/4C/F0/wKgED1uvSMeAYV_QAAOg0xhjC5U96.jpeg?imageMogr2%2Fthumbnail%2F%21260x139r%2Fgravity%2FCenter%2Fcrop%2F%21260x139%2Fquality%2F100" alt="">
+            <h3>dsafasfaf</h3>
+          </div>
+        </li>
+
+      </ul>
+      <ul class="content_essay">
+        <div class="content_essay_head">
+          <p class="essay_head_left">热门游记</p>
+          <el-button class="essay_head_right" type="primary" icon="el-icon-edit">写游记</el-button>
+        </div>
+        <li class="essay_item">
+          <img
+            src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"
+            alt="">
+          <div class="essay_item_info">
+            <p class="item_info_total"><a href="">冰岛冬季环岛 | 世界若有尽头，应是一首孤独的蓝色散文诗</a></p>
+            <p class="item_info_text"> 关于出发，意料之外却又情理之中 我不知道有多少人，这个春天，跟我一样，被困囿于魔都的封城里。灵魂和身体，总...</p>
+            <div class="item_info_extra">
+
+              <span><i class="el-icon-location-outline"></i>图书馆</span>
+              <span>爱吃的仙姑噶才</span>
+              <span><i class="el-icon-view"></i><a href="">XXX已经阅读</a></span>
+            </div>
+          </div>
+        </li>
+        <li class="essay_item">
+          <img
+            src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"
+            alt="">
+          <div class="essay_item_info"></div>
+        </li>
+      </ul>
     </div>
 
   </div>
@@ -51,27 +82,29 @@ export default {
           url: require('@/assets/images/home2.png')
         }, {
           url: require('@/assets/images/home3.png')
+        }, {
+          url: require('@/assets/images/home4.png')
         },],
       classiFyList: [
         {
-          name:'教学楼',
+          name: '教学楼',
           url: require('@/assets/images/classify/edu.png')
         }, {
-          name:'运动场',
+          name: '运动场',
           url: require('@/assets/images/classify/playground.png')
         }, {
-          name:'自习室',
+          name: '自习室',
           url: require('@/assets/images/classify/studyRoom.png')
         },
         {
-          name:'食堂',
+          name: '食堂',
           url: require('@/assets/images/classify/eatRoom.png')
         }, {
-          name:'办公室',
+          name: '办公室',
           url: require('@/assets/images/classify/office.png')
         },
         {
-          name:'服务楼',
+          name: '服务楼',
           url: require('@/assets/images/classify/serviceRoom.png')
         },],
       searchData: {
@@ -90,7 +123,7 @@ export default {
 
 .main_carousel {
   position: relative;
-  height: 600px;
+  height: 500px;
 }
 
 .carousel_right_black {
@@ -112,10 +145,6 @@ export default {
   height: 100%;
 }
 
-/* 输入框颜色 */
-
-
-
 /* 内容区域 */
 .main_content {
   width: 1000px;
@@ -125,9 +154,6 @@ export default {
 
 }
 
-.content_total {
-  font-size: 14px;
-}
 
 .content_main {
   display: flex;
@@ -169,30 +195,129 @@ export default {
   top: 20px;
   right: 0;
 }
-.recommend_total{
-  font-size: 14px;
-}
-.content_recommend {
-  width: 315px;
-  height: 300px;
-  margin-right: 0;
-  border: 1px solid #e5e5e5;
-  display: inline-block;
-  background-color: white;
-  background-repeat: no-repeat;
+
+.content_column {
+  width: 300px;
+  height: 500px;
+  float: left;
+  background-color: #b999bf;
 }
 
+.column_head {
+  width: 100%;
+  font-size: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.column_aside {
+  width: 100%;
+  margin-bottom: 30px;
+
+}
+
+.aside_hd {
+  height: 35px;
+  line-height: 35px;
+  margin-bottom: 12px;
+}
+
+.hd-title {
+  float: left;
+  font-size: 18px;
+  color: #333;
+  font-weight: normal;
+}
+
+.hd-right {
+  float: right;
+}
+.aside_bd{
+  
+}
 .content_essay {
   width: 700px;
-  height: 1000px;
+  height: 500px;
   float: left;
-  background-color: #99a9bf;
 }
 
-.content_aside {
-  width: 300px;
-  height: 600px;
-  float: left;
+.content_essay_head {
+  width: 700px;
+  padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.essay_head_left {
+  width: 150px;
+  color: #3a8aff;
+  height: 30px;
+  margin: 0;
+  border-bottom: #3a8aff solid 3px;
+}
+
+.essay_head_right {
+  width: 150px;
+  height: 32px;
+  line-height: 5px;
+}
+
+.essay_item {
+  display: block;
+  width: 700px;
+  padding: 15px 10px;
+  height: 150px;
   background-color: white;
+}
+
+.essay_item :hover {
+  background-color: #f8f8f8;
+}
+
+.essay_item img {
+  display: inline-block;
+  width: 220px;
+  height: 150px;
+}
+
+.essay_item_info {
+  width: 450px;
+  height: 150px;
+  padding-left: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.item_info_total {
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.item_info_total a {
+  text-decoration: none;
+  /* 去除默认的下划线 */
+  outline: none;
+  /* 去除旧版浏览器的点击后的外虚线框 */
+  color: #000;
+  /* 去除默认的颜色和点击后变化的颜色 */
+}
+
+.item_info_text {
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item_info_extra {
+  font-size: 14px;
+}
+
+.item_info_extra span {
+  display: inline-block;
+  color: #999;
+  margin-right: 30px;
 }
 </style>

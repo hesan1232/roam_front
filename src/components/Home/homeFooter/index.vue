@@ -24,13 +24,19 @@
                 <a href="#">服务协议</a>
               </dd>
             </dl>
-            <dl class="footer_info_code">
+            <dl class="footer_info_about footer_info_left">
+              <dt>关于我们</dt>
               <dd>
-                <span class="ft-qrcode-tejia"></span>
-                <p>马蜂窝良品<br />官方服务号</p>
+                <a href="#">关于马蜂窝</a>
               </dd>
               <dd>
-                <p>马蜂窝APP<br />扫描立即下载</p>
+                <a href="#">联系我们</a>
+              </dd>
+              <dd>
+                <a href="#">隐私政策</a>
+              </dd>
+              <dd>
+                <a href="#">服务协议</a>
               </dd>
             </dl>
           </div>
@@ -82,12 +88,12 @@ export default {
 
 .footer_info_intro {
   width: 200px;
-  margin-right: 68px;
+  margin-right: 200px;
 }
 
 .footer_info_about {
   width: 128px;
-  margin-right: 85px;
+  margin-right: 150px;
 }
 
 .footer_info_about a {

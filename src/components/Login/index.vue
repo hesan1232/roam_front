@@ -2,6 +2,7 @@
   <div id="login">
     <!-- 登录模块 -->
     <div class="bg login-bg" ref="login">
+      <div class="avater">sds</div>
       <el-form
         :model="loginFormInfo"
         status-icon
@@ -105,7 +106,7 @@ export default {
     };
   },
   mounted(){
-    this.drawBg()
+    // this.drawBg()
   },
   methods: {
     //登录表单提交
@@ -250,17 +251,23 @@ export default {
 #login {
   width: 100%;
   height: 100vh;
-  /* background-image: url("../../assets/bg1.jpg"); */
-  /* background-size: 100% 100%; */
+  background-image: url("../../assets/bg1.jpg");
+  background-size: cover;
   overflow: hidden;
   position: relative;
 }
+.avater{
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border-radius: 50px;
+  margin: 0 auto;
+}
 .bg{
   width: 500px;
-  height: 500px;
-  background-color: rgba(212, 228, 240, 0.5);
+  background-color: rgba(212, 228, 240, 0.4);
   border-radius: 10px;
-  padding-top: 40px;
+  padding: 30px 0;
   text-align: center;
   position: absolute;
   top: 50%;
@@ -275,7 +282,7 @@ export default {
 
 .demo-loginFormInfo {
   width: 300px;
-  padding-top: 180px;
+  padding-top: 50px;
   margin-left: 70px;
 }
 .el-button {
