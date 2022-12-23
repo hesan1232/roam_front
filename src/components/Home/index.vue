@@ -58,27 +58,19 @@ export default {
   },
 };
 </script>
-<style scoped>
-body {
-  background-color: rgb(230, 230, 230);
-}
-
+<style >
 .main_center {
   margin: 0 auto;
 }
-
 /* 头部 */
 .main_head {
   width: 1140px;
   height: 60px;
-
   margin-top: 1px;
   padding: 0 20px;
   color: white;
   z-index: 10;
-  /* background-color:#0a96eb; */
 }
-
 .head_logo {
   width: 150px;
   height: 100%;

@@ -178,10 +178,6 @@ export default {
 </script>
 
 <style scoped>
-.main_center {
-  margin: 0 auto;
-
-}
 
 .main_carousel {
   position: relative;

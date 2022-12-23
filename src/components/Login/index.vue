@@ -2,13 +2,14 @@
   <div id="login">
     <!-- 登录模块 -->
     <div class="bg login-bg" ref="login">
-      <div class="avater">sds</div>
+      <div class="avater"><i class="el-icon-user"></i></div>
       <el-form
         :model="loginFormInfo"
         status-icon
         :rules="rules"
         ref="loginFormInfo"
-        label-width="100px"
+        label-width="70px"
+        label-position="left"
         class="demo-loginFormInfo"
       >
         <el-form-item label="用户名:" prop="userName">
@@ -37,7 +38,8 @@
         status-icon
         :rules="rules"
         ref="registerFormInfo"
-        label-width="100px"
+        label-width="70px"
+        label-position="left"
         class="demo-loginFormInfo"
       >
         <el-form-item label="用户名" prop="userName">
@@ -65,6 +67,7 @@
       <button class="btn" @click="userRegister('registerFormInfo')">
         完成注册
       </button>
+      <p class="toLogin" @click="toLogin">返回登录</p>
     </div>
     <!-- 代码雨背景 -->
     <canvas id="bg"></canvas>
@@ -263,6 +266,14 @@ export default {
   border-radius: 50px;
   margin: 0 auto;
 }
+.avater i{
+  margin-top: 20px;
+  font-size: 50px;
+}
+.toLogin{
+  font-size: 12px;
+  margin-top: 20px;
+}
 .bg{
   width: 500px;
   background-color: rgba(212, 228, 240, 0.4);
@@ -282,7 +293,7 @@ export default {
 
 .demo-loginFormInfo {
   width: 300px;
-  padding-top: 50px;
+  padding-top: 20px;
   margin-left: 70px;
 }
 .el-button {
