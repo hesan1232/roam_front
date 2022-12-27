@@ -166,6 +166,7 @@ export default {
 
 /* 头部区域 */
 .el-header {
+  width: 100vw;
   height: 76px !important;
   padding: 0px;
   background-color: #ffffff;
@@ -176,8 +177,7 @@ export default {
 
 /* 主盒子 */
 .main {
-  width: 100vw;
-  height: 100vh;
+
   display: flex;
   flex-direction: row;
   overflow: hidden;
@@ -185,6 +185,7 @@ export default {
 /* 左侧导导航栏 */
 .el-aside {
   max-width: 180px;
+  height: 670px;
   margin: 20px;
   background: #7b80e3;
   box-shadow: 0px 0px 12px 0px rgba(123, 128, 227, 0.4),
@@ -256,7 +257,7 @@ export default {
 /* 右侧主内容盒子 */
 .main_right {
   flex: 1;
-  height: 100%;
+  height: 650px;
 }
 
 .right_top {
