@@ -44,15 +44,15 @@
               >
               </el-avatar>
               <span>
-                {{ userInfo.name || "未登录" }}
+                {{ userInfo.userName || "未登录" }}
               </span>
               <el-dropdown trigger="click" click="user-dropdown">
                 <span
                   class="el-dropdown-link"
                   style="display: inline-block; text-align: center"
                 >
-                  <el-button type="info" size="mini" round>
-                    {{ userInfo.userType || "未登录" }}</el-button
+                  <el-tag type=""  >
+                    {{ userInfo.type==0?"管理员":"普通用户" }}</el-tag
                   >
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
@@ -67,7 +67,7 @@
           </div>
           <div class="right_main">
             <transition :name="SkipSwitchName">
-              <router-view></router-view>
+              <router-view :userInfo="userInfo"></router-view>
             </transition>
           </div>
         </div>
@@ -77,13 +77,14 @@
 </template>
 
 <script>
+import { removeToken } from "@/api/token"
+import { reqGetUserInfo } from "@/api/user"
 export default {
   data() {
     return {
       //用户属性
       userInfo: {
-        name: "hesan",
-        userType: "管理员",
+        userName: "未登录",  
       },
       //面包屑
       levelList: null,
@@ -119,12 +120,20 @@ export default {
     };
   },
   mounted(){
+    this.getUserInfo()
     this.getBreadcrumb()
   },
   methods: {
+    //获取个人信息
+    getUserInfo() {
+      reqGetUserInfo().then((res) => {
+        this.userInfo = res.data;
+      });
+    },
     //退出登录
     LoginOut() {
-      console.log("推出登录");
+      removeToken()
+      this.$router.push({ path: "/login" })
     },
     //改变面包屑
     getBreadcrumb() {

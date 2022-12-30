@@ -161,7 +161,7 @@ export default {
       reqUserLogin(this.loginFormInfo).then(
         (res) => {
           if (res.status == 200) {
-            this.$message({type:'success',message:'登录成功',center:true});
+            this.$message.success('登录成功')
             setToken(res.token);
             this.$router.push({ path: "/home" });
           }

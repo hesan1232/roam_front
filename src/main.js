@@ -18,7 +18,8 @@ VueAMap.initAMapApiLoader({
   key: '4d2b3c833bb4bebd9726f61801d6fb91',
   securityJsCode:'8e36784df1a2d2c10e295a02875646dd',
 });
-
+import VueRout from 'vue-router'
+Vue.use(VueRout)
 
 //路由的引入
 import router from "@/router";

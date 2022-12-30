@@ -1,7 +1,7 @@
 <template>
   <el-card class="card">
     <el-button type="primary" @click="dialogVisible = true">新增</el-button>
-    <el-table :data="placeList" border style="width: 100%" height="400"
+    <el-table :data="placeList" border style="width: 100%" height="450"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
       <el-table-column prop="placeName" label="用户名" width="100" align="center">
@@ -66,6 +66,7 @@ import {
   reqDeletePlaceById,reqAddPlace
 } from "@/api/place";
 export default {
+
   data() {
     return {
       placeList: [],

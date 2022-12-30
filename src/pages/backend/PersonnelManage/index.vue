@@ -1,7 +1,7 @@
 <template>
   <el-card class="card">
     <el-button type="primary" @click="dialogVisible = true">新增</el-button>
-    <el-table :data="userInfoList" border style="width: 100%" height="400"
+    <el-table :data="userInfoList" border style="width: 100%" height="450"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <el-table-column type="index" label="序号" width="100px" align="center"></el-table-column>
       <el-table-column prop="userName" label="用户名" align="center"> </el-table-column>
@@ -64,33 +64,11 @@ export default {
       },
        //表单校验规则
        rules:{
-        placeName: [
-            { required: true, message: '请输入地点名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 1 到 5 个字符', trigger: 'blur' }
-          ],
-          placeType: [
-            { required: true, message: '请选择活动区域', trigger: 'blur' }
-          ],
-          placeXY: [
-            {trigger: 'change',validator:(rule, value, callback)=>{
-              if(this.updateFormInfo.placeX&& this.updateFormInfo.placeY)
-              {
-              const flag=Number(this.updateFormInfo.placeX)+Number(this.updateFormInfo.placeX)
-              if(!isNaN(flag))
-             callback()
-              }else{
-               callback(new Error('经纬度不能为空'))
-              }
-              callback(new Error('经纬度必须为数字'))
-            }}
-          ],
-        
+
           ImgUrl:[
             { required: true, message: '请填写活动形式', trigger: 'blur' }
           ],
-          description: [
-            { required: true, message: '请填写地点说明', trigger: 'blur' }
-          ]
+         
         }
     };
   },
