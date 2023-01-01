@@ -48,7 +48,7 @@ export const reqAddPlace = (data) => {
 //更新地点数据
 export const reqUpdatePlaceById = (data) => {
     return requests({
-        url: '/place/updatePlaceListById',
+        url: '/place/updatePlaceById',
         method: 'post',
         data
     })

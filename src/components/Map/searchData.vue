@@ -5,7 +5,6 @@
       <el-tag size="small">{{data.placeType}}</el-tag>
     </el-descriptions-item>
     <el-descriptions-item label="预览" >
-      <!-- :src="data.ImgUrl" -->
       <el-image
         style="width: 300px; height: 200px"
         :src="data.ImgUrl"

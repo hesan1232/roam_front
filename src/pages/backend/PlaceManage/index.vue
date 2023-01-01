@@ -4,7 +4,7 @@
     <el-table :data="placeList" border style="width: 100%" height="450"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="placeName" label="用户名" width="100" align="center">
+      <el-table-column prop="placeName" label="地点名" width="100" align="center">
       </el-table-column>
       <el-table-column prop="placeType" label="类型" width="100" align="center">
       </el-table-column>
@@ -76,15 +76,7 @@ export default {
         size: 10,
       },
       dialogType:1,
-      updateFormInfo: {
-        placeName: "",
-        placeType: '',
-        placeX: '',
-        placeY: '',
-        description: '',
-        Link:'',
-        ImgUrl: '',
-      },
+      updateFormInfo: {},
       dialogVisible: false,
       //表单校验规则
       rules:{
