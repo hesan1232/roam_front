@@ -1,59 +1,55 @@
 <template>
   <div>
-      <div class="main_head main_center">
-        <div class="head_logo"></div>
-        <div class="head_menu">
-          <el-menu
-            :default-active="activeIndex"
-            mode="horizontal"
-            router
-            @select="handleSelect"
-           
-          >
-            <el-menu-item index="homepage">首页</el-menu-item>
-            <el-menu-item index="place">校园风光</el-menu-item>
-            <el-menu-item index="history">校园历史</el-menu-item>
-            <el-menu-item index="academy">专业介绍</el-menu-item>
-            <el-menu-item index="/backend">我的工作台</el-menu-item>
-            <el-menu-item index="/map">新生指引</el-menu-item>
-          </el-menu>
-        </div>
-        <div class="head_user">
-          <el-avatar style="display: inline-block; margin: 10px 10px">
-            无
-          </el-avatar>
-          <div class="head_user_black">
-            <span>登录</span>
-            <span>|</span>
-            <span>注册</span>
-            
-          </div>
-
+    <div class="main_head main_center">
+      <div class="head_logo"></div>
+      <div class="head_menu">
+        <el-menu :default-active="activeIndex" mode="horizontal" router @select="handleSelect">
+          <el-menu-item index="homepage">首页</el-menu-item>
+          <el-menu-item index="place">校园风光</el-menu-item>
+          <el-menu-item index="history">校园历史</el-menu-item>
+          <el-menu-item index="academy">专业介绍</el-menu-item>
+          <el-menu-item index="/backend">我的工作台</el-menu-item>
+          <el-menu-item index="/map">新生指引</el-menu-item>
+        </el-menu>
+      </div>
+      <div class="head_user">
+        <el-avatar :src="userInfo.userAvater" class="user_avater">
+        </el-avatar>
+        <div class="user_name">
+          <span v-if="userInfo.nickName">{{ userInfo.nickName }}</span>
+          <span v-else>登录 | 注册</span>
         </div>
       </div>
-      <router-view></router-view>
-      <HomeFooter/>
     </div>
+    <router-view></router-view>
+    <HomeFooter />
+  </div>
 </template>
 <script>
 import HomeFooter from '@/components/Home/homeFooter'
+import { getToken } from '@/api/token'
 export default {
-  components:{HomeFooter},
+  components: { HomeFooter },
   data() {
     return {
-        activeIndex: '1',
-            
+      userInfo:{},
+      activeIndex: '1',
+      isLogin: getToken()
     };
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch('getUserInfo').then(()=>{
+      this.userInfo=this.$store.state.userInfo
+    })
+  },
   methods: {
     jumpMap() {
       this.$router.push({ path: "/map" });
     },
-    handleSelect(e,r){
-     console.log(e,r)
-     if(e==5) this.$router.push({ path: "/backend" });
-     
+    handleSelect(e, r) {
+      console.log(e, r)
+      if (e == 5) this.$router.push({ path: "/backend" });
+
     },
   },
 };
@@ -62,6 +58,7 @@ export default {
 .main_center {
   margin: 0 auto;
 }
+
 /* 头部 */
 .main_head {
   width: 1140px;
@@ -71,6 +68,7 @@ export default {
   color: white;
   z-index: 10;
 }
+
 .head_logo {
   width: 150px;
   height: 100%;
@@ -91,7 +89,12 @@ export default {
   vertical-align: top;
 }
 
-.head_user_black {
+.user_avater {
+  display: inline-block;
+  margin: 10px 10px;
+}
+
+.user_name {
   height: 100%;
   width: 100px;
   line-height: 60px;
@@ -99,10 +102,6 @@ export default {
   vertical-align: top;
   color: #000000;
 }
-.head_user_black span{
-  margin: 0 3px;
-}
-
 
 
 </style>

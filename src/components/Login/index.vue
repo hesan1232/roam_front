@@ -92,15 +92,8 @@ export default {
       }
     };
     return {
-      loginFormInfo: {
-        userName: "",
-        password: "",
-      },
-      registerFormInfo: {
-        userName: "",
-        password: "",
-        checkPass: "",
-      },
+      loginFormInfo: {     },
+      registerFormInfo: {},
       rules: {
         userName: { required: true, message: "请填写用户", trigger: "change" },
         password: { required: true, message: "请输入密码", trigger: "change" },
@@ -162,8 +155,12 @@ export default {
         (res) => {
           if (res.status == 200) {
             this.$message.success('登录成功')
-            setToken(res.token);
-            this.$router.push({ path: "/home" });
+            setToken(res.token)
+           
+            this.$store.dispatch('getUserInfo').then(()=>{
+              this.$router.push({ path: "/home" })
+            })
+            
           }
         },
         (err) => {

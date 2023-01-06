@@ -4,29 +4,24 @@
         <img src="@/assets/logo.png" alt="logo" />
       </div>
       <div class="head_user">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-        <el-tag size="mini">管理员</el-tag>
-        <span size="mini">{{ userInfo.userName }}</span>
+        <el-avatar :src="userInfo.userAvater"></el-avatar>
+        <span >{{ userInfo.nickName }}</span>
       </div>
     </div>
 </template>
 
 <script>
-import { reqGetUserInfo } from "@/api/user";
+
 export default {
   data(){
     return {
         //用户信息
-      userInfo: {},
+      userInfo: this.$store.state.userInfo,
     }
   },
   methods:{
-     //获取个人信息
-     getUserInfo() {
-      reqGetUserInfo().then((res) => {
-        this.userInfo = res.data
-      });
-    },
+    
+   
   }
 }
 </script>
@@ -63,12 +58,12 @@ export default {
 } */
 .head_user {
   vertical-align: middle;
-
+  margin-top: 30px;
 }
 
 .head_user span {
   vertical-align: middle;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 </style>

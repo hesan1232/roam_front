@@ -32,7 +32,7 @@
         <el-form-item label="昵称">
           <el-input v-model="updateFormInfo.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="头像地址" prop="ImgUrl">
+        <el-form-item label="头像地址" prop="userAvater">
           <el-input v-model="updateFormInfo.userAvater"></el-input>
         </el-form-item>
 
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { reqGetUserList,reqDeleteUserInfo,reqResetUserPassword} from "@/api/user";
+import { reqGetUserList, reqUserRegister,reqDeleteUserInfo, reqResetUserPassword, reqUpdateUserInfo } from "@/api/user";
 export default {
   data() {
     return {
@@ -58,18 +58,18 @@ export default {
         size: 10,
       },
       dialogVisible: false,
-      dialogType:1,
+      dialogType: 1,
       updateFormInfo: {
 
       },
-       //表单校验规则
-       rules:{
+      //表单校验规则
+      rules: {
 
-          ImgUrl:[
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
-          ],
-         
-        }
+        userAvater: [
+          { required: true, message: '请填写头像地址', trigger: 'blur' }
+        ],
+
+      }
     };
   },
   mounted() {
@@ -80,13 +80,39 @@ export default {
     getUserList() {
       reqGetUserList().then((res) => {
         this.userInfoList = res.data.userList;
-        this.total=res.data.total
+        this.total = res.data.total
       });
+    },
+    //增加用户
+    addUser(){
+      reqUserRegister(this.updateFormInfo).then(()=>{
+        this.getUserList()
+        this.$message.success('新增成功')
+      })
+    },
+    //更新用户信息
+    updateUserInfo() {
+      reqUpdateUserInfo(this.updateFormInfo).then(()=>{
+        this.getUserList()
+        this.$message.success('编辑成功')
+      })
     },
     //分页器的回调
     handleCurrentChange(val) {
       this.searchInfo.page = val
       // this.getPlaceList()
+    },
+    //更新弹窗确认回调
+    updateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogVisible = false
+          this.dialogType == 1 ? this.addUser() : this.updateUserInfo()
+        } else {
+
+          return false;
+        }
+      });
     },
     // 编辑信息的回调
     updateDialog(data) {
@@ -94,6 +120,7 @@ export default {
       this.dialogVisible = true
       this.dialogType = 2
     },
+
     deletFormInfo(data) {
       this.$confirm(`你确定删除  ${data.userName}  ?`, "提示", {
         confirmButtonText: "确定",
@@ -101,7 +128,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          reqDeleteUserInfo({id:data.id}).then(
+          reqDeleteUserInfo({ id: data.id }).then(
             (res) => {
               this.getUserList()
               this.$message({
@@ -131,7 +158,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          reqResetUserPassword({id:data.id}).then(
+          reqResetUserPassword({ id: data.id }).then(
             (res) => {
               this.getUserList()
               this.$message({
@@ -154,24 +181,25 @@ export default {
           });
         });
     },
-     //弹窗关闭的回调
-     dialogClose(formName){
-      this.updateFormInfo={}
-      this.dialogType=1
-      this.$nextTick(()=>{
+    //弹窗关闭的回调
+    dialogClose(formName) {
+      this.updateFormInfo = {}
+      this.dialogType = 1
+      this.$nextTick(() => {
         this.$refs[formName].clearValidate()
       })
-      
+
     },
   },
 };
 </script>
 
 <style scoped>
-.card{
+.card {
   height: 600px;
 }
-.el-table{
+
+.el-table {
   margin: 10px 0;
 }
 </style>

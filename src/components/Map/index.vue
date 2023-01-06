@@ -91,7 +91,7 @@ export default {
   },
   mounted() {
     this.getPlaceList();
-    
+    this.getInteractList()
     //初始化分类列表
     this.getPlaceTypeList()
     // this.notice()
@@ -106,9 +106,11 @@ export default {
     },
     //分页获取评论信息
     getInteractList() {
-      reqGetInteractList(this.searchInfo).then((res) => {
+      reqGetInteractList({
+        page: 1,
+        size: 10,
+      }).then((res) => {
         this.interactList = res.data.interactList;
-        this.total = res.data.total;
       });
     },
     //根据名字模糊搜索
@@ -161,7 +163,14 @@ export default {
     },
     //评论滚动播放
     notice(){
+      let i=0
+      let j=Number(this.interactList.length)
+      console.log(i,j+0,"----------------")
       setInterval(()=>{
+        console.log(i,"取余前")
+        i=i%8
+        console.log(i,"取余后")
+        i++
         this.$notify({
           title: 'HTML 片段',
           duration:1000,

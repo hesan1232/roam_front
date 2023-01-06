@@ -8,7 +8,7 @@
           </div>
           <el-menu
             text-color="#fff"
-            background-color="#7b80e3"
+            background-color="#409EFF"
             class="el-menu-vertical-demo"
             :router="true"
           >
@@ -40,11 +40,11 @@
             <div class="head_user">
               <el-avatar
                 class="user_img"
-                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                :src="userInfo.userAvater"
               >
               </el-avatar>
               <span>
-                {{ userInfo.userName || "未登录" }}
+                {{ userInfo.nickName || "未登录" }}
               </span>
               <el-dropdown trigger="click" click="user-dropdown">
                 <span
@@ -78,14 +78,11 @@
 
 <script>
 import { removeToken } from "@/api/token"
-import { reqGetUserInfo } from "@/api/user"
 export default {
   data() {
     return {
       //用户属性
-      userInfo: {
-        userName: "未登录",  
-      },
+      userInfo: this.$store.state.userInfo,
       //面包屑
       levelList: null,
       //用户权限信息
@@ -120,16 +117,10 @@ export default {
     };
   },
   mounted(){
-    this.getUserInfo()
+
     this.getBreadcrumb()
   },
   methods: {
-    //获取个人信息
-    getUserInfo() {
-      reqGetUserInfo().then((res) => {
-        this.userInfo = res.data;
-      });
-    },
     //退出登录
     LoginOut() {
       removeToken()
@@ -180,13 +171,12 @@ export default {
   padding: 0px;
   background-color: #ffffff;
   color: #333;
-  box-shadow: 0px 0px 12px 0px rgba(123, 128, 227, 0.4),
+  box-shadow: 0px 0px 12px 0px rgba(124, 186, 244, 0.4),
     0px 0px 12px 0px rgba(0, 0, 0, 0.05);
 }
 
 /* 主盒子 */
 .main {
-
   display: flex;
   flex-direction: row;
   overflow: hidden;
@@ -196,8 +186,8 @@ export default {
   max-width: 180px;
   height: 670px;
   margin: 20px;
-  background: #7b80e3;
-  box-shadow: 0px 0px 12px 0px rgba(123, 128, 227, 0.4),
+  background: #409EFF;
+  box-shadow: 0px 0px 12px 0px #66b0ffba,
     0px 0px 12px 0px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   overflow-x: hidden;
@@ -217,7 +207,7 @@ export default {
   line-height: 40px;
   margin: 50px 0;
   border-radius: 20px;
-  background-color: #656acb;
+  background-color: #69b1ff;
 }
 .el-menu {
   border: none;
@@ -246,7 +236,7 @@ export default {
 .el-submenu__title:hover,
 .el-menu-item:focus,
 .el-menu-item:hover {
-  background: #656acb !important;
+  background: #69b1ff !important;
   border-radius: 12px;
   box-shadow: 0px 0px 12px 0px rgba(123, 128, 227, 0.4);
 }

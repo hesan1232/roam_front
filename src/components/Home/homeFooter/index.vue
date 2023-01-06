@@ -10,28 +10,17 @@
              
             </dl>
             <dl class="footer_info_about footer_info_left">
-              <dt>关于我们</dt>
+              <dt>关于</dt>
               <dd>
                 <a href="#">关于马蜂窝</a>
               </dd>
               <dd>
                 <a href="#">联系我们</a>
               </dd>
-              <dd>
-                <a href="#">隐私政策</a>
-              </dd>
-              <dd>
-                <a href="#">服务协议</a>
-              </dd>
+              
             </dl>
             <dl class="footer_info_about footer_info_left">
-              <dt>关于我们</dt>
-              <dd>
-                <a href="#">关于马蜂窝</a>
-              </dd>
-              <dd>
-                <a href="#">联系我们</a>
-              </dd>
+              <dt>服务</dt>
               <dd>
                 <a href="#">隐私政策</a>
               </dd>

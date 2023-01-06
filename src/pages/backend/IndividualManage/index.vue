@@ -31,7 +31,7 @@
         <el-form-item label="昵称">
           <el-input v-model="updateFormInfo.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="头像地址" prop="ImgUrl">
+        <el-form-item label="头像地址" prop="userAvater">
           <el-input v-model="updateFormInfo.userAvater"></el-input>
         </el-form-item>
       </el-form>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { reqGetUserInfo } from "@/api/user";
+import { reqUpdateUserInfo } from "@/api/user";
 export default {
   props:['userInfo'],
   data() {
@@ -56,7 +56,7 @@ export default {
       //表单校验规则
       rules: {
 
-        ImgUrl: [
+        userAvater: [
           { required: true, message: '请填写活动形式', trigger: 'blur' }
         ],
 
@@ -64,18 +64,32 @@ export default {
     };
   },
   mounted() {
-    // this.getUserInfo();
+
   },
   methods: {
-    //获取个人信息
-    getUserInfo() {
-      reqGetUserInfo().then((res) => {
-        this.userInfo = res.data;
-      });
-    },
+  
     editUserData() {
       this.updateFormInfo = this.userInfo
       this.dialogVisible = true
+    },
+     //更新用户信息
+     updateUserInfo() {
+      reqUpdateUserInfo(this.updateFormInfo).then(()=>{
+        this.$store.dispatch('getUserInfo')
+        this.$message.success('编辑成功')
+      })
+    },
+     //更新弹窗确认回调
+     updateForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogVisible = false
+          this.updateUserInfo()
+        } else {
+
+          return false;
+        }
+      });
     },
     //弹窗关闭的回调
     dialogClose(formName) {
