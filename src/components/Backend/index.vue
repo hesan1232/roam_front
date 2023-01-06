@@ -4,7 +4,7 @@
       <div class="main">
         <el-aside width="auto">
           <div style="margin: auto" class="aside_img">
-            <div  class="aside_icon">后台</div>
+            <div @click="jumpHome" class="aside_icon">后台</div>
           </div>
           <el-menu
             text-color="#fff"
@@ -121,6 +121,10 @@ export default {
     this.getBreadcrumb()
   },
   methods: {
+    //跳转前台
+    jumpHome(){
+      this.$router.push('/home')
+    },
     //退出登录
     LoginOut() {
       removeToken()
