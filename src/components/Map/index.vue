@@ -94,7 +94,7 @@ export default {
     this.getInteractList()
     //初始化分类列表
     this.getPlaceTypeList()
-    // this.notice()
+    this.notice()
   },
   methods: {
    
@@ -110,8 +110,27 @@ export default {
         page: 1,
         size: 10,
       }).then((res) => {
-        this.interactList = res.data.interactList;
-      });
+        this.interactList = res.data.interactList
+        let i=0
+        let j=this.interactList.length
+        var notifyTimer=setInterval(()=>{
+          if(i==j) i=0
+        this.$notify({
+          title: `${ this.interactList[i].userName}`,
+          duration:1000,
+          dangerouslyUseHTMLString: true,
+          message: `${ this.interactList[i].comments}`,
+          position:'bottom-right',
+          offset:100
+        });
+        i++
+      },
+      800)
+        for (let index = 0; index < this.interactList.length; index++) {
+         console.log(index)
+       
+      }
+      })
     },
     //根据名字模糊搜索
     getPlaceByPlaceName(searchText) {
@@ -164,25 +183,17 @@ export default {
     //评论滚动播放
     notice(){
       let i=0
-      let j=Number(this.interactList.length)
-      console.log(i,j+0,"----------------")
-      setInterval(()=>{
-        console.log(i,"取余前")
-        i=i%8
-        console.log(i,"取余后")
-        i++
-        this.$notify({
-          title: 'HTML 片段',
-          duration:1000,
-          dangerouslyUseHTMLString: true,
-          message: '<strong>这是 <i>HTML</i> 片段</strong>',
-          position:'bottom-right'
-        });
-      },
-      800)
+      let j=this.interactList.length
+      console.log(i,j,"----------------")
+     
+      
       
     }
   },
+  beforeDestroy(){
+    clearInterval(notifyTimer)
+  },
+
   computed: {
     //判断dataInfo是否为空，控制详情显示
     show() {
@@ -213,29 +224,6 @@ export default {
   flex-direction: column;
 }
 
-.map_head {
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 30px;
-  background-color: rgb(10, 150, 235);
-  align-items: center;
-  font-size: 12px;
-  overflow: hidden;
-}
-
-/* .head_logo {
-} */
-.head_user {
-  vertical-align: middle;
-
-}
-
-.head_user span {
-  vertical-align: middle;
-  margin-left: 20px;
-}
-
 .map {
   flex: 1;
   width: 100%;
@@ -255,19 +243,23 @@ export default {
   top: 20px;
   left: 20px;
   z-index: 100;
+  background-color: rgba(255, 255, 255, 0)!important;
+  box-shadow: none !important;
+  border: none;
 }
 
 .el-tabs__nav {
-  width: 100%;
+  width: 500px !important;
 }
 
 .el-tabs__item {   
-  width: 34%;
+  width: 40% !important;
   text-align: center;
 }
 
 .tab_pane {
   height: 400px;
+  
 }
 
 ul {

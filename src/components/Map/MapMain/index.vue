@@ -34,8 +34,10 @@
       <!-- 地图内嵌全景网站 -->
       <el-amap-info-window
         :position="mapPlaceInfo.mapCenter"
+        v-if="mapPlaceInfo.iframeInfoWindow"
         :visible.sync="mapPlaceInfo.iframeInfoWindow"
         @click="openNewLink"
+        @close="closeIframeInfoWindow"
       >
         <div
           style="width: 250px; height: 150px; z-index: 10">
@@ -98,6 +100,11 @@ export default {
       },100)
       
     },
+    //关闭信息窗口
+    closeIframeInfoWindow(){
+      console.log('关闭')
+      this.mapPlaceInfo.iframeInfoWindow = false
+    }
   },
   watch: {
     mapPlaceInfo:{
