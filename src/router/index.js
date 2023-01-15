@@ -4,10 +4,8 @@ Vue.use(VueRouter)
 //引入组件
 import Login from '@/components/Login'
 import Home from '@/components/Home'
-  import Academy from '@/pages/home/academy'
-  import History from '@/pages/home/history'
   import HomePage from '@/pages/home/homePage'
-  import Place from '@/pages/home/place'
+
 import Map from "@/components/Map"
 import Backend from "@/components/Backend"
   import CommentsManage from "@/pages/backend/CommentsManage"
@@ -16,7 +14,7 @@ import Backend from "@/components/Backend"
   import PlaceManage from "@/pages/backend/PlaceManage"
   
 
-export default new VueRouter({
+const router=  new VueRouter({
     routes: [
         {
             path:'/',
@@ -35,21 +33,10 @@ export default new VueRouter({
                     redirect: 'homepage' 
                 },
                 {
-                    path: 'academy',
-                    component: Academy,  
-                },
-                {
-                    path: 'history',
-                    component: History,  
-                },
-                {
                     path: 'homepage',
                     component: HomePage,  
-                },
-                {
-                    path: 'place',
-                    component: Place,  
-                },
+                }
+               
             ]
         },
         {
@@ -99,4 +86,31 @@ export default new VueRouter({
         
     ]
 })
+let isToken=true
+router.beforeEach(async (to,from,next)=>{
+    document.title='全景可视化管理' 
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
+    if(isToken&& localStorage.getItem('isLogin')){
+        console.log('加载路由')
+        // store.dispatch('getPermissionsInfo').then(()=>{
+        //     const dynamicRouteses =store.state.permissionsInfo
+        //     dynamicRouteses.forEach(item=>{
+        //         router.addRoute('home',{  
+        //             path:item.routingPath,
+        //             component: (resolve) => require([`@/${item.componentPath.replace(/(^\/*)/g, '')}/index.vue`], resolve),
+        //             meta:{
+        //                 title:item.menuName,
+        //                 weight:item.menuWeight
+        //             },
+        //         })
+        //     })       
+        // })
+    isToken=false
+    }
+  next()
+})
+export default router;
+
 

@@ -50,7 +50,7 @@ import {
   reqGetAllPlace, reqGetPlaceByPlaceName,
   reqGetPlaceTypeList, reqGetPlaceListByPlaceType
 } from "@/api/place";
-import { reqGetInteractList } from '@/api/interact'
+import { reqGetInteractList,reqAddInteract } from '@/api/interact'
 import mapHead from "@/pages/map/mapHead"
 import MapMain from "@/components/Map/MapMain";
 import mapSearch from "@/pages/map/mapSearch"
@@ -130,6 +130,12 @@ export default {
          console.log(index)
        
       }
+      })
+    },
+    //增加评价信息
+    addInteract(){
+      reqAddInteract().then((result)=>{
+
       })
     },
     //根据名字模糊搜索

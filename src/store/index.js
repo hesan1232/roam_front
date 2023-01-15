@@ -5,13 +5,12 @@ import createPersistedState from 'vuex-persistedstate'
 import { reqGetUserInfo } from "@/api/user";
 Vue.use(Vuex)
 const state={
-    userInfo:{}
+    userInfo:{},
 }
 const actions={
     //获取用户权限
     getUserInfo({commit}){
      reqGetUserInfo().then((result)=>{
-        console.log('获取数据')
        commit('GETUserInfo',result.data)
      })
       
@@ -27,7 +26,8 @@ const actions={
 const mutations={
     GETUserInfo(state,data){
        state.userInfo=data
-    }
+    },
+    userLogout(){}
     // GETPermissionsInfo(state,data){
     //   state.permissionsInfo=data
     // },
@@ -45,5 +45,6 @@ export default new Vuex.Store({
             storage:localStorage,
             key:'userInfo'
         })
+       
     ]
 })

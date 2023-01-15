@@ -2,6 +2,7 @@
 //存储token
 export const setToken=(Authorization)=>{
     localStorage.setItem('AUTHORIZATION',Authorization)
+    localStorage.setItem('isLogin',true)
 }
 //获取token
 export const getToken=()=>{
@@ -10,4 +11,5 @@ export const getToken=()=>{
 //清除token
 export const removeToken=()=>{
     localStorage.removeItem('AUTHORIZATION')
+    localStorage.setItem('isLogin',false)
 }

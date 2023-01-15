@@ -1,18 +1,6 @@
 <template>
   <div>
-    <div class="main_carousel main_center">
-      <el-carousel height="500px">
-        <el-carousel-item v-for="(item, index) in imageList" :key="index">
-          <img class="carousel-img" :src="item.url" alt="">
-          <h3 class="small">{{ item.url }}</h3>
-        </el-carousel-item>
-      </el-carousel>
-      <div class="carousel_right_black">
-        <el-input v-model="searchData.text" placeholder="请输入">
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </div>
-    </div>
+
     <div class="main_content main_center">
 
       <div class="content_main">
@@ -32,9 +20,7 @@
           <h3>河南城建最新资讯</h3>
           <ul>
             <li>10月18日<a href="#">这是一条金报新闻</a></li>
-            <li>10月18日<a href="#">这是一条金报新闻</a></li>
-            <li>10月18日<a href="#">这是一条金报新闻</a></li>
-            <li>10月18日<a href="#">这是一条金报新闻</a></li>
+            
             <li>10月18日<a href="#">这是一条金报新闻</a></li>
           </ul>
         </div>
@@ -68,21 +54,6 @@
           <p class="essay_head_left">热门游记</p>
           <el-button class="essay_head_right" type="primary" icon="el-icon-edit">写游记</el-button>
         </div>
-        <li class="essay_item">
-          <img
-            src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"
-            alt="">
-          <div class="essay_item_info">
-            <p class="item_info_total"><a href="">冰岛冬季环岛 | 世界若有尽头，应是一首孤独的蓝色散文诗</a></p>
-            <p class="item_info_text"> 关于出发，意料之外却又情理之中 我不知道有多少人，这个春天，跟我一样，被困囿于魔都的封城里。灵魂和身体，总...</p>
-            <div class="item_info_extra">
-
-              <span><i class="el-icon-location-outline"></i>图书馆</span>
-              <span>爱吃的仙姑噶才</span>
-              <span><i class="el-icon-view"></i><a href="">XXX已经阅读</a></span>
-            </div>
-          </div>
-        </li>
         <li class="essay_item">
           <img
             src="https://note.mafengwo.net/img/37/6e/0db100de8d2faa35c129ee2457ba9a4b.jpeg?imageMogr2%2Fthumbnail%2F%21440x300r%2Fstrip%2Fgravity%2FCenter%2Fcrop%2F%21440x300%2Fquality%2F90"

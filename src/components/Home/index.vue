@@ -5,9 +5,6 @@
       <div class="head_menu">
         <el-menu :default-active="activeIndex" mode="horizontal" router @select="handleSelect">
           <el-menu-item index="homepage">首页</el-menu-item>
-          <el-menu-item index="place">校园风光</el-menu-item>
-          <el-menu-item index="history">校园历史</el-menu-item>
-          <el-menu-item index="academy">专业介绍</el-menu-item>
           <el-menu-item index="/backend">我的工作台</el-menu-item>
           <el-menu-item index="/map">新生指引</el-menu-item>
         </el-menu>
@@ -26,7 +23,7 @@
   </div>
 </template>
 <script>
-import HomeFooter from '@/components/Home/homeFooter'
+import HomeFooter from '@/pages/home/homeFooter'
 import { getToken } from '@/api/token'
 export default {
   components: { HomeFooter },
@@ -66,6 +63,7 @@ export default {
   margin-top: 1px;
   padding: 0 20px;
   color: white;
+  background-color: #04305c;
   z-index: 10;
 }
 
@@ -100,7 +98,7 @@ export default {
   line-height: 60px;
   display: inline-block;
   vertical-align: top;
-  color: #000000;
+  color: white;
 }
 
 

@@ -12,7 +12,7 @@
             <dl class="footer_info_about footer_info_left">
               <dt>关于</dt>
               <dd>
-                <a href="#">关于马蜂窝</a>
+                <a href="#">关于城建</a>
               </dd>
               <dd>
                 <a href="#">联系我们</a>
@@ -45,10 +45,9 @@ export default {
 }
 /* 底部区域 */
 .main_footer {
-  height: 300px;
-  background-color: rgb(136, 135, 135);
+  height: 200px;
   clear: both;
-  background-color: #3c3c3c;
+  background-color: #04305c;
   color: #c2c2c2;
   line-height: 22px;
   padding-bottom: 20px;
@@ -57,7 +56,7 @@ export default {
 
 .main_footer_content {
   width: 1000px;
-  height: 300px;
+  height: 200px;
 
   display: block;
   overflow: hidden;
