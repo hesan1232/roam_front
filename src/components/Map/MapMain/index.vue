@@ -19,7 +19,9 @@
         :url="url"
         :bounds="bounds"
         :visible="visible"
-      />
+      >
+      dasf asjf
+      </el-amap-layer-image>>
       <!-- 地图比例尺 -->
       <el-amap-control-scale :visible="visible" />
       <!-- 地图指南针 -->
@@ -55,7 +57,9 @@
 <script>
 
 export default {
+
   props: [ "placeList", "mapPlaceInfo"],
+  
   data() {
     return {
       visible: true,
@@ -74,8 +78,8 @@ export default {
       console.log('init map: ', e);
     },
     initImagLayer(e) {
-      e._opts.url = "/images/2022/09/10/37.jpg";
-      e.Be = "/images/2022/09/10/37.jpg";
+      e._opts.url = "/images/2023/01/28/mapImage.md.png";
+      e.Be = "/images/2023/01/28/mapImage.md.png";
     },
     //地图有移动
     moveendMap(e){

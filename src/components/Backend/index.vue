@@ -4,7 +4,7 @@
       <div class="main">
         <el-aside width="auto">
           <div style="margin: auto" class="aside_img">
-            <div @click="jumpHome" class="aside_icon">后台</div>
+            <div @click="jumpHome" class="aside_icon">后台管理</div>
           </div>
           <el-menu
             text-color="#fff"
@@ -135,10 +135,10 @@ export default {
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
       const first = matched[0]
       if (!this.isIndex(first)) {
-        matched = [{ path: '/backend', meta: { title: '首页' } }].concat(matched)
+        matched = [{ path: '/backend', meta: { title: '后台' } }].concat(matched)
         this.levelList = matched
       } else {
-        this.levelList = [{ path: '/backendme', meta: { title: '首页' } }]
+        this.levelList = [{ path: '/backendme', meta: { title: '后台' } }]
       }
     },
     isIndex(route) {

@@ -91,10 +91,10 @@ export default {
   },
   mounted() {
     this.getPlaceList();
-    this.getInteractList()
+    // this.getInteractList()
     //初始化分类列表
     this.getPlaceTypeList()
-    this.notice()
+    // this.notice()
   },
   methods: {
    

@@ -11,6 +11,9 @@
           
           :preview-src-list="[data.ImgUrl]"
         >
+        <div slot="placeholder" class="image-slot">
+        加载中<span class="dot">...</span>
+      </div>
         </el-image>
       </el-descriptions-item>
       <el-descriptions-item label="描述信息" :span="1"

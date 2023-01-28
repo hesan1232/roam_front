@@ -27,38 +27,21 @@ export default {
 </script>
 
 <style scoped>
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-}
-
-.main {
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
 
 .map_head {
-  height: 80px;
+  height: 72px;
   display: flex;
   justify-content: space-between;
-  padding: 10px 30px;
-  background-color: rgb(10, 150, 235);
+  padding: 0 30px;
+  background-color: #005bac;
   align-items: center;
   font-size: 12px;
   overflow: hidden;
 }
 
-/* .head_logo {
-} */
 .head_user {
   vertical-align: middle;
-  margin-top: 30px;
+  margin-right: 60px;
 }
 
 .head_user span {

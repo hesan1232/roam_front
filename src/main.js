@@ -20,7 +20,12 @@ VueAMap.initAMapApiLoader({
 });
 import VueRout from 'vue-router'
 Vue.use(VueRout)
+//懒加载
+import VueLazyload from 'vue-lazyload'
 
+Vue.use(VueLazyload,{
+  loading:'https://www.keaidian.com/uploads/allimg/190424/24110307_8.jpg' // 懒加载默认图片
+})
 //路由的引入
 import router from "@/router";
 new Vue({
