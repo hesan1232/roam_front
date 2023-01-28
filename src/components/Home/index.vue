@@ -3,7 +3,7 @@
     <div class="main_head main_center">
       <div class="head_logo"></div>
       <div class="head_menu">
-        <el-menu :default-active="activeIndex" mode="horizontal" router @select="handleSelect">
+        <el-menu :default-active="activeIndex" background-color="#04305c" mode="horizontal" router >
           <el-menu-item index="homepage">首页</el-menu-item>
           <el-menu-item index="/backend">我的工作台</el-menu-item>
           <el-menu-item index="/map">新生指引</el-menu-item>
@@ -18,7 +18,14 @@
         </div>
       </div>
     </div>
-    <router-view></router-view>
+    <div class="main_body main_center">
+      <el-card class="body_left"></el-card>
+      <div></div>
+      <el-card class="body_right"></el-card>
+      <el-card class="body_right"></el-card>
+    </div>
+ 
+    
     <HomeFooter />
   </div>
 </template>
@@ -40,14 +47,7 @@ export default {
     })
   },
   methods: {
-    jumpMap() {
-      this.$router.push({ path: "/map" });
-    },
-    handleSelect(e, r) {
-      console.log(e, r)
-      if (e == 5) this.$router.push({ path: "/backend" });
-
-    },
+   
   },
 };
 </script>
@@ -58,10 +58,10 @@ export default {
 
 /* 头部 */
 .main_head {
-  width: 1140px;
+  
   height: 60px;
   margin-top: 1px;
-  padding: 0 20px;
+  padding: 0 220px;
   color: white;
   background-color: #04305c;
   z-index: 10;
@@ -100,6 +100,19 @@ export default {
   vertical-align: top;
   color: white;
 }
-
-
+.main_body{
+  width: 1000px;
+  height: 600px;
+  padding: 10px 0;
+}
+.body_left{
+  width: 600px;
+  height: 100%;
+  float: left;
+}
+.body_right{
+  width: 300px;
+  height: 300px;
+  float: left;
+}
 </style>

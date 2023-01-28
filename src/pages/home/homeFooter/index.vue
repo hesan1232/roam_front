@@ -5,12 +5,8 @@
             <dl class="footer_info_intro footer_info_left">
               <dt>河南城建学院漫游指南</dt>
               <dd>城建学子用得更多的漫游网站</dd>
-              <dd>上亿旅行者共同打造的<strong>"旅行神器"</strong></dd>
-              <dd> 多个<strong>"食堂自习室"</strong>目的地</dd>
-             
             </dl>
             <dl class="footer_info_about footer_info_left">
-              <dt>关于</dt>
               <dd>
                 <a href="#">关于城建</a>
               </dd>
@@ -20,7 +16,7 @@
               
             </dl>
             <dl class="footer_info_about footer_info_left">
-              <dt>服务</dt>
+              
               <dd>
                 <a href="#">隐私政策</a>
               </dd>
@@ -45,31 +41,28 @@ export default {
 }
 /* 底部区域 */
 .main_footer {
-  height: 200px;
   clear: both;
   background-color: #04305c;
   color: #c2c2c2;
   line-height: 22px;
-  padding-bottom: 20px;
   font-size: 12px;
 }
 
 .main_footer_content {
   width: 1000px;
-  height: 200px;
+  height: 100px;
 
   display: block;
   overflow: hidden;
 }
 
 .footer_info {
-  padding: 30px 8px 40px 8px;
-  border-bottom: 1px solid #575a5b;
+  padding: 10px 8px;
   overflow: hidden;
 }
 
 .footer_info dt {
-  height: 30px;
+  height: 20px;
   font-size: 14px;
   overflow: hidden;
 }
@@ -99,8 +92,4 @@ export default {
   float: left;
 }
 
-.footer_info_intro strong {
-  color: #ff9d00;
-  font-weight: normal;
-}
 </style>
