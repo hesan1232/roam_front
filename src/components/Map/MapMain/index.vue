@@ -20,7 +20,6 @@
         :bounds="bounds"
         :visible="visible"
       >
-      dasf asjf
       </el-amap-layer-image>>
       <!-- 地图比例尺 -->
       <el-amap-control-scale :visible="visible" />

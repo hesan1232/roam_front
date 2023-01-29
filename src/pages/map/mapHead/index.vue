@@ -4,6 +4,14 @@
         <img src="@/assets/logo.png" alt="logo" />
       </div>
       <div class="head_user">
+        <el-popover
+    placement="top-start"
+    trigger="hover">
+    <img class="code_out" src="@/assets/out.jpg" alt="">
+    <img slot="reference" class="codeImage" src="@/assets/code.png" alt="二维码"/>
+  </el-popover>
+        <span><a style="color:white" href="https://www.720yun.com/t/d3vkb917r1m?scene_id=89903467" target="_blank">全景漫游</a></span>
+        
         <el-avatar :src="userInfo.userAvater"></el-avatar>
         <span >{{ userInfo.nickName }}</span>
       </div>
@@ -37,6 +45,7 @@ export default {
   align-items: center;
   font-size: 12px;
   overflow: hidden;
+  color: white;
 }
 
 .head_user {
@@ -48,5 +57,10 @@ export default {
   vertical-align: middle;
   margin-left: 10px;
 }
-
+.codeImage{
+  width: 38px;
+}
+.code_out{
+  width: 200px;
+}
 </style>
