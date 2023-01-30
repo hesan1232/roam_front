@@ -15,8 +15,7 @@
             <el-menu-item
               v-for="item in permissionsInfo"
               :key="item.id"
-              :index="item.routingPath"
-            >
+              :index="item.routingPath">
               <i :class="item.menuIcon"></i>
               <span slot="title">{{ item.menuName }}</span>
             </el-menu-item>
@@ -92,24 +91,28 @@ export default {
           routingPath: "individualManage",
           menuIcon: "el-icon-user",
           menuName: "个人信息",
+          type:1,
         },
         {
           id: "2",
           routingPath: "personnelManage",
           menuIcon: "el-icon-s-custom",
           menuName: "人员管理",
+          type:0,
         },
         {
           id: "3",
           routingPath: "placeManage",
           menuIcon: "el-icon-s-promotion",
           menuName: "地点管理",
+          type:0,
         },
         {
           id: "4",
           routingPath: "commentsManage",
           menuIcon: "el-icon-s-comment",
           menuName: "评论管理",
+          type:0,
         },
       ],
       //监听路由名称

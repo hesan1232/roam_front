@@ -16,11 +16,11 @@
       <el-amap-layer-image
         ref="imageLayer"
         @init="initImagLayer"
-        :url="url"
+         :url="url"
         :bounds="bounds"
         :visible="visible"
       >
-      </el-amap-layer-image>>
+      </el-amap-layer-image>
       <!-- 地图比例尺 -->
       <el-amap-control-scale :visible="visible" />
       <!-- 地图指南针 -->
@@ -54,16 +54,19 @@
 </template>
 
 <script>
-
+import mapUrl from '@/assets/map.png';
 export default {
 
   props: [ "placeList", "mapPlaceInfo"],
   
   data() {
+    
     return {
       visible: true,
       zoom:16,
-      url: "https://img.zcool.cn/community/01fc3958c9eab4a801219c77058f53.jpg@1280w_1l_2o_100sh.jpg",
+    
+      url:mapUrl,
+      // url: "https://img.zcool.cn/community/01fc3958c9eab4a801219c77058f53.jpg@1280w_1l_2o_100sh.jpg",
       bounds: [113.179513, 33.768828, 113.19891, 33.775999],
     };
   },
@@ -77,8 +80,8 @@ export default {
       console.log('init map: ', e);
     },
     initImagLayer(e) {
-      e._opts.url = "/images/2023/01/28/mapImage.md.png";
-      e.Be = "/images/2023/01/28/mapImage.md.png";
+      // e._opts.url = this.url;
+      // e.Be = this.url;
     },
     //地图有移动
     moveendMap(e){
@@ -127,14 +130,6 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-.map {
-  position: absolute;
-  width: 100%;
-  background: url(@/assets/hncj_map.png);
-  background-size: cover;
-  aspect-ratio: 8429/4080;
-  transition: all 0.2s;
 }
 .amap-demo {
   height: 100%;
