@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
+
+import store from '@/store'
 //引入组件
 import Login from '@/components/Login'
 import Home from '@/components/Home'
@@ -8,10 +10,10 @@ import Home from '@/components/Home'
 
 import Map from "@/components/Map"
 import Backend from "@/components/Backend"
-  import CommentsManage from "@/pages/backend/CommentsManage"
   import IndividualManage from "@/pages/backend/IndividualManage"
   import PersonnelManage from "@/pages/backend/PersonnelManage"
   import PlaceManage from "@/pages/backend/PlaceManage"
+  import CommentsManage from "@/pages/backend/CommentsManage"
   
 
 const router=  new VueRouter({
@@ -45,6 +47,7 @@ const router=  new VueRouter({
             
         },
         {
+            name:'backend',
             path: '/backend',
             component: Backend,
             children:[
@@ -93,20 +96,21 @@ router.beforeEach(async (to,from,next)=>{
         document.title = to.meta.title
     }
     if(isToken&& localStorage.getItem('isLogin')){
-        console.log('加载路由')
-        // store.dispatch('getPermissionsInfo').then(()=>{
-        //     const dynamicRouteses =store.state.permissionsInfo
-        //     dynamicRouteses.forEach(item=>{
-        //         router.addRoute('home',{  
-        //             path:item.routingPath,
-        //             component: (resolve) => require([`@/${item.componentPath.replace(/(^\/*)/g, '')}/index.vue`], resolve),
-        //             meta:{
-        //                 title:item.menuName,
-        //                 weight:item.menuWeight
-        //             },
-        //         })
-        //     })       
-        // })
+        console.log('加载路由',isToken,localStorage.getItem('isLogin'))
+        store.dispatch('getPermissionsInfo').then(()=>{
+            const dynamicRouteses =store.state.permissionsInfo
+            console.log(dynamicRouteses)
+            dynamicRouteses.forEach(item=>{
+                router.addRoute('backend',{  
+                    path:item.routingPath,
+                    component: (resolve) => require([`${item.componentPath}/index.vue`], resolve),
+                    meta:{
+                        title:item.menuName,
+                     
+                    },
+                })
+            })       
+        })
     isToken=false
     }
   next()

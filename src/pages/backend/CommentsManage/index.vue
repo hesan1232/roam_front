@@ -4,7 +4,7 @@
     <el-table :data="interactList" border style="width: 100%" height="450"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
-      <el-table-column prop="userName" label="用户名"  align="center">
+      <el-table-column prop="nickName" label="用户名"  align="center">
       </el-table-column>
 
       <el-table-column prop="comments" label="评论信息" align="center">

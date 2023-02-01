@@ -32,9 +32,12 @@
         </el-form-item>
         <el-form-item label="地点类型" prop="placeType">
           <el-radio-group v-model="updateFormInfo.placeType">
-            <el-radio label="运动场"></el-radio>
-            <el-radio label="食堂"></el-radio>
+            <el-radio label="教学楼"></el-radio>
+            <el-radio label="办公楼"></el-radio>
             <el-radio label="自习室"></el-radio>
+            <el-radio label="服务楼"></el-radio>
+            <el-radio label="运动场"></el-radio>
+            <el-radio label="其他"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="地点坐标" prop="placeXY">
@@ -76,13 +79,15 @@ export default {
         size: 10,
       },
       dialogType:1,
-      updateFormInfo: {},
+      updateFormInfo: {
+        Link:'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
+      },
       dialogVisible: false,
       //表单校验规则
       rules:{
         placeName: [
             { required: true, message: '请输入地点名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 1 到 5 个字符', trigger: 'blur' }
+            { min: 1, max: 10, message: '长度在 1 到 5 个字符', trigger: 'blur' }
           ],
           placeType: [
             { required: true, message: '请选择活动区域', trigger: 'blur' }
@@ -191,7 +196,9 @@ export default {
     },
     //弹窗关闭的回调
     dialogClose(formName){
-      this.updateFormInfo={}
+      this.updateFormInfo={
+        Link:'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
+      }
       this.dialogType=1
       this.$nextTick(()=>{
         this.$refs[formName].clearValidate()

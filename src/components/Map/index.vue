@@ -37,7 +37,7 @@
           </el-tabs>
         </el-card>
       </el-card>
-      <MapMain :placeList="placeList" :mapPlaceInfo="mapPlaceInfo" />
+      <MapMain :placeList="placeList" :mapPlaceInfo="mapPlaceInfo" @updateMapPlaceInfo="updateMapPlaceInfo" />
     </div>
   </div>
 </template>
@@ -83,8 +83,8 @@ export default {
       //点击结果传递地点信息对象
       mapPlaceInfo: {
         mapCenter: [113.18791, 33.772726],
-        url: '',
-        mapZoom: 16,
+        Link:'https://720yun.com/t/d3vkb917r1m?scene_id=89960801',
+        mapZoom: 18,
         iframeInfoWindow: false,
       },
     };
@@ -168,7 +168,7 @@ export default {
       this.mapPlaceInfo = { ...this.mapPlaceInfo, ...data }
       this.mapPlaceInfo.mapCenter = [data.placeX, data.placeY]
       this.mapPlaceInfo.iframeInfoWindow = true
-      this.mapPlaceInfo.mapZoom = 18
+      this.mapPlaceInfo.mapZoom = 20
       this.activeName = "searchData"
       this.dataInfo = data
     },
@@ -194,7 +194,12 @@ export default {
      
       
       
-    }
+    },
+    //修改标记点和嵌入网页的数据
+    updateMapPlaceInfo(data){
+     console.log('修改了值',data)
+     this.mapPlaceInfo=Object.assign(this.mapPlaceInfo,data)
+    },
   },
   beforeDestroy(){
     clearInterval(notifyTimer)

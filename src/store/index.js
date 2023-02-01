@@ -3,9 +3,11 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 // import { reqGetPermissionsInfo } from '@/axios/menu'
 import { reqGetUserInfo } from "@/api/user";
+import { reqGetRouterList} from "@/api/router"
 Vue.use(Vuex)
 const state={
     userInfo:{},
+    permissionsInfo:[],
 }
 const actions={
     //获取用户权限
@@ -14,26 +16,25 @@ const actions={
        commit('GETUserInfo',result.data)
      })
       
-    }
-    //  //获取用户权限 reqGetPermissionsInfo
-    //  async getPermissionsInfo({commit}) {
-    //     const result = await reqGetPermissionsInfo();
-    //     if (result.code == 200) {
-    //         commit('GETPermissionsInfo',result.data)
-    //     }
-    //   },
+    },
+     //获取用户权限 reqGetPermissionsInfo
+     getPermissionsInfo({commit}) {
+       reqGetRouterList().then((result)=>{
+        console.log('请求了')
+        commit('GETPermissionsInfo',result.data)
+       })
+      },
 }
 const mutations={
     GETUserInfo(state,data){
        state.userInfo=data
     },
-    userLogout(){}
-    // GETPermissionsInfo(state,data){
-    //   state.permissionsInfo=data
-    // },
-    // RemovePermissionsInfo(state,data){
-    //     state.permissionsInfo=[]  
-    // },
+    GETPermissionsInfo(state,data){
+      state.permissionsInfo=data
+    },
+    RemovePermissionsInfo(state,data){
+        state.permissionsInfo=[]  
+    },
 }
 
 export default new Vuex.Store({
@@ -43,8 +44,8 @@ export default new Vuex.Store({
     plugins:[
         createPersistedState({
             storage:localStorage,
-            key:'userInfo'
-        })
+            key:'store'
+        }),
        
     ]
 })

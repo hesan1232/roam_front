@@ -6,16 +6,14 @@
       :opacity="1"
       :center.sync="mapPlaceInfo.mapCenter"
       :zoom="zoom"
-      :zooms="[16, 19]"
+      :zooms="[16, 20]"
       view-mode="2D"
       @init="initMap"
       @click="clickMap"
-      @moveend="moveendMap"
       class="amap-demo"
     >
       <el-amap-layer-image
         ref="imageLayer"
-        @init="initImagLayer"
          :url="url"
         :bounds="bounds"
         :visible="visible"
@@ -39,13 +37,14 @@
         :visible.sync="mapPlaceInfo.iframeInfoWindow"
         @click="openNewLink"
         @close="closeIframeInfoWindow"
+        :offset="[-115,-180]"
       >
         <div
           style="width: 250px; height: 150px; z-index: 10">
           <iframe
             style="width: 100%; height: 100%"
             frameborder="0"
-            src="https://720yun.com/t/d3vkb917r1m?scene_id=89960801"
+            src="https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801"
           ></iframe>
         </div>
       </el-amap-info-window>
@@ -63,44 +62,35 @@ export default {
     
     return {
       visible: true,
-      zoom:16,
-    
+      zoom:18,
       url:mapUrl,
-      // url: "https://img.zcool.cn/community/01fc3958c9eab4a801219c77058f53.jpg@1280w_1l_2o_100sh.jpg",
       bounds: [113.179513, 33.768828, 113.19891, 33.775999],
     };
   },
   mounted() {},
   methods: {
     clickMap(e) {
-      console.log("click map :", e.lnglat.lng,e.lnglat.lat)
+      let text=e.lnglat.lng+'  '+e.lnglat.lat
+      navigator.clipboard.writeText(text)
       
     },
     initMap(e) {
-      console.log('init map: ', e);
+      // console.log('init map: ', e);
     },
-    initImagLayer(e) {
-      // e._opts.url = this.url;
-      // e.Be = this.url;
-    },
-    //地图有移动
-    moveendMap(e){
-      console.log(e)
-    },
+
     //点击标记
     clickArrayMarker(marker) {
-      this.mapPlaceInfo.mapCenter = [marker.placeX, marker.placeY]
-      this.mapPlaceInfo.Link=marker.Link
-      this.mapPlaceInfo.iframeInfoWindow = true
-      this.mapPlaceInfo.mapZoom = 18
+      this.$emit('updateMapPlaceInfo',{
+        mapCenter:[marker.placeX, marker.placeY],
+        Link:marker.Link,
+        iframeInfoWindow:true,
+        mapZoom:20,
+      })
     },
     //打开新网站
     openNewLink() {
-      console.log("点击");
-     
       setTimeout(()=>{
          if(this.mapPlaceInfo.iframeInfoWindow){
-          console.log(this.mapPlaceInfo.Link)
           window.open(this.mapPlaceInfo.Link, "_blank")
          }
       },100)
@@ -108,19 +98,19 @@ export default {
     },
     //关闭信息窗口
     closeIframeInfoWindow(){
-      console.log('关闭')
-      this.mapPlaceInfo.iframeInfoWindow = false
+      this.$emit('updateMapPlaceInfo',{   
+        iframeInfoWindow:false,      
+      })
     }
   },
   watch: {
-    mapPlaceInfo:{
-      handler(newObj, oldObj) {
-        if(oldObj) this.zoom=18
-        console.log(oldObj)
-      },
-      immediate: true,
-      deep: true
-    }
+    // mapPlaceInfo:{
+    //   handler(newObj, oldObj) {
+    //     if(oldObj) this.zoom=18
+    //   },
+    //   immediate: true,
+    //   deep: true
+    // }
   } 
 };
 
