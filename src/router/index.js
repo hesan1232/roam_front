@@ -96,10 +96,8 @@ router.beforeEach(async (to,from,next)=>{
         document.title = to.meta.title
     }
     if(isToken&& localStorage.getItem('isLogin')){
-        console.log('加载路由',isToken,localStorage.getItem('isLogin'))
         store.dispatch('getPermissionsInfo').then(()=>{
             const dynamicRouteses =store.state.permissionsInfo
-            console.log(dynamicRouteses)
             dynamicRouteses.forEach(item=>{
                 router.addRoute('backend',{  
                     path:item.routingPath,

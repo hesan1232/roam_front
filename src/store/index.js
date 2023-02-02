@@ -20,7 +20,6 @@ const actions={
      //获取用户权限 reqGetPermissionsInfo
      getPermissionsInfo({commit}) {
        reqGetRouterList().then((result)=>{
-        console.log('请求了')
         commit('GETPermissionsInfo',result.data)
        })
       },

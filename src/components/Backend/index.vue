@@ -77,7 +77,7 @@
 
 <script>
 import { removeToken } from "@/api/token"
-
+import {reqGetRouterList} from "@/api/router"
 export default {
   data() {
     return {
@@ -90,6 +90,9 @@ export default {
       //监听路由名称
       SkipSwitchName: "",
     };
+  },
+  created(){
+    this.getRouterList()
   },
   mounted(){
 
@@ -104,6 +107,12 @@ export default {
     LoginOut() {
       removeToken()
       this.$router.push({ path: "/login" })
+    },
+    //获取权限信息
+    getRouterList(){
+      reqGetRouterList().then(result=>{
+        this.permissionsInfo=result.data
+      })
     },
     //改变面包屑
     getBreadcrumb() {
