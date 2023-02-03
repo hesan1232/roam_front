@@ -11,28 +11,45 @@
       <div class="head_user">
         <el-avatar :src="userInfo.userAvater" class="user_avater">
         </el-avatar>
-        <div class="user_name">
-          <span v-if="userInfo.nickName">{{ userInfo.nickName }}</span>
-          <span v-else>登录 | 注册</span>
-        </div>
+        <el-dropdown trigger="click" click="user-dropdown">
+        <span  class="el-dropdown-link" style="color:white">
+          {{ userInfo.nickName }}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+         
+        <el-dropdown-menu slot="dropdown" class="user_dropdown">
+          <el-dropdown-item>
+            <p @click="goBackend">工作台</p>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <p @click="LoginOut">退出登录</p>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+       
       </div>
     </div>
     <div class="main_body main_center">
-      <el-card class="body_left"></el-card>
+      <el-card class="body_left" shadow="hover"></el-card>
       <div class="body_right">
-        <el-card class="body_item">
+        <el-card class="body_item" shadow="hover">
           <div ref="category" style="width:100%;height:300px"></div>
         </el-card>
-        <el-card class="body_item">
-          <el-row :gutter="20" class="section">
-            <el-col :xs="24" :sm="12" :lg="6" >
-             <div>热搜榜</div>
-             <div>
-              <span>a</span>
-             </div>
-            </el-col>
-          </el-row>
+        <el-card class="body_item" shadow="hover">
 
+          <div slot="header" class="clearfix">
+            <span>热门搜索</span>
+            <el-button style="float: right; font-size: 20px; padding: 3px 0;border: none;"
+              icon="el-icon-refresh-right"></el-button>
+          </div>
+          <div v-for="item, index in hotSearch" :key="item.id" class="list"
+            :class="{ last: index + 1 == hotSearch.length }" @click="goMap(item)">
+            <span class="index" :class="'index' + (index + 1)">{{ index+ 1}}</span>
+            <div class="label">{{ item.placeName }}</div>
+            <div class="value">{{ item.number || 0 }}人</div>
+
+          </div>
+          <el-empty v-if="!hotSearch.length" description="描述文字"></el-empty>
         </el-card>
       </div>
     </div>
@@ -69,7 +86,7 @@
 </template>
 <script>
 import * as echarts from 'echarts';
-import { getToken } from '@/api/token'
+import { getToken, removeToken } from '@/api/token'
 
 export default {
   data() {
@@ -77,12 +94,38 @@ export default {
       userInfo: {},
       activeIndex: '1',
       isLogin: getToken(),
-      newUserList:[
-        {id:1,
-          HeadImgURL:'',
-          CustName:'民资',
-          Mobile:'as'
-        }
+      hotSearch: [
+        {
+          id: 1,
+          placeName: '十号楼',
+          number: 23
+        },
+        {
+          id: 2,
+          placeName: '八号楼',
+          number: 19
+        },
+        {
+          id: 3,
+          placeName: '图书馆',
+          number: 12
+        },
+        {
+          id: 4,
+          placeName: '五环运动场',
+          number: 8
+        },
+        {
+          id: 5,
+          placeName: '体育馆',
+          number: 5
+        },
+        {
+          id: 6,
+          placeName: '北门',
+          number: 2
+        },
+
       ]
     };
   },
@@ -105,7 +148,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: ['01-29', '01-30', '01-31', '02-01', '02-02', '02-03', '02-04']
         },
         yAxis: {
           type: 'value'
@@ -120,10 +163,26 @@ export default {
       };
       myChart.setOption(option)
     },
+    goMap(data) {
+      this.$router.push({
+        path: '/map', query: {
+          placeName: data.placeName
+
+        }
+      })
+    },
+    //退出登录
+    LoginOut() {
+      removeToken()
+      this.$router.push({ path: "/login" })
+    },
+    goBackend() {
+      this.$router.push('/backend')
+    }
   },
 };
 </script>
-<style scoped > 
+<style scoped >
 .main {
   width: 100vw;
   height: 100vh;
@@ -160,30 +219,25 @@ export default {
 }
 
 .head_user {
-  width: 250px;
   height: 100%;
   float: right;
-  vertical-align: top;
+  vertical-align: middle;
+  margin-top:10px ;
+  margin-right: 160px;
 }
 
-.user_avater {
-  display: inline-block;
-  margin: 10px 10px;
+
+.head_user span {
+  vertical-align: middle;
+  margin-left: 10px;
 }
 
-.user_name {
-  height: 100%;
-  width: 100px;
-  line-height: 60px;
-  display: inline-block;
-  vertical-align: top;
-  color: white;
-}
+
+
 
 .main_body {
   width: 1000px;
   height: 580px;
-  background-color: blanchedalmond;
 }
 
 .body_left {
@@ -262,8 +316,53 @@ export default {
   height: 300px;
 } */
 /* 热门搜索 */
-.section{
+.section {
   width: 100%;
   height: 100%;
+}
+
+.list {
+  padding: 5px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.last {
+  border-bottom: none;
+}
+
+.index {
+  color: #fff;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  background: #9195A3;
+  border-radius: 4px;
+}
+
+.index1 {
+  background: #FE2D46;
+}
+
+.index2 {
+  background: #F60;
+}
+
+.index3 {
+  background: #FAA90E;
+}
+
+.label {
+  flex: 2;
+  margin-left: 5px;
+}
+
+.value {
+  flex: 1;
+  text-align: right;
 }
 </style>

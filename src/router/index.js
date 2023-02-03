@@ -6,7 +6,7 @@ import store from '@/store'
 //引入组件
 import Login from '@/components/Login'
 import Home from '@/components/Home'
-  import HomePage from '@/pages/home/homePage'
+
 
 import Map from "@/components/Map"
 import Backend from "@/components/Backend"
@@ -29,17 +29,7 @@ const router=  new VueRouter({
         {
             path: '/home',
             component: Home,
-            children:[
-                {
-                    path: '/home',
-                    redirect: 'homepage' 
-                },
-                {
-                    path: 'homepage',
-                    component: HomePage,  
-                }
-               
-            ]
+            
         },
         {
             path: '/map',

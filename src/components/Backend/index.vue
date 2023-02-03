@@ -4,7 +4,7 @@
       <div class="main">
         <el-aside width="auto">
           <div style="margin: auto" class="aside_img">
-            <div @click="jumpHome" class="aside_icon">后台管理</div>
+            <div @click="jumpHome" class="aside_icon">工作台</div>
           </div>
           <el-menu
             text-color="#fff"

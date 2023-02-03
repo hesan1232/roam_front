@@ -3,7 +3,7 @@
     <mapHead/>
     <div class="map">
       <el-card class="search">
-        <el-autocomplete class="inline-input" v-model="search_text" 
+        <el-autocomplete class="inline-input" v-model="searchText" 
           placeholder="请输入地点名称" clearable style="width: 280px"></el-autocomplete>
         <el-button type="primary" @click="searchPlaceInfo">搜索</el-button>
         <el-card style="margin-top: 20px">
@@ -63,7 +63,7 @@ export default {
       //tab栏
       activeName: "searchHost",
       //收集表单数据
-      search_text: "",
+      searchText: "",
       
       //地点数组
       placeList: [],
@@ -95,6 +95,11 @@ export default {
     //初始化分类列表
     this.getPlaceTypeList()
     // this.notice()
+    //判断路由是否携带参数
+    if(this.$route.query.placeName){
+      this.searchText=this.$route.query.placeName
+      this.searchPlaceInfo()
+    }
   },
   methods: {
    
@@ -180,7 +185,7 @@ export default {
     
     //向后端请求具体地点信息
     searchPlaceInfo() {
-      this.getPlaceByPlaceName(this.search_text);
+      this.getPlaceByPlaceName(this.searchText);
     },
     //tab栏切回调
     handleClick(tab, event) {

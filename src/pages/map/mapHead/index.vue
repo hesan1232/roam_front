@@ -1,41 +1,64 @@
 <template>
   <div class="map_head">
+    <router-link to="/home">
       <div class="head_logo">
         <img src="@/assets/logo.png" alt="logo" />
       </div>
-      <div class="head_user">
-        <el-popover
-    placement="top-start"
-    trigger="hover">
-    <img class="code_out" src="@/assets/out.jpg" alt="">
-    <img slot="reference" class="codeImage" src="@/assets/code.png" alt="二维码"/>
-  </el-popover>
-        <span><a style="color:white" href="https://www.720yun.com/t/d3vkb917r1m?scene_id=89903467" target="_blank">全景漫游</a></span>
-        
-        <el-avatar :src="userInfo.userAvater"></el-avatar>
-        <span >{{ userInfo.nickName }}</span>
-      </div>
+    </router-link>
+
+    <div class="head_user">
+      <el-popover placement="top-start" trigger="hover">
+        <img class="code_out" src="@/assets/out.jpg" alt="">
+        <img slot="reference" class="codeImage" src="@/assets/code.png" alt="二维码" />
+      </el-popover>
+      <span><a style="color:white" href="https://www.720yun.com/t/d3vkb917r1m?scene_id=89903467"
+          target="_blank">全景漫游</a></span>
+      <el-avatar class="user_img" :src="userInfo.userAvater">
+      </el-avatar>
+
+      <el-dropdown trigger="click" click="user-dropdown">
+        <span class="el-dropdown-link" style="color:white">
+          {{ userInfo.nickName || "未登录" }}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown" class="user_dropdown">
+          <el-dropdown-item>
+            <p @click="goBackend">工作台</p>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <p @click="LoginOut">退出登录</p>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
     </div>
+  </div>
 </template>
 
 <script>
-
+import { removeToken } from "@/api/token"
 export default {
-  data(){
+  data() {
     return {
-        //用户信息
+      //用户信息
       userInfo: this.$store.state.userInfo,
+      visible: false,
     }
   },
-  methods:{
-    
-   
+  methods: {
+    //退出登录
+    LoginOut() {
+      removeToken()
+      this.$router.push({ path: "/login" })
+    },
+    goBackend() {
+      this.$router.push('/backend')
+    }
   }
 }
 </script>
 
 <style scoped>
-
 .map_head {
   height: 72px;
   display: flex;
@@ -57,10 +80,12 @@ export default {
   vertical-align: middle;
   margin-left: 10px;
 }
-.codeImage{
+
+.codeImage {
   width: 38px;
 }
-.code_out{
+
+.code_out {
   width: 200px;
 }
 </style>
