@@ -2,41 +2,8 @@
   <div class="main">
     <mapHead/>
     <div class="map">
-      <el-card class="search">
-        <el-autocomplete class="inline-input" v-model="searchText" 
-          placeholder="请输入地点名称" clearable style="width: 280px"></el-autocomplete>
-        <el-button type="primary" @click="searchPlaceInfo">搜索</el-button>
-        <el-card style="margin-top: 20px">
-          <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-            <el-tab-pane label="详细信息" name="searchData" class="tab_pane">
-              <mapSearch v-if="show" :data="dataInfo"></mapSearch>
-            </el-tab-pane>
-            <el-tab-pane label="搜索结果" name="searchResult" class="tab_pane">
-              <template>
-                <ul>
-                  <li v-for="item in searchPlaceList" :key="item.id" @click="clickPlaceResult(item)">
-                    <i class="el-icon-location-information" id="fire"></i>
-                    {{ item.placeName }}
-                    <i class="el-icon-position iRight"></i>
-                  </li>
-                </ul>
-              </template></el-tab-pane>
-            <el-tab-pane label="热门搜索" name="searchHost" class="tab_pane">
-              <ul v-for="item in placeTypeList" :key="item.id">
-                <li class="grid-content bg-purple" @click="clickPlaceType(item)">
-                  <svg class="icon" id="fire" aria-hidden="true">
-                    <use xlink:href="#icon-remen"></use>
-                  </svg>
-                  {{ item.placeType }}
-                  <svg class="icon" id="qizi" aria-hidden="true">
-                    <use xlink:href="#icon-qizi"></use>
-                  </svg>
-                </li>
-              </ul>
-            </el-tab-pane>
-          </el-tabs>
-        </el-card>
-      </el-card>
+     
+     <mapSearch @updateMapPlaceInfo="updateMapPlaceInfo"/>
       <MapMain :placeList="placeList" :mapPlaceInfo="mapPlaceInfo" @updateMapPlaceInfo="updateMapPlaceInfo" />
     </div>
   </div>
@@ -47,9 +14,7 @@ import '@/api/iconfont'
 //引入请求
 
 import {
-  reqGetAllPlace, reqGetPlaceByPlaceName,
-  reqGetPlaceTypeList, reqGetPlaceListByPlaceType
-} from "@/api/place";
+  reqGetAllPlace,} from "@/api/place";
 import { reqGetInteractList,reqAddInteract } from '@/api/interact'
 import mapHead from "@/pages/map/mapHead"
 import MapMain from "@/components/Map/MapMain";
@@ -60,22 +25,13 @@ export default {
   components: { mapHead,MapMain,mapSearch },
   data() {
     return {
-      //tab栏
-      activeName: "searchHost",
-      //收集表单数据
-      searchText: "",
-      
-      //地点数组
+     
+      //全部地点列表
       placeList: [],
       //评论数组
       interactList:[],
-      //检索地点列表
-      searchPlaceList: [],
-      //地点类型数组
-      placeTypeList: [],
 
-      //后端返回地点列表
-      restaurants: [],
+  
       //点击的对象信息
       dataInfo: {},
       //全景内嵌网站的出现控制
@@ -93,7 +49,7 @@ export default {
     this.getPlaceList();
     // this.getInteractList()
     //初始化分类列表
-    this.getPlaceTypeList()
+    
     // this.notice()
     //判断路由是否携带参数
     if(this.$route.query.placeName){
@@ -143,54 +99,7 @@ export default {
 
       })
     },
-    //根据名字模糊搜索
-    getPlaceByPlaceName(searchText) {
-      reqGetPlaceByPlaceName(searchText).then(
-        (res) => {
-          this.searchPlaceList = res.data
-          this.activeName = "searchResult"
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    },
-    //获取分类列表
-    getPlaceTypeList() {
-      reqGetPlaceTypeList().then(res => {
-        this.placeTypeList = res.data
 
-      })
-    },
-    //根据分类查找地点列表
-    getPlaceListByPlaceType(placeType) {
-      reqGetPlaceListByPlaceType({ placeType }).then(res => {
-        this.searchPlaceList = res.data
-      })
-    },
-    //搜索结果点击
-    clickPlaceResult(data) {
-      this.mapPlaceInfo = { ...this.mapPlaceInfo, ...data }
-      this.mapPlaceInfo.mapCenter = [data.placeX, data.placeY]
-      this.mapPlaceInfo.iframeInfoWindow = true
-      this.mapPlaceInfo.mapZoom = 20
-      this.activeName = "searchData"
-      this.dataInfo = data
-    },
-    //地点结果点击
-    clickPlaceType(data) {
-      this.getPlaceListByPlaceType(data.placeType)
-      this.activeName = "searchResult"
-    },
-    
-    //向后端请求具体地点信息
-    searchPlaceInfo() {
-      this.getPlaceByPlaceName(this.searchText);
-    },
-    //tab栏切回调
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
     //评论滚动播放
     notice(){
       let i=0
@@ -207,19 +116,10 @@ export default {
     },
   },
   beforeDestroy(){
-    clearInterval(notifyTimer)
+    // clearInterval(notifyTimer)
   },
 
-  computed: {
-    //判断dataInfo是否为空，控制详情显示
-    show() {
-      console.log(
-        Object.keys(this.dataInfo).length == 1,
-        Object.keys(this.dataInfo)
-      );
-      return Object.keys(this.dataInfo).length != 0;
-    },
-  },
+  
 };
 </script>
 
@@ -248,43 +148,72 @@ export default {
   overflow: hidden;
 }
 
-.el-card__body {
-  padding: 0 !important;
-}
-
-.search {
+ 
+.search_top{
   position: absolute;
-  width: 400px;
-  padding: 0;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
-  background-color: rgba(255, 255, 255, 0)!important;
-  box-shadow: none !important;
-  border: none;
+  width: 390px;
+  top: 18px;
+  left: 16px;
+  z-index: 10;
+  box-sizing: border-box;
+}
+.tab {
+  position: absolute;
+  width: 390px ;
+  top: 75px;
+  left: 16px;
+  z-index: 10;
+  background-color: white;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.el-tabs__nav {
-  width: 500px !important;
+::v-deep .el-tabs__nav {
+  width:100%;
+  overflow: hidden;
 }
 
-.el-tabs__item {   
-  width: 40% !important;
+::v-deep .el-tabs__item {   
+  width: 34%;
   text-align: center;
 }
 
 .tab_pane {
   height: 400px;
-  
+  overflow: auto;
 }
-
-ul {
-  padding-left: 20px;
+.type{
+  width: 100%;
+  border-bottom:1px solid #dcdfe6 ;
 }
-
-li {
-  background-color: rgb(240, 244, 247);
+.type_item{
+  width: 25%;
+  padding: 5px 0px;
+  height: 60px;
+  text-align: center;
+  display: inline-block;
   cursor: pointer;
+}
+.type_item img{
+  height: 26px;
+  line-height: 30px;
+}
+.type_item p{
+  font-size: 14px;
+}
+.type_title{
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+}
+.searchResult ul {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.searchResult li {
+  background-color: rgb(240, 244, 247);
+ 
   height: 40px;
   line-height: 40px;
   margin-top: 10px;
@@ -295,7 +224,7 @@ li {
   border-bottom: 1px solid rgb(207, 203, 203);
 }
 
-li:hover {
+.searchResult li:hover {
   background-color: rgb(221, 224, 226);
 }
 
@@ -303,7 +232,7 @@ li:hover {
   line-height: 40px;
 }
 
-li #qizi,
+.searchResult li #qizi,
 .iRight {
   float: right;
   height: 40px;
@@ -312,7 +241,7 @@ li #qizi,
 
 }
 
-#fire {
+.searchResult #fire {
   padding-left: 5px;
   width: 20px;
 }

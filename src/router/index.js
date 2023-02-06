@@ -3,18 +3,6 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import store from '@/store'
-//引入组件
-import Login from '@/components/Login'
-import Home from '@/components/Home'
-
-
-import Map from "@/components/Map"
-import Backend from "@/components/Backend"
-  import IndividualManage from "@/pages/backend/IndividualManage"
-  import PersonnelManage from "@/pages/backend/PersonnelManage"
-  import PlaceManage from "@/pages/backend/PlaceManage"
-  import CommentsManage from "@/pages/backend/CommentsManage"
-  
 
 const router=  new VueRouter({
     routes: [
@@ -24,22 +12,25 @@ const router=  new VueRouter({
         },
         {
             path: '/login',
-            component: Login,
+            component: ()=>import('@/components/Login'),
         },
         {
             path: '/home',
-            component: Home,
+            component: ()=>import('@/components/Home'),
             
         },
         {
             path: '/map',
-            component: Map,
+            component: ()=>import('@/components/Map'),
+            meta:{
+                title:'全景服务平台'
+            }
             
         },
         {
             name:'backend',
             path: '/backend',
-            component: Backend,
+            component: ()=>import('@/components/Backend'),
             children:[
                 {
                     path: '/backend',
@@ -48,28 +39,28 @@ const router=  new VueRouter({
                
                {
                 path:'individualManage',
-                component:IndividualManage,
+                component:()=>import('@/pages/backend/IndividualManage'),
                 meta:{
                     title:'个人信息'
                 }
                },
                {
                 path:'personnelManage',
-                component:PersonnelManage,
+                component:()=>import('@/pages/backend/PersonnelManage'),
                 meta:{
                     title:'人员信息'
                 }
                },
                {
                 path:'placeManage',
-                component:PlaceManage,
+                component:()=>import('@/pages/backend/PlaceManage'),
                 meta:{
                     title:'地点管理'
                 }
                },
                {
                 path:'commentsManage',
-                component:CommentsManage,
+                component:()=>import('@/pages/backend/CommentsManage'),
                 meta:{
                     title:'评论管理'
                 }
@@ -88,16 +79,16 @@ router.beforeEach(async (to,from,next)=>{
     if(isToken&& localStorage.getItem('isLogin')){
         store.dispatch('getPermissionsInfo').then(()=>{
             const dynamicRouteses =store.state.permissionsInfo
-            dynamicRouteses.forEach(item=>{
-                router.addRoute('backend',{  
-                    path:item.routingPath,
-                    component: (resolve) => require([`${item.componentPath}/index.vue`], resolve),
-                    meta:{
-                        title:item.menuName,
+            // dynamicRouteses.forEach(item=>{
+            //     router.addRoute('backend',{  
+            //         path:item.routingPath,
+            //         component: (resolve) => require([`${item.componentPath}/index.vue`], resolve),
+            //         meta:{
+            //             title:item.menuName,
                      
-                    },
-                })
-            })       
+            //         },
+            //     })
+            // })       
         })
     isToken=false
     }

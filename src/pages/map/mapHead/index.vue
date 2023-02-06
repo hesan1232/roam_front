@@ -8,11 +8,11 @@
 
     <div class="head_user">
       <el-popover placement="top-start" trigger="hover">
-        <img class="code_out" src="@/assets/out.jpg" alt="">
-        <img slot="reference" class="codeImage" src="@/assets/code.png" alt="二维码" />
+        <img   class="code_out" src="@/assets/out.jpg" alt="">
+        <img style="width: 42px; vertical-align: middle;" slot="reference" class="codeImage" src="@/assets/code.png" alt="二维码" />
+        <span slot="reference" style="color:white;font-size: 14px;">移动端</span>
       </el-popover>
-      <span><a style="color:white" href="https://www.720yun.com/t/d3vkb917r1m?scene_id=89903467"
-          target="_blank">全景漫游</a></span>
+    
       <el-avatar class="user_img" :src="userInfo.userAvater">
       </el-avatar>
 
@@ -63,7 +63,7 @@ export default {
   height: 72px;
   display: flex;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 5px 30px;
   background-color: #005bac;
   align-items: center;
   font-size: 12px;

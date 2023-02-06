@@ -3,7 +3,7 @@
     <div class="main_head main_center">
       <div class="head_logo"></div>
       <div class="head_menu">
-        <el-menu :default-active="activeIndex" background-color="#04305c" mode="horizontal" router>
+        <el-menu :default-active="activeIndex" background-color="#005bac" mode="horizontal" router text-color="#fff">
           <el-menu-item index="/backend">我的工作台</el-menu-item>
           <el-menu-item index="/map">新生指引</el-menu-item>
         </el-menu>
@@ -87,7 +87,7 @@
 <script>
 import * as echarts from 'echarts';
 import { getToken, removeToken } from '@/api/token'
-
+import { reqGetUserInfo } from "@/api/user";
 export default {
   data() {
     return {
@@ -130,14 +130,21 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch('getUserInfo').then((result) => {
-      this.userInfo = this.$store.state.userInfo
-    })
+    // this.$store.dispatch('getUserInfo').then((result) => {
+    //   this.userInfo = this.$store.state.userInfo
+    // })
   },
   mounted() {
     this.initCategory()
+    this.getUserInfo()
   },
   methods: {
+    //获取信息
+   getUserInfo(){
+      reqGetUserInfo().then((result)=>{
+        this.userInfo=result.data
+      })
+    },
     initCategory() {
       const chartDom = this.$refs.category
       const myChart = echarts.init(chartDom)
@@ -249,7 +256,6 @@ export default {
 .body_right {
   width: 390px;
   height: 100%;
-  background-color: pink;
   float: right;
 }
 
@@ -328,6 +334,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #ddd;
+  cursor: pointer;
 }
 
 .last {
