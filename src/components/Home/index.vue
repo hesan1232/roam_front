@@ -197,21 +197,17 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
-
 .main_center {
   margin: 0 auto;
 }
-
 /* 头部 */
 .main_head {
   width: 100%;
   height: 60px;
-
   color: white;
   background-color: #005bac;
   z-index: 10;
 }
-
 .head_logo {
   width: 150px;
   height: 100%;
@@ -219,12 +215,10 @@ export default {
   display: inline-block;
   background: url(@/assets/hncjLogo.png) no-repeat;
 }
-
 .head_menu {
   height: 100%;
   display: inline-block;
 }
-
 .head_user {
   height: 100%;
   float: right;
@@ -232,27 +226,19 @@ export default {
   margin-top:10px ;
   margin-right: 160px;
 }
-
-
 .head_user span {
   vertical-align: middle;
   margin-left: 10px;
 }
-
-
-
-
 .main_body {
   width: 1000px;
   height: 580px;
 }
-
 .body_left {
   width: 600px;
   height: 100%;
   float: left;
 }
-
 .body_right {
   width: 390px;
   height: 100%;
@@ -262,7 +248,6 @@ export default {
 .body_item {
   height: 50%;
 }
-
 /* 底部区域 */
 .main_footer {
   clear: both;

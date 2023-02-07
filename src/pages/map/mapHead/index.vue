@@ -65,6 +65,8 @@ export default {
   justify-content: space-between;
   padding: 5px 30px;
   background-color: #005bac;
+  /* background: rgb(0,91,172);
+background: linear-gradient(90deg, rgba(0,91,172,1) 42%, rgba(0,172,197,1) 83%); */
   align-items: center;
   font-size: 12px;
   overflow: hidden;

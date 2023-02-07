@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import store from '@/store'
-
+ import logon from '@/pages/login/logon'
+ import register from '@/pages/login/register'
 const router=  new VueRouter({
     routes: [
         {
@@ -13,8 +14,32 @@ const router=  new VueRouter({
         {
             path: '/login',
             component: ()=>import('@/components/Login'),
+            children:[
+                {
+                    path: '/login',
+                    redirect: 'logon' ,
+                },
+               
+               {
+                name:'logon',
+                path:'logon',
+                component:logon,
+                meta:{
+                    title:'登录页'
+                }
+               },
+               {
+                name:'register',
+                path:'register',
+                component:register,
+                meta:{
+                    title:'注册页'
+                }
+               },
+            ]
         },
         {
+            name:'home',
             path: '/home',
             component: ()=>import('@/components/Home'),
             
@@ -79,16 +104,7 @@ router.beforeEach(async (to,from,next)=>{
     if(isToken&& localStorage.getItem('isLogin')){
         store.dispatch('getPermissionsInfo').then(()=>{
             const dynamicRouteses =store.state.permissionsInfo
-            // dynamicRouteses.forEach(item=>{
-            //     router.addRoute('backend',{  
-            //         path:item.routingPath,
-            //         component: (resolve) => require([`${item.componentPath}/index.vue`], resolve),
-            //         meta:{
-            //             title:item.menuName,
-                     
-            //         },
-            //     })
-            // })       
+           
         })
     isToken=false
     }
