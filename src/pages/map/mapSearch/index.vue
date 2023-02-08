@@ -97,11 +97,11 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-    <el-dialog title="全景漫游" :visible.sync="imgDlg" width="60%"  >
+    <el-dialog title="全景漫游" :visible.sync="imgDlg" width="60%">
       <div style="text-align: center;">
         <p>手机微信扫一扫</p>
-      <img src="@/assets/out.jpg" alt="">
-      <p>沉浸式全景体验</p>
+        <img src="@/assets/out.jpg" alt="">
+        <p>沉浸式全景体验</p>
       </div>
     </el-dialog>
   </div>
@@ -142,8 +142,15 @@ export default {
   },
   created() {
     this.getPlaceTypeList()
-  },
 
+  },
+  mounted() {
+    //判断路由是否携带参数
+    if (this.$route.params.placeName) {
+      this.searchText = this.$route.params.placeName
+      this.searchPlaceInfo()
+    }
+  },
   methods: {
     //根据名字模糊搜索
     getPlaceByPlaceName(searchText) {

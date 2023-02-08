@@ -48,14 +48,8 @@ export default {
   mounted() {
     this.getPlaceList();
     // this.getInteractList()
-    //初始化分类列表
-    
     // this.notice()
-    //判断路由是否携带参数
-    if(this.$route.query.placeName){
-      this.searchText=this.$route.query.placeName
-      this.searchPlaceInfo()
-    }
+   
   },
   methods: {
    

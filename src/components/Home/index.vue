@@ -12,31 +12,70 @@
         <el-avatar :src="userInfo.userAvater" class="user_avater">
         </el-avatar>
         <el-dropdown trigger="click" click="user-dropdown">
-        <span  class="el-dropdown-link" style="color:white">
-          {{ userInfo.nickName }}
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-         
-        <el-dropdown-menu slot="dropdown" class="user_dropdown">
-          <el-dropdown-item>
-            <p @click="goBackend">工作台</p>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <p @click="LoginOut">退出登录</p>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-       
+          <span class="el-dropdown-link" style="color:white">
+            {{ userInfo.nickName }}
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+
+          <el-dropdown-menu slot="dropdown" class="user_dropdown">
+            <el-dropdown-item>
+              <p @click="goBackend">工作台</p>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <p @click="LoginOut">退出登录</p>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
       </div>
     </div>
     <div class="main_body main_center">
-      <el-card class="body_left" shadow="hover"></el-card>
-      <div class="body_right">
-        <el-card class="body_item" shadow="hover">
-          <div ref="category" style="width:100%;height:300px"></div>
-        </el-card>
-        <el-card class="body_item" shadow="hover">
 
+      <div class="body_left">
+        <el-card class="body_lt" shadow="hover">
+          <h1>地点分类</h1>
+          <ul class="bd_list">
+            <li class="bd_item" v-for="item in placeTypeList" :key="item.id">
+              <img :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
+              <p>{{ item.placeType }}</p>
+            </li>
+
+          </ul>
+        </el-card>
+        <el-card class="body_lb" shadow="hover">
+          <h1>工作台</h1>
+          <ul class="bd_list">
+            <li class="bd_item" v-for="item in permissionsInfo" :key="item.id" @click="goBackend">
+              <img :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
+              <p>{{ item.title }}</p>
+            </li>
+
+          </ul>
+        </el-card>
+        <el-card class="body_lb" shadow="hover">
+          <h1>系统管理</h1>
+          <ul class="bd_list">
+            <li class="bd_item" @click="goMap()">
+              <img src="@/assets/icon/map-road.png" alt="">
+              <p>新生指引</p>
+            </li>
+            <li class="bd_item" @click="goBackend">
+              <img src="@/assets/icon/system.png" alt="">
+              <p>工作台</p>
+            </li>
+            <li class="bd_item" @click="LoginOut">
+              <img src="@/assets/icon/power.png" alt="">
+              <p>退出登录</p>
+            </li>
+          </ul>
+
+        </el-card>
+      </div>
+      <div class="body_right">
+        <el-card class="body_rt" shadow="hover">
+
+        </el-card>
+        <el-card class="body_rb" shadow="hover">
           <div slot="header" class="clearfix">
             <span>热门搜索</span>
             <el-button style="float: right; font-size: 20px; padding: 3px 0;border: none;"
@@ -85,15 +124,21 @@
   </div>
 </template>
 <script>
-import * as echarts from 'echarts';
 import { getToken, removeToken } from '@/api/token'
-import { reqGetUserInfo } from "@/api/user";
+import { reqGetUserInfo } from "@/api/user"
+import { reqGetPlaceTypeList } from "@/api/place"
+import { reqGetRouterList } from "@/api/router"
 export default {
   data() {
     return {
       userInfo: {},
       activeIndex: '1',
       isLogin: getToken(),
+      //分类
+      placeTypeList: {},
+      //工作台
+      permissionsInfo: [],
+      //热门搜索
       hotSearch: [
         {
           id: 1,
@@ -130,53 +175,48 @@ export default {
     };
   },
   created() {
+    this.getPlaceTypeList()
+    this.getRouterList()
     // this.$store.dispatch('getUserInfo').then((result) => {
     //   this.userInfo = this.$store.state.userInfo
     // })
   },
   mounted() {
-    this.initCategory()
     this.getUserInfo()
   },
   methods: {
     //获取信息
-   getUserInfo(){
-      reqGetUserInfo().then((result)=>{
-        this.userInfo=result.data
+    getUserInfo() {
+      reqGetUserInfo().then((result) => {
+        this.userInfo = result.data
       })
     },
-    initCategory() {
-      const chartDom = this.$refs.category
-      const myChart = echarts.init(chartDom)
-      let option = {
-        title: {
-          left: 'center',
-          text: '访客记录'
-        },
-        xAxis: {
-          type: 'category',
-          data: ['01-29', '01-30', '01-31', '02-01', '02-02', '02-03', '02-04']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            data: [0, 9, 42, 1, 12, 12, 50],
-            type: 'line',
-            smooth: true
-          }
-        ]
-      };
-      myChart.setOption(option)
+    //获取分类列表
+    getPlaceTypeList() {
+      reqGetPlaceTypeList().then(res => {
+        this.placeTypeList = res.data
+
+      })
+    },
+    //获取权限信息
+    getRouterList() {
+      reqGetRouterList().then(result => {
+        this.permissionsInfo = result.data
+      })
     },
     goMap(data) {
-      this.$router.push({
-        path: '/map', query: {
-          placeName: data.placeName
+      if (data) {
+        this.$router.push({
+          path: '/map', params: {
+            placeName: data.placeName
+          }
+        })
+      }else{
+        this.$router.push({
+          path: '/map', 
+        })
+      }
 
-        }
-      })
     },
     //退出登录
     LoginOut() {
@@ -197,9 +237,11 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .main_center {
   margin: 0 auto;
 }
+
 /* 头部 */
 .main_head {
   width: 100%;
@@ -208,46 +250,91 @@ export default {
   background-color: #005bac;
   z-index: 10;
 }
+
 .head_logo {
-  width: 150px;
+  width: 240px;
   height: 100%;
   margin-left: 300px;
   display: inline-block;
-  background: url(@/assets/hncjLogo.png) no-repeat;
+  background: url(@/assets/logo_1.png) no-repeat;
+  background-size: cover;
 }
+
 .head_menu {
   height: 100%;
   display: inline-block;
 }
+
 .head_user {
   height: 100%;
   float: right;
   vertical-align: middle;
-  margin-top:10px ;
+  margin-top: 10px;
   margin-right: 160px;
 }
+
 .head_user span {
   vertical-align: middle;
   margin-left: 10px;
 }
+
 .main_body {
   width: 1000px;
-  height: 580px;
+  height: 500px;
 }
+
 .body_left {
   width: 600px;
   height: 100%;
   float: left;
 }
+
 .body_right {
   width: 390px;
   height: 100%;
   float: right;
 }
 
-.body_item {
-  height: 50%;
+.body_lt {
+  height: 46%;
 }
+
+.body_lb {
+  height: 27%;
+}
+
+.body_rt {
+  height: 20%;
+}
+
+.body_rb {
+  height: 80%;
+}
+
+.bd_list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.bd_item {
+  width: 90px;
+  height: 90px;
+  margin: 0 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.bd_item img {
+  height: 45px;
+}
+
+.bd_item p {
+  font-size: 14px;
+}
+
 /* 底部区域 */
 .main_footer {
   clear: both;
