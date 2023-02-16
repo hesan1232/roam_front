@@ -7,7 +7,7 @@ import store from '@/store'
 
 //引入elm——ui
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import '@/assets/element-style/index.css';
 Vue.use(ElementUI);
 //引入高德地图api
 

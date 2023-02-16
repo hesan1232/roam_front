@@ -2,12 +2,6 @@
   <div class="main">
     <div class="main_head main_center">
       <div class="head_logo"></div>
-      <div class="head_menu">
-        <el-menu :default-active="activeIndex" background-color="#005bac" mode="horizontal" router text-color="#fff">
-          <el-menu-item index="/backend">我的工作台</el-menu-item>
-          <el-menu-item index="/map">新生指引</el-menu-item>
-        </el-menu>
-      </div>
       <div class="head_user">
         <el-avatar :src="userInfo.userAvater" class="user_avater">
         </el-avatar>
@@ -29,29 +23,21 @@
 
       </div>
     </div>
+    <div class="search"><el-input v-model="search" placeholder=""></el-input></div>
+    <div class="bddy_t">
+      <ul class="t_list">
+        <li class="t_item" v-for="item in placeTypeList" :key="item.id">
+          <div style="background-color: white;border-radius: 5px;"> <img :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
+          </div>
+
+          <p>{{ item.placeType }}</p>
+        </li>
+
+      </ul>
+    </div>
     <div class="main_body main_center">
 
       <div class="body_left">
-        <el-card class="body_lt" shadow="hover">
-          <h1>地点分类</h1>
-          <ul class="bd_list">
-            <li class="bd_item" v-for="item in placeTypeList" :key="item.id">
-              <img :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
-              <p>{{ item.placeType }}</p>
-            </li>
-
-          </ul>
-        </el-card>
-        <el-card class="body_lb" shadow="hover">
-          <h1>工作台</h1>
-          <ul class="bd_list">
-            <li class="bd_item" v-for="item in permissionsInfo" :key="item.id" @click="goBackend">
-              <img :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
-              <p>{{ item.title }}</p>
-            </li>
-
-          </ul>
-        </el-card>
         <el-card class="body_lb" shadow="hover">
           <h1>系统管理</h1>
           <ul class="bd_list">
@@ -72,9 +58,6 @@
         </el-card>
       </div>
       <div class="body_right">
-        <el-card class="body_rt" shadow="hover">
-
-        </el-card>
         <el-card class="body_rb" shadow="hover">
           <div slot="header" class="clearfix">
             <span>热门搜索</span>
@@ -83,7 +66,7 @@
           </div>
           <div v-for="item, index in hotSearch" :key="item.id" class="list"
             :class="{ last: index + 1 == hotSearch.length }" @click="goMap(item)">
-            <span class="index" :class="'index' + (index + 1)">{{ index+ 1}}</span>
+            <span class="index" :class="'index' + (index + 1)">{{ index + 1 }}</span>
             <div class="label">{{ item.placeName }}</div>
             <div class="value">{{ item.number || 0 }}人</div>
 
@@ -93,37 +76,10 @@
       </div>
     </div>
 
-    <div class="main_footer">
-      <div class="main_footer_content main_center">
-        <div class="footer_info">
-          <dl class="footer_info_intro footer_info_left">
-            <dt>河南城建学院漫游指南</dt>
-            <dd>城建学子用得更多的漫游网站</dd>
-          </dl>
-          <dl class="footer_info_about footer_info_left">
-            <dd>
-              <a href="#">关于城建</a>
-            </dd>
-            <dd>
-              <a href="#">联系我们</a>
-            </dd>
-
-          </dl>
-          <dl class="footer_info_about footer_info_left">
-
-            <dd>
-              <a href="#">隐私政策</a>
-            </dd>
-            <dd>
-              <a href="#">服务协议</a>
-            </dd>
-          </dl>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 </template>
 <script>
+
 import { getToken, removeToken } from '@/api/token'
 import { reqGetUserInfo } from "@/api/user"
 import { reqGetPlaceTypeList } from "@/api/place"
@@ -171,7 +127,8 @@ export default {
           number: 2
         },
 
-      ]
+      ],
+      search:[]
     };
   },
   created() {
@@ -211,9 +168,9 @@ export default {
             placeName: data.placeName
           }
         })
-      }else{
+      } else {
         this.$router.push({
-          path: '/map', 
+          path: '/map',
         })
       }
 
@@ -233,9 +190,9 @@ export default {
 .main {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background: url(@/assets/login/login_bg1.jpg);
+  background-size: cover;
+  overflow: hidden;
 }
 
 .main_center {
@@ -247,24 +204,18 @@ export default {
   width: 100%;
   height: 60px;
   color: white;
-  background-color: #005bac;
-  z-index: 10;
+  margin: 60px 0;
+
 }
 
 .head_logo {
   width: 240px;
   height: 100%;
-  margin-left: 300px;
+  margin-left: 100px;
   display: inline-block;
   background: url(@/assets/logo_1.png) no-repeat;
   background-size: cover;
 }
-
-.head_menu {
-  height: 100%;
-  display: inline-block;
-}
-
 .head_user {
   height: 100%;
   float: right;
@@ -280,9 +231,13 @@ export default {
 
 .main_body {
   width: 1000px;
-  height: 500px;
+  height: 400px;
+  margin-top:40px ;
 }
-
+.search{
+  width: 800px;
+  margin: 0 auto;
+}
 .body_left {
   width: 600px;
   height: 100%;
@@ -295,17 +250,44 @@ export default {
   float: right;
 }
 
-.body_lt {
-  height: 46%;
+.bddy_t {
+  width: 750px;
+  margin: 0 auto;
+  margin-top:20px ;
+  backdrop-filter: blur(10px) !important; 
+  -webkit-backdrop-filter: blur(8px);
+  border-radius:10px;
+  padding-top:10px ;
+}
+.t_list{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.t_item{
+  width: 50px;
+  height: 60px;
+  margin: 0 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.t_item img {
+  height: 30px;
+}
+.t_item  p {
+  font-size: 14px;
+    backdrop-filter: blur(10px);
+  color: #fff;
 }
 
 .body_lb {
-  height: 27%;
+  height: 160px;
 }
 
-.body_rt {
-  height: 20%;
-}
 
 .body_rb {
   height: 80%;
@@ -335,64 +317,6 @@ export default {
   font-size: 14px;
 }
 
-/* 底部区域 */
-.main_footer {
-  clear: both;
-  background-color: #005bac;
-  color: #c2c2c2;
-  line-height: 22px;
-  font-size: 12px;
-}
-
-.main_footer_content {
-  width: 1000px;
-  height: 100px;
-
-  display: block;
-  overflow: hidden;
-}
-
-.footer_info {
-  padding: 10px 8px;
-  overflow: hidden;
-}
-
-.footer_info dt {
-  height: 20px;
-  font-size: 14px;
-  overflow: hidden;
-}
-
-.footer_info_intro {
-  width: 200px;
-  margin-right: 200px;
-}
-
-.footer_info_about {
-  width: 128px;
-  margin-right: 150px;
-}
-
-.footer_info_about a {
-  color: #c2c2c2;
-  list-style: none;
-}
-
-.footer_info_code {
-  float: right;
-  padding-top: 22px;
-  line-height: 1.4em;
-}
-
-.footer_info_left {
-  float: left;
-}
-
-/* 折线图 */
-/* #category{
-  width: 100%;
-  height: 300px;
-} */
 /* 热门搜索 */
 .section {
   width: 100%;
