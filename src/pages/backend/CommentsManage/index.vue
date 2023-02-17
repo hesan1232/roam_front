@@ -7,7 +7,7 @@
       <el-table-column prop="nickName" label="用户名"  align="center">
       </el-table-column>
 
-      <el-table-column prop="comments" label="评论信息" align="center">
+      <el-table-column prop="comments" label="评论信息" align="center" show-overflow-tooltip>
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">

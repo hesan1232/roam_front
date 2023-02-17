@@ -36,8 +36,8 @@
       <!-- 地图内嵌全景网站 -->
       <el-amap-info-window :position="mapPlaceInfo.mapCenter" v-if="mapPlaceInfo.iframeInfoWindow"
         :visible.sync="mapPlaceInfo.iframeInfoWindow" @click="openNewLink" @close="closeIframeInfoWindow"
-        :offset="[-115, -180]">
-        <div style="width: 250px; height: 150px; z-index: 10">
+        :offset="[-190, -280]">
+        <div style="width: 400px; height: 250px; z-index: 10">
           <iframe id="iframe" ref="iframe" style="width: 100%; height: 100%" frameborder="0"
             :src="mapPlaceInfo.Link"></iframe>
         </div>

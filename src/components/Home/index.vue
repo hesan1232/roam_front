@@ -23,23 +23,47 @@
 
       </div>
     </div>
-    <div class="search"><el-input v-model="search" placeholder=""></el-input></div>
+    <div class="search"><el-input v-model="search" placeholder="输入您感兴趣的的地点信息回车查看"
+        @keyup.enter.native="goMap(search)"></el-input></div>
     <div class="bddy_t">
       <ul class="t_list">
-        <li class="t_item" v-for="item in placeTypeList" :key="item.id">
-          <div style="background-color: white;border-radius: 5px;"> <img :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
+        <li class="t_item" v-for="item in placeTypeList" :key="item.id" @click="goMap(item.placeType)">
+          <div style="background-color: white;border-radius: 5px;"> <img
+              :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
           </div>
-
           <p>{{ item.placeType }}</p>
         </li>
-
       </ul>
     </div>
     <div class="main_body main_center">
-
       <div class="body_left">
+        <el-card class="body_lt" shadow="hover">
+          <h5>友情链接
+          </h5>
+          <ul class="lt_list">
+            <li class="lt_item">
+              <a href="https://hncj.edu.cn/" target="_blank" rel="noopener noreferrer">
+                <img src="@/assets/hncjLogo.png" alt="">
+                河南城建学院
+              </a>
+            </li>
+            <li class="lt_item">
+              <a href="https://hesan1232.github.io/" target="_blank" rel="noopener noreferrer">
+                <img src="@/assets/hexo.png" alt="">
+                个人博客
+              </a>
+            </li>
+            <li class="lt_item">
+              <a href="https://github.com/hesan1232" target="_blank" rel="noopener noreferrer">
+                <img src="@/assets/github.png" alt="">
+                github
+              </a>
+            </li>
+            <li></li>
+          </ul>
+        </el-card>
         <el-card class="body_lb" shadow="hover">
-          <h1>系统管理</h1>
+          <h5>系统管理</h5>
           <ul class="bd_list">
             <li class="bd_item" @click="goMap()">
               <img src="@/assets/icon/map-road.png" alt="">
@@ -65,7 +89,7 @@
               icon="el-icon-refresh-right"></el-button>
           </div>
           <div v-for="item, index in hotSearch" :key="item.id" class="list"
-            :class="{ last: index + 1 == hotSearch.length }" @click="goMap(item)">
+            :class="{ last: index + 1 == hotSearch.length }" @click="goMap(item.placeName)">
             <span class="index" :class="'index' + (index + 1)">{{ index + 1 }}</span>
             <div class="label">{{ item.placeName }}</div>
             <div class="value">{{ item.number || 0 }}人</div>
@@ -83,7 +107,6 @@
 import { getToken, removeToken } from '@/api/token'
 import { reqGetUserInfo } from "@/api/user"
 import { reqGetPlaceTypeList } from "@/api/place"
-import { reqGetRouterList } from "@/api/router"
 export default {
   data() {
     return {
@@ -128,18 +151,16 @@ export default {
         },
 
       ],
-      search:[]
+      search: []
     };
   },
   created() {
     this.getPlaceTypeList()
-    this.getRouterList()
-    // this.$store.dispatch('getUserInfo').then((result) => {
-    //   this.userInfo = this.$store.state.userInfo
-    // })
+    this.getUserInfo()
+    this.$store.dispatch('getUserInfo')
   },
   mounted() {
-    this.getUserInfo()
+
   },
   methods: {
     //获取信息
@@ -155,17 +176,12 @@ export default {
 
       })
     },
-    //获取权限信息
-    getRouterList() {
-      reqGetRouterList().then(result => {
-        this.permissionsInfo = result.data
-      })
-    },
     goMap(data) {
+
       if (data) {
         this.$router.push({
-          path: '/map', params: {
-            placeName: data.placeName
+          path: '/map', query: {
+            placeName: data
           }
         })
       } else {
@@ -216,6 +232,7 @@ export default {
   background: url(@/assets/logo_1.png) no-repeat;
   background-size: cover;
 }
+
 .head_user {
   height: 100%;
   float: right;
@@ -231,13 +248,16 @@ export default {
 
 .main_body {
   width: 1000px;
-  height: 400px;
-  margin-top:40px ;
+  height: 240px;
+  margin-top: 30px;
 }
-.search{
+
+.search {
   width: 800px;
   margin: 0 auto;
+  margin-top: 200px;
 }
+
 .body_left {
   width: 600px;
   height: 100%;
@@ -251,15 +271,16 @@ export default {
 }
 
 .bddy_t {
-  width: 750px;
+  width: 700px;
   margin: 0 auto;
-  margin-top:20px ;
-  backdrop-filter: blur(10px) !important; 
+  margin-top: 10px;
+  backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(8px);
-  border-radius:10px;
-  padding-top:10px ;
+  border-radius: 10px;
+  padding-top: 5px;
 }
-.t_list{
+
+.t_list {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -267,7 +288,8 @@ export default {
   flex-wrap: wrap;
   margin-top: 10px;
 }
-.t_item{
+
+.t_item {
   width: 50px;
   height: 60px;
   margin: 0 10px;
@@ -278,19 +300,40 @@ export default {
 .t_item img {
   height: 30px;
 }
-.t_item  p {
+
+.t_item p {
   font-size: 14px;
-    backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: #fff;
 }
 
 .body_lb {
-  height: 160px;
+  height: 60%;
 }
 
+.body_lt {
+  height: 40%;
+}
+
+.lt_list {
+  margin: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lt_item {
+  width: 200px;
+  cursor: pointer;
+}
+
+.lt_item img {
+  width: 20px;
+  vertical-align: middle;
+
+}
 
 .body_rb {
-  height: 80%;
+  height: 100%;
 }
 
 .bd_list {
@@ -367,5 +410,4 @@ export default {
 .value {
   flex: 1;
   text-align: right;
-}
-</style>
+}</style>

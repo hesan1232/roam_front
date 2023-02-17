@@ -115,7 +115,6 @@ import {
 export default {
   data() {
     return {
-
       //tab栏
       activePane: "searchHost",
       //收集表单数据
@@ -129,7 +128,7 @@ export default {
 
       },
       //搜索结果数组
-      searchPlaceList: {},
+      searchPlaceList: [],
       placeTypeList: {
         id: 1,
         typeName: '教学楼',
@@ -146,8 +145,8 @@ export default {
   },
   mounted() {
     //判断路由是否携带参数
-    if (this.$route.params.placeName) {
-      this.searchText = this.$route.params.placeName
+    if (this.$route.query.placeName) {
+      this.searchText = this.$route.query.placeName
       this.searchPlaceInfo()
     }
   },
@@ -204,6 +203,7 @@ export default {
     },
     tabChange(name) {
       this.activePane = name
+      if(name=='searchHost') this.searchPlaceList=[]
     }
 
   },
