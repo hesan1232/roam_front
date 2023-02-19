@@ -83,8 +83,8 @@
                         v-model="loginFormInfo.userName">
                     </el-input></el-form-item>
                 <el-form-item prop="password">
-                    <el-input placeholder="密码" prefix-icon="el-icon-lock" v-model="loginFormInfo.password"
-                        class="logon_info" show-password>
+                    <el-input placeholder="密码" prefix-icon="el-icon-lock" v-model="loginFormInfo.password" @keyup.enter.native="submitForm('login')"
+                        class="logon_info" show-password >
                     </el-input>
                 </el-form-item>
                 <el-form-item>
@@ -98,7 +98,7 @@
                 </el-form-item>
                 <el-form-item >
                     <div class="btn">
-                        <button class="Login_Btn" @click.prevent="submitForm('login')">
+                        <button class="Login_Btn" @click="submitForm('login')">
                         登录</button>
                     <button class="Login_Btn" >
                         <router-link :to="{name:'register'}" style="color: #fff;">注册</router-link>

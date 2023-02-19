@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search_top">
-      <el-input class="inline-input" v-model="searchText" placeholder="请输入地点名称" clearable
+      <el-input class="inline-input" v-model="searchText" placeholder="请输入地点名称" clearable @keyup.enter.native="searchPlaceInfo"
         style="width: 320px;"></el-input>
       <el-button type="primary" @click="searchPlaceInfo">搜索</el-button>
     </div>

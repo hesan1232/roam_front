@@ -5,9 +5,9 @@
             <div class="Login_phone">
                 <h1>欢迎新用户</h1>
             </div>
-           
-            <svg class="Login_bottom" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="356.3573" height="578.27325"
-                viewBox="0 0 356.3573 578.27325" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <svg class="Login_bottom" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="356.3573"
+                height="578.27325" viewBox="0 0 356.3573 578.27325" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path
                     d="M529.96429,271.023c-1.85286,7.35735-7.89056,22.15132-7.94354,29.7812l.41737-.53928a34.09917,34.09917,0,0,0,3.72993,4.04055,21.90272,21.90272,0,0,1,6.68115-6.06947,26.21866,26.21866,0,0,0-1.23234,10.3204c4.25322,8.94314,17.47476,2.90571,25.41426.78675,9.3214,8.13092,20.3814,9.07981,33.7146,1.86418,3.98574-.12966,8.4193-.48221,10.858-3.17932s-10.246-16.48828-9.20629-19.943c7.40567-24.60821,6.987-21.93175-2.71826-31.31421-2.13576-2.06474-2.59724-5.51651-5.11347-7.42143-3.49088-2.64006-8.33262-2.93988-12.78106-3.10256a6.64655,6.64655,0,0,0,5.39622-3.64942,5.99594,5.99594,0,0,0-.92173-6.19056c-1.90461-2.36555-5.33818-3.42495-8.50507-3.37569a30.27478,30.27478,0,0,0-9.03606,2.02883,16.51031,16.51031,0,0,0-5.296,2.52231,4.57248,4.57248,0,0,0-1.73458,4.91284,5.92357,5.92357,0,0,0,3.97923,3.269,15.50488,15.50488,0,0,0,4.0698.54071,31.0643,31.0643,0,0,0-17.6254,5.61463C535.65086,256.58168,531.82724,263.66807,529.96429,271.023Z"
                     transform="translate(-421.82135 -160.86337)" fill="#2f2e41" />
@@ -24,8 +24,7 @@
                 <path
                     d="M582.34688,717.15172v-7.81624l-3.031.18517-12.33831.731-2.85555.17542-2.18307,26.17758L561.822,738.008h8.18654l.26316-1.39366,1.189-6.33485,3.07,6.33485.67247,1.39366h21.70418a4.90408,4.90408,0,0,0,4.873-4.88272C602.69637,728.84683,584.64691,719.598,582.34688,717.15172Z"
                     transform="translate(-421.82135 -160.86337)" fill="#2f2e41" />
-                <polygon points="16.8 541.356 26.293 547.899 56.048 514.396 42.037 504.74 16.8 541.356"
-                    fill="#ffb6b6" />
+                <polygon points="16.8 541.356 26.293 547.899 56.048 514.396 42.037 504.74 16.8 541.356" fill="#ffb6b6" />
                 <path
                     d="M450.68405,711.79473l4.43594-6.43554-2.6007-1.56773L441.94567,697.391l-2.45068-1.47618-16.654,20.31446-.89277,1.08913,6.74042,4.6461,1.00761-.99813,4.57415-4.541-1.06752,6.95813-.23726,1.52912,17.87022,12.31774a4.904,4.904,0,0,0,6.78325-1.25466C460.80157,732.97285,451.18947,715.11417,450.68405,711.79473Z"
                     transform="translate(-421.82135 -160.86337)" fill="#2f2e41" />
@@ -157,18 +156,22 @@
                         v-model="formInfo.userName">
                     </el-input></el-form-item>
                 <el-form-item prop="password">
-                    <el-input placeholder="登录密码" prefix-icon="el-icon-lock" v-model="formInfo.password"
-                        class="logon_info" show-password>
+                    <el-input placeholder="登录密码" prefix-icon="el-icon-lock" v-model="formInfo.password" class="logon_info"
+                        show-password>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="checkPass">
-                    <el-input placeholder="确认密码" prefix-icon="el-icon-lock" v-model="formInfo.checkPass"
-                        class="logon_info" show-password>
+                    <el-input placeholder="确认密码" prefix-icon="el-icon-lock" v-model="formInfo.checkPass" class="logon_info"
+                        show-password>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="" style="margin-left: -270px">
-                    <el-checkbox v-model="agree">记住密码</el-checkbox>
+                <el-form-item >
+                    <template>
+                        <el-radio v-model="formInfo.type" label="0">管理员</el-radio>
+                        <el-radio v-model="formInfo.type" label="1">普通用户</el-radio>
+                    </template>
                 </el-form-item>
+                
                 <el-form-item>
                     <div class="btn">
                         <button class="Login_Btn" @click.prevent="submitForm('login')">
@@ -180,7 +183,7 @@
                 </el-form-item>
             </el-form>
         </div>
-    </div>
+</div>
 </template>
 
 <script>
@@ -199,7 +202,9 @@ export default {
             }
         };
         return {
-            formInfo: {},
+            formInfo: {
+                type:'1',
+            },
             rules: {
                 userName: { required: true, message: " ", trigger: "change" },
                 password: { required: true, message: " ", trigger: "change" },

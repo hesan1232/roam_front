@@ -43,13 +43,13 @@ export default {
         mapZoom: 18,
         iframeInfoWindow: false,
       },
+      //评论定时器
+      notifyTimer:{},
     };
   },
   mounted() {
     this.getPlaceList();
-    // this.getInteractList()
-    // this.notice()
-   
+    this.getInteractList()
   },
   methods: {
    
@@ -68,23 +68,20 @@ export default {
         this.interactList = res.data.interactList
         let i=0
         let j=this.interactList.length
-        var notifyTimer=setInterval(()=>{
+        this.notifyTimer=setInterval(()=>{
           if(i==j) i=0
         this.$notify({
-          title: `${ this.interactList[i].userName}`,
+          title: `${ this.interactList[i].nickName}`,
           duration:1000,
           dangerouslyUseHTMLString: true,
           message: `${ this.interactList[i].comments}`,
           position:'bottom-right',
-          offset:100
+          offset:100,
+          customClass:' notification'
         });
         i++
       },
       800)
-        for (let index = 0; index < this.interactList.length; index++) {
-         console.log(index)
-       
-      }
       })
     },
     //增加评价信息
@@ -94,15 +91,7 @@ export default {
       })
     },
 
-    //评论滚动播放
-    notice(){
-      let i=0
-      let j=this.interactList.length
-      console.log(i,j,"----------------")
-     
-      
-      
-    },
+  
     //修改标记点和嵌入网页的数据
     updateMapPlaceInfo(data){
      console.log('修改了值',data)
@@ -110,7 +99,7 @@ export default {
     },
   },
   beforeDestroy(){
-    // clearInterval(notifyTimer)
+    clearInterval(this.notifyTimer)
   },
 
   
@@ -142,101 +131,7 @@ export default {
   overflow: hidden;
 }
 
- 
-.search_top{
-  position: absolute;
-  width: 390px;
-  top: 18px;
-  left: 16px;
-  z-index: 10;
-  box-sizing: border-box;
-}
-.tab {
-  position: absolute;
-  width: 390px ;
-  top: 75px;
-  left: 16px;
-  z-index: 10;
-  background-color: white;
-  overflow: hidden;
-  box-sizing: border-box;
-}
 
-::v-deep .el-tabs__nav {
-  width:100%;
-  overflow: hidden;
-}
 
-::v-deep .el-tabs__item {   
-  width: 34%;
-  text-align: center;
-}
 
-.tab_pane {
-  height: 400px;
-  overflow: auto;
-}
-.type{
-  width: 100%;
-  border-bottom:1px solid #dcdfe6 ;
-}
-.type_item{
-  width: 25%;
-  padding: 5px 0px;
-  height: 60px;
-  text-align: center;
-  display: inline-block;
-  cursor: pointer;
-}
-.type_item img{
-  height: 26px;
-  line-height: 30px;
-}
-.type_item p{
-  font-size: 14px;
-}
-.type_title{
-  font-size: 14px;
-  height: 50px;
-  line-height: 50px;
-}
-.searchResult ul {
-  padding: 5px;
-  cursor: pointer;
-}
-
-.searchResult li {
-  background-color: rgb(240, 244, 247);
- 
-  height: 40px;
-  line-height: 40px;
-  margin-top: 10px;
-  list-style: none;
-  border-radius: 10px;
-  box-shadow: 0 0 3px 0;
-  padding-bottom: 3px;
-  border-bottom: 1px solid rgb(207, 203, 203);
-}
-
-.searchResult li:hover {
-  background-color: rgb(221, 224, 226);
-}
-
-#qizi {
-  line-height: 40px;
-}
-
-.searchResult li #qizi,
-.iRight {
-  float: right;
-  height: 40px;
-  line-height: 40px;
-  margin-right: 20px;
-
-}
-
-.searchResult #fire {
-  padding-left: 5px;
-  width: 20px;
-}
 </style>

@@ -16,6 +16,9 @@
               <p @click="goBackend">工作台</p>
             </el-dropdown-item>
             <el-dropdown-item>
+              <p @click="goMap()">新生指引</p>
+            </el-dropdown-item>
+            <el-dropdown-item>
               <p @click="LoginOut">退出登录</p>
             </el-dropdown-item>
           </el-dropdown-menu>
