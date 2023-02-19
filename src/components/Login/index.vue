@@ -31,7 +31,7 @@ export default {
 .login_container {
   width: 100vw !important;
   height: 100vh !important;
-  background: url(@/assets/login/login_bg1.jpg);
+  background: url(@/assets/login/bg.jpg);
   background-size: cover;
   display: flex;
   justify-content: center;

@@ -17,7 +17,7 @@ export const reqAddInteract = (data) => {
         data
     })
 }
-//更新地点数据
+//更新评论数据
 export const reqUpdateInteractById = (data) => {
     return requests({
         url: '/interact/updateInteractById',
@@ -25,7 +25,7 @@ export const reqUpdateInteractById = (data) => {
         data
     })
 }
-//根据id删除地点信息
+//根据id删除评论信息
 export const reqDeleteInteractById = (id) => {
     return requests({
         url: '/interact/deleteInteractById',
