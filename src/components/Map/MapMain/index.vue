@@ -81,7 +81,8 @@ export default {
       notifyTimer:{},
       //评论内容
       comments:'',
-
+      //用户信息
+      userInfo:this.$store.state.userInfo,
     };
   },
   created() {
@@ -142,7 +143,7 @@ export default {
      getInteractList() {
       reqGetInteractList({
         page: 1,
-        size: 10,
+        size: 20,
       }).then((res) => {
         this.interactList = res.data.interactList
         let i=0
@@ -167,6 +168,19 @@ export default {
     addInteract(){
       
       reqAddInteract({comments:this.comments}).then((result)=>{
+        this.$notify({
+          title: `${ this.userInfo.nickName}`,
+          duration:1000,
+          dangerouslyUseHTMLString: true,
+          message: `${ this.comments}`,
+          position:'bottom-right',
+          offset:200,
+          customClass:' notification'
+        });
+        this.interactList.push({
+          nickName:this.userInfo.nickName,
+          comments:this.comments
+        })
         this.comments=''
          
       })

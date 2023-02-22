@@ -3,7 +3,7 @@
         <!-- 登录左侧 -->
         <div class="Login_ Login_left">
             <div class="Login_phone">
-                <h1>微信扫一扫</h1>
+                <h3>微信扫一扫</h3>
             </div>
             <div class="Login_er">
                 <img src="@/assets/out.jpg" alt="二维码" />
@@ -162,6 +162,7 @@ export default {
             reqUserLogin(this.loginFormInfo).then(
                 (res) => {
                     setToken(res.token)
+                    localStorage.setItem('isLogin',true)
                     this.$message.success('登录成功')
                     this.$router.push({ path: "/home" })
                 },

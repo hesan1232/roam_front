@@ -8,7 +8,7 @@
           </div>
           <el-menu
             text-color="#fff"
-            background-color="#409EFF"
+            background-color="#005BAC"
             class="el-menu-vertical-demo"
             :router="true"
           >
@@ -182,16 +182,16 @@ export default {
   max-width: 180px;
   height: 670px;
   margin: 20px;
-  background: #409EFF;
-  box-shadow: 0px 0px 12px 0px #66b0ffba,
+  background: #005BAC;
+  box-shadow: 0px 0px 12px 0px #0086CA,
     0px 0px 12px 0px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   overflow-x: hidden;
   z-index: 100;
 }
 .el-menu-vertical-demo {
-  padding: 0px;
-  margin: 0 10px;
+  padding: 0px 10px;
+
 }
 .aside_img {
   max-width: 160px;
@@ -203,7 +203,7 @@ export default {
   line-height: 40px;
   margin: 50px 0;
   border-radius: 20px;
-  background-color: #69b1ff;
+  background-color: #0087ca6f;
 }
 .el-menu {
   border: none;
@@ -213,6 +213,8 @@ export default {
 .el-submenu__title {
   height: 40px;
   line-height: 40px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 .el-menu .el-menu-item,
 .el-tooltip {
@@ -232,8 +234,7 @@ export default {
 .el-submenu__title:hover,
 .el-menu-item:focus,
 .el-menu-item:hover {
-  background: #69b1ff !important;
-  border-radius: 12px;
+  background: #0086CA !important;
   box-shadow: 0px 0px 12px 0px rgba(123, 128, 227, 0.4);
 }
 

@@ -40,6 +40,25 @@
     </div>
     <div class="main_body main_center">
       <div class="body_left">
+        
+        <el-card class="body_lb" shadow="hover">
+          <h5>系统管理</h5>
+          <ul class="bd_list">
+            <li class="bd_item" @click="goMap()">
+              <img src="@/assets/icon/map-road.png" alt="">
+              <p>新生指引</p>
+            </li>
+            <li class="bd_item" @click="goBackend">
+              <img src="@/assets/icon/system.png" alt="">
+              <p>工作台</p>
+            </li>
+            <li class="bd_item" @click="LoginOut">
+              <img src="@/assets/icon/power.png" alt="">
+              <p>退出登录</p>
+            </li>
+          </ul>
+
+        </el-card>
         <el-card class="body_lt" shadow="hover">
           <h5>友情链接
           </h5>
@@ -65,29 +84,11 @@
             <li></li>
           </ul>
         </el-card>
-        <el-card class="body_lb" shadow="hover">
-          <h5>系统管理</h5>
-          <ul class="bd_list">
-            <li class="bd_item" @click="goMap()">
-              <img src="@/assets/icon/map-road.png" alt="">
-              <p>新生指引</p>
-            </li>
-            <li class="bd_item" @click="goBackend">
-              <img src="@/assets/icon/system.png" alt="">
-              <p>工作台</p>
-            </li>
-            <li class="bd_item" @click="LoginOut">
-              <img src="@/assets/icon/power.png" alt="">
-              <p>退出登录</p>
-            </li>
-          </ul>
-
-        </el-card>
       </div>
       <div class="body_right">
         <el-card class="body_rb" shadow="hover">
           <div slot="header" class="clearfix">
-            <span>热门搜索</span>
+            <h5>热门搜索</h5>
             <el-button style="float: right; font-size: 20px; padding: 3px 0;border: none;"
               icon="el-icon-refresh-right"></el-button>
           </div>
@@ -146,13 +147,7 @@ export default {
           id: 5,
           placeName: '体育馆',
           number: 5
-        },
-        {
-          id: 6,
-          placeName: '北门',
-          number: 2
-        },
-
+        }
       ],
       search: []
     };
