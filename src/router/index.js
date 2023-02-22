@@ -3,8 +3,6 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import store from '@/store'
- import logon from '@/pages/login/logon'
- import register from '@/pages/login/register'
 const router=  new VueRouter({
     routes: [
         {
@@ -23,7 +21,7 @@ const router=  new VueRouter({
                {
                 name:'logon',
                 path:'logon',
-                component:logon,
+                component:()=>import('@/pages/login/logon'),
                 meta:{
                     title:'登录页'
                 }
@@ -31,7 +29,7 @@ const router=  new VueRouter({
                {
                 name:'register',
                 path:'register',
-                component:register,
+                component:()=>import('@/pages/login/register'),
                 meta:{
                     title:'注册页'
                 }

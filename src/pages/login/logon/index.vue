@@ -142,21 +142,11 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.reqLogin();
-                    this.$store.dispatch('getUserInfo')
+
                 } else {
                     return false;
                 }
             });
-        },
-        //表单重置
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-        },
-        //登陆隐藏，显示注册
-        toRegister() {
-            this.$router.push({
-                name: 'register',
-            })
         },
         reqLogin() {
             reqUserLogin(this.loginFormInfo).then(
@@ -164,6 +154,7 @@ export default {
                     setToken(res.token)
                     localStorage.setItem('isLogin',true)
                     this.$message.success('登录成功')
+                    this.$store.dispatch('getUserInfo')
                     this.$router.push({ path: "/home" })
                 },
                 () => {
