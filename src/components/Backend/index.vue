@@ -42,7 +42,7 @@
                 :src="userInfo.userAvater"
               >
               </el-avatar>
-              <span>
+              <span >
                 {{ userInfo.nickName || "未登录" }}
               </span>
               <el-dropdown trigger="click" click="user-dropdown">
@@ -66,7 +66,7 @@
           </div>
           <div class="right_main">
             <transition :name="SkipSwitchName">
-              <router-view :userInfo="userInfo"></router-view>
+              <router-view :userInfo="userInfo" @getUserInfo="getUserInfo"></router-view>
             </transition>
           </div>
         </div>
@@ -260,7 +260,7 @@ export default {
   width: 100%;
   height: 76px;
   line-height: 76px;
-
+  padding-right: 50px;
 }
 .el-breadcrumb {
   line-height: 76px;
@@ -269,7 +269,7 @@ export default {
 }
 .head_user {
   margin-right: 20px;
-  width: 200px;
+ display: inline;
   font-size: 14px;
   float: right;
 }
