@@ -12,7 +12,7 @@
       </el-table-column>
       <el-table-column prop="placeY" label="纬度" width="100" align="center">
       </el-table-column>
-      <el-table-column prop="description" label="描述信息"  width="160" align="center" show-overflow-tooltip>
+      <el-table-column prop="description" label="描述信息" width="160" align="center" show-overflow-tooltip>
       </el-table-column>
       <el-table-column prop="ImgUrl" label="图片地址" align="center" show-overflow-tooltip> </el-table-column>
       <el-table-column label="操作" align="center">
@@ -22,11 +22,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout=" ->,total, prev, pager, next" :total="total"
-      @current-change="handleCurrentChange">
+    <el-pagination background layout=" ->,total, prev, pager, next" :total="total" @current-change="handleCurrentChange">
     </el-pagination>
-    <el-dialog :title="dialogType==1?'新增':'编辑'" :visible.sync="dialogVisible" @close="dialogClose('ruleForm')">
-      <el-form :model="updateFormInfo" :rules="rules" ref="ruleForm" label-position="left" label-width="120px" >
+    <el-dialog :title="dialogType == 1 ? '新增' : '编辑'" :visible.sync="dialogVisible" @close="dialogClose('ruleForm')">
+      <el-form :model="updateFormInfo" :rules="rules" ref="ruleForm" label-position="left" label-width="120px">
         <el-form-item label="地点名称" prop="placeName">
           <el-input v-model="updateFormInfo.placeName"></el-input>
         </el-form-item>
@@ -41,16 +40,22 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="地点坐标" prop="placeXY">
-          <span style="margin:0 5px;">经度：</span><el-input v-model.number="updateFormInfo.placeX" style="width:250px" placeholder="经度"></el-input>
-          <span style="margin:0 5px;">纬度：</span><el-input v-model.number="updateFormInfo.placeY" style="width:250px" placeholder="纬度"></el-input>
+          <span style="margin:0 5px;">经度：</span><el-input v-model.number="updateFormInfo.placeX" style="width:200px"
+            placeholder="经度"></el-input>
+          <span style="margin:0 5px;">纬度：</span><el-input v-model.number="updateFormInfo.placeY" style="width:200px"
+            placeholder="纬度"></el-input>
         </el-form-item>
-        <el-form-item label="全景地址" >
+        <el-form-item label="全景地址">
           <el-input v-model="updateFormInfo.Link"></el-input>
         </el-form-item>
-        <el-form-item label="图片地址" prop="ImgUrl">
-          <el-input v-model="updateFormInfo.ImgUrl"></el-input>
+        <el-form-item label="图片地址" >
+          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater"
+            :on-change="handlehCangeUpload" :limit="1">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__tip" slot="tip">仅支持jpg、jpeg、png格式的图片</div>
+          </el-upload>
         </el-form-item>
-        
+
         <el-form-item label="地点说明" prop="description">
           <el-input type="textarea" v-model="updateFormInfo.description"></el-input>
         </el-form-item>
@@ -60,14 +65,19 @@
         <el-button type="primary" @click="updateForm('ruleForm')">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="dialogImage">
+      <img width="50%" :src="dialogImageUrl" alt="">
+    </el-dialog>
   </el-card>
 </template>
 
 <script>
 import {
   reqGetPlaceList, reqUpdatePlaceById,
-  reqDeletePlaceById,reqAddPlace
+  reqDeletePlaceById, reqAddPlace
 } from "@/api/place";
+import { reqUpLoadImage } from "@/api/upLoad"
+import lodash from 'lodash'
 export default {
 
   data() {
@@ -78,41 +88,45 @@ export default {
         page: 1,
         size: 10,
       },
-      dialogType:1,
+      dialogType: 1,
       updateFormInfo: {
-        Link:'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
+        Link: 'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
       },
       dialogVisible: false,
       //表单校验规则
-      rules:{
+      rules: {
         placeName: [
-            { required: true, message: '请输入地点名称', trigger: 'blur' },
-            { min: 1, max: 10, message: '长度在 1 到 5 个字符', trigger: 'blur' }
-          ],
-          placeType: [
-            { required: true, message: '请选择活动区域', trigger: 'blur' }
-          ],
-          placeXY: [
-            {trigger: 'change',validator:(rule, value, callback)=>{
-              if(this.updateFormInfo.placeX&& this.updateFormInfo.placeY)
-              {
-              const flag=Number(this.updateFormInfo.placeX)+Number(this.updateFormInfo.placeX)
-              if(!isNaN(flag))
-             callback()
-              }else{
-               callback(new Error('经纬度不能为空'))
+          { required: true, message: '请输入地点名称', trigger: 'blur' },
+          { min: 1, max: 10, message: '长度在 1 到 5 个字符', trigger: 'blur' }
+        ],
+        placeType: [
+          { required: true, message: '请选择活动区域', trigger: 'blur' }
+        ],
+        placeXY: [
+          {
+            trigger: 'change', validator: (rule, value, callback) => {
+              if (this.updateFormInfo.placeX && this.updateFormInfo.placeY) {
+                const flag = Number(this.updateFormInfo.placeX) + Number(this.updateFormInfo.placeX)
+                if (!isNaN(flag))
+                  callback()
+              } else {
+                callback(new Error('经纬度不能为空'))
               }
               callback(new Error('经纬度必须为数字'))
-            }}
-          ],
-        
-          ImgUrl:[
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
-          ],
-          description: [
-            { required: true, message: '请填写地点说明', trigger: 'blur' }
-          ]
-        }
+            }
+          }
+        ],
+
+        ImgUrl: [
+          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        ],
+        description: [
+          { required: true, message: '请填写地点说明', trigger: 'blur' }
+        ]
+      },
+      //上传图片
+      dialogImageUrl: '',
+      dialogImage: false,
     }
   },
   mounted() {
@@ -128,16 +142,16 @@ export default {
     },
     //增加一个地点
     addPlace() {
-      reqAddPlace(this.updateFormInfo).then(res=>{
-       this.getPlaceList()
-       this.$message.success('新增成功')
-      },err=>{})
+      reqAddPlace(this.updateFormInfo).then(res => {
+        this.getPlaceList()
+        this.$message.success('新增成功')
+      }, err => { })
     },
     //更新地点信息
     updatePlaceById() {
       reqUpdatePlaceById(this.updateFormInfo).then(result => {
         this.getPlaceList()
-       this.$message.success('更新成功')
+        this.$message.success('更新成功')
       }, err => { })
     },
     //删除地点
@@ -171,23 +185,23 @@ export default {
           });
         });
     },
-   // 编辑信息的回调
+    // 编辑信息的回调
     updateDialog(data) {
       this.updateFormInfo = data
       this.dialogVisible = true
-      this.dialogType=2
+      this.dialogType = 2
     },
-     //更新弹窗确认回调
-    updateForm(formName){
+    //更新弹窗确认回调
+    updateForm(formName) {
       this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.dialogVisible = false
-            this.dialogType==1?this.addPlace():this.updatePlaceById()
-          } else {
-            
-            return false;
-          }
-        });
+        if (valid) {
+          this.dialogVisible = false
+          this.dialogType == 1 ? this.addPlace() : this.updatePlaceById()
+        } else {
+
+          return false;
+        }
+      });
     },
     //分页器的回调
     handleCurrentChange(val) {
@@ -195,26 +209,44 @@ export default {
       this.getPlaceList();
     },
     //弹窗关闭的回调
-    dialogClose(formName){
-      this.updateFormInfo={
-        Link:'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
+    dialogClose(formName) {
+      this.updateFormInfo = {
+        Link: 'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
       }
-      this.dialogType=1
-      this.$nextTick(()=>{
+      this.dialogType = 1
+      this.$nextTick(() => {
         this.$refs[formName].clearValidate()
       })
-      
+
     },
+    handlehCangeUpload(file) {
+      let formData = new FormData();
+      formData.append('file', file.raw);//键名要和后台一致
+      this.upLoadImage(formData)
+    },
+    uploadAvater(file,) {
+      // console.log(file,"覆盖上传事件")
+
+    },
+    //上传图片
+    upLoadImage(data) {
+
+      reqUpLoadImage(data).then((res) => {
+        console.log(res)
+        this.updateFormInfo.ImgUrl = res.data.imgUrl
+        this.$message.success('上传成功')
+      })
+    }
   },
 };
 </script>
 
 <style scoped>
-.card{
+.card {
   height: 600px;
 }
-.el-table{
+
+.el-table {
   margin: 10px 0;
 }
-
 </style>

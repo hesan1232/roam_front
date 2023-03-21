@@ -6,16 +6,8 @@
           <div style="margin: auto" class="aside_img">
             <div @click="jumpHome" class="aside_icon">工作台</div>
           </div>
-          <el-menu
-            text-color="#fff"
-            background-color="#005BAC"
-            class="el-menu-vertical-demo"
-            :router="true"
-          >
-            <el-menu-item
-              v-for="item in permissionsInfo"
-              :key="item.id"
-              :index="item.routingPath">
+          <el-menu text-color="#fff" background-color="#005BAC" class="el-menu-vertical-demo" :router="true">
+            <el-menu-item v-for="item in permissionsInfo" :key="item.id" :index="item.routingPath">
               <i :class="item.menuIcon"></i>
               <span slot="title">{{ item.title }}</span>
             </el-menu-item>
@@ -26,33 +18,22 @@
             <!-- 导航面包屑 -->
             <el-breadcrumb class="app-breadcrumb" separator="/">
               <transition-group name="breadcrumb">
-                <el-breadcrumb-item
-                  v-for="item in levelList"
-                  :key="item.path"
-                  :to="{ path: item.path }"
-                >
+                <el-breadcrumb-item v-for="item in levelList" :key="item.path" :to="{ path: item.path }">
                   <span>{{ item.meta.title }}</span>
                 </el-breadcrumb-item>
               </transition-group>
             </el-breadcrumb>
 
             <div class="head_user">
-              <el-avatar
-                class="user_img"
-                :src="userInfo.userAvater"
-              >
+              <el-avatar class="user_img" :src="userInfo.userAvater">
               </el-avatar>
-              <span >
+              <span>
                 {{ userInfo.nickName || "未登录" }}
               </span>
               <el-dropdown trigger="click" click="user-dropdown">
-                <span
-                  class="el-dropdown-link"
-                  style="display: inline-block; text-align: center"
-                >
-                  <el-tag type=""  >
-                    {{ userInfo.type==0?"管理员":"普通用户" }}</el-tag
-                  >
+                <span class="el-dropdown-link" style="display: inline-block; text-align: center">
+                  <el-tag type="">
+                    {{ userInfo.type == 0 ? "管理员" : "普通用户" }}</el-tag>
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
 
@@ -66,7 +47,7 @@
           </div>
           <div class="right_main">
             <transition :name="SkipSwitchName">
-              <router-view :userInfo="userInfo" @getUserInfo="getUserInfo"></router-view>
+              <router-view @getUserInfo="getUserInfo"></router-view>
             </transition>
           </div>
         </div>
@@ -78,37 +59,34 @@
 <script>
 import { removeToken } from "@/api/token"
 import { reqGetUserInfo } from "@/api/user";
-import {reqGetRouterList} from "@/api/router"
+import { reqGetRouterList } from "@/api/router"
 export default {
   data() {
     return {
-      //用户属性
-      userInfo: this.$store.state.userInfo,
       //面包屑
       levelList: null,
-      //用户权限信息
-      permissionsInfo: this.$store.state.permissionsInfo,
+
       //监听路由名称
       SkipSwitchName: "",
     };
   },
-  created(){
+  created() {
     this.getRouterList()
     this.getUserInfo()
   },
-  mounted(){
+  mounted() {
 
     this.getBreadcrumb()
   },
   methods: {
     //获取信息
-   getUserInfo(){
-      reqGetUserInfo().then((result)=>{
-        this.userInfo=result.data
+    getUserInfo() {
+      reqGetUserInfo().then((result) => {
+        this.userInfo = result.data
       })
     },
     //跳转前台
-    jumpHome(){
+    jumpHome() {
       this.$router.push('/home')
     },
     //退出登录
@@ -117,9 +95,9 @@ export default {
       this.$router.push({ path: "/login" })
     },
     //获取权限信息
-    getRouterList(){
-      reqGetRouterList().then(result=>{
-        this.permissionsInfo=result.data
+    getRouterList() {
+      reqGetRouterList().then(result => {
+        this.permissionsInfo = result.data
       })
     },
     //改变面包屑
@@ -139,6 +117,16 @@ export default {
         return false
       }
       return redirect === '/home'
+    },
+  },
+  computed: {
+    //这里需要把store 
+    userInfo() {
+      return this.$store.state.userInfo
+    },
+    //用户权限信息
+    permissionsInfo() {
+      return this.$store.state.permissionsInfo
     },
   },
   watch: {
@@ -177,6 +165,7 @@ export default {
   flex-direction: row;
   overflow: hidden;
 }
+
 /* 左侧导导航栏 */
 .el-aside {
   max-width: 180px;
@@ -189,15 +178,18 @@ export default {
   overflow-x: hidden;
   z-index: 100;
 }
+
 .el-menu-vertical-demo {
   padding: 0px 10px;
 
 }
+
 .aside_img {
   max-width: 160px;
   text-align: center;
   color: white;
 }
+
 .aside_icon {
   height: 40px;
   line-height: 40px;
@@ -205,6 +197,7 @@ export default {
   border-radius: 20px;
   background-color: #0087ca6f;
 }
+
 .el-menu {
   border: none;
 }
@@ -216,21 +209,26 @@ export default {
   border-radius: 12px;
   overflow: hidden;
 }
+
 .el-menu .el-menu-item,
 .el-tooltip {
   max-width: 160px;
   padding: 0px 12px !important;
 }
+
 .el-menu i {
   color: #ffffff !important;
 }
+
 .el-menu-item.is-active {
   color: #ffffff;
 }
+
 .aside_bottom {
   margin-top: 230px;
   text-align: center;
 }
+
 .el-submenu__title:hover,
 .el-menu-item:focus,
 .el-menu-item:hover {
@@ -262,14 +260,16 @@ export default {
   line-height: 76px;
   padding-right: 50px;
 }
+
 .el-breadcrumb {
   line-height: 76px;
   display: inline-block;
   float: left;
 }
+
 .head_user {
   margin-right: 20px;
- display: inline;
+  display: inline;
   font-size: 14px;
   float: right;
 }
@@ -291,9 +291,11 @@ export default {
 .Skright-enter {
   transform: translate3d(-100%, 0, 0);
 }
+
 .Skright-leave-to {
   transform: translate3d(100%, 0, 0);
 }
+
 .Skleft-enter {
   transform: translate3d(100%, 0, 0);
 }
@@ -301,9 +303,10 @@ export default {
 .Skleft-leave-to {
   transform: translate3d(-100%, 0, 0);
 }
+
 /* 路由页面 */
 .right_main {
-  width:1300px;
+  width: 1300px;
   margin-top: 10px;
   margin-right: 20px;
 }

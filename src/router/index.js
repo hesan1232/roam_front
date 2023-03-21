@@ -99,7 +99,8 @@ router.beforeEach(async (to,from,next)=>{
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    if(isToken&& localStorage.getItem('isLogin')){
+    console.log(localStorage.getItem('isLogin'),'是否登录')
+    if(isToken){
         store.dispatch('getPermissionsInfo').then(()=>{
             const dynamicRouteses =store.state.permissionsInfo
            

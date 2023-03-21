@@ -30,23 +30,22 @@
         <el-form-item label="昵称">
           <el-input v-model="updateFormInfo.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="头像地址" prop="userAvater">
-          <el-input v-model="updateFormInfo.userAvater"></el-input>
+        <el-form-item label="头像">
+          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater" :file-list="fileList" :class="{disabled:uploadDisabled}"
+            :on-preview="handlePreview" :on-remove="handleRemove" :on-change="handlehCangeUpload" :limit="1">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__tip" slot="tip">仅支持jpg、jpeg、png格式的图片</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="updateForm('ruleForm')">确 定</el-button>
       </div>
-      <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater"
-        :on-change="handlehCangeUpload" :limit="1">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em></em></div>
-        <div class="el-upload__tip" slot="tip">一次只能上传一张jpg、jpeg、png格式的图片</div>
-      </el-upload>
+
     </el-dialog>
     <el-dialog :visible.sync="dialogImage">
-      <img width="50%" :src="dialogImageUrl" alt="">
+      <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
   </el-card>
 </template>
@@ -56,10 +55,8 @@ import { reqUpdateUserInfo } from "@/api/user";
 import { reqUpLoadImage } from "@/api/upLoad"
 import lodash from 'lodash'
 export default {
-  // props: ['userInfo'],
   data() {
     return {
-      // userInfo:this.$store.state.userInfo,
       //表单数据
       dialogVisible: false,
       updateFormInfo: {},
@@ -69,14 +66,22 @@ export default {
           { required: true, message: '请填写活动形式', trigger: 'blur' }
         ],
       },
-      //文件
+      //上传图片
+      fileList: [
+        { name: 'food.jpeg', 
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, 
+          
+        ],
       dialogImageUrl: '',
       dialogImage: false,
+      uploadDisabled:false
     };
   },
   methods: {
     editUserData() {
       this.updateFormInfo = lodash.cloneDeep(this.userInfo)
+      this.fileList=[{name:this.updateFormInfo.nickName,url:this.updateFormInfo.userAvater}]
+      this.uploadDisabled=true
       this.dialogVisible = true
     },
     //更新用户信息
@@ -102,21 +107,31 @@ export default {
     //弹窗关闭的回调
     dialogClose(formName) {
       this.updateFormInfo = {}
+      this.fileList=[]
       this.dialogType = 1
       this.$nextTick(() => {
         this.$refs[formName].clearValidate()
       })
 
     },
-    handlehCangeUpload(file) {
+    handlehCangeUpload(file,fileList) {
+      
       let formData = new FormData();
-      console.log(file, "参数")
       formData.append('file', file.raw);//键名要和后台一致
       this.upLoadImage(formData)
     },
-    uploadAvater(file,) {
-      // console.log(file,"覆盖上传事件")
+    uploadAvater(file) {
+      this.uploadDisabled=true
 
+    },
+    //触发图片预览
+    handlePreview(file) {
+      this.dialogImage = true;
+      this.dialogImageUrl = file.url;
+    },
+    //触发图片删除
+    handleRemove(file){
+       this.uploadDisabled=false
     },
     //上传图片
     upLoadImage(data) {
@@ -132,7 +147,10 @@ export default {
     //这里需要把store 动态的数据放到computed里面才会同步更新 视图
     userInfo() {
       return this.$store.state.userInfo
-    }
+    },
+    // uploadDisabled(){
+    //   return this.fileList.length==1
+    // },
   },
 
 };
@@ -173,4 +191,13 @@ export default {
   height: 178px;
   display: block;
 }
+::v-deep .disabled .el-upload.el-upload--picture-card {
+    display: none !important;
+}
+
+::v-deep  .disabled .el-button--success.is-plain {
+    display: none !important;
+}
+
+
 </style>
