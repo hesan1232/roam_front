@@ -155,6 +155,7 @@ export default {
                     localStorage.setItem('isLogin',true)
                     this.$message.success('登录成功')
                     this.$store.dispatch('getUserInfo')
+                    this.$store.dispatch('getPermissionsInfo')
                     this.$router.push({ path: "/home" })
                 },
                 () => {

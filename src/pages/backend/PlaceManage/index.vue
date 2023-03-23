@@ -49,8 +49,8 @@
           <el-input v-model="updateFormInfo.Link"></el-input>
         </el-form-item>
         <el-form-item label="图片地址" >
-          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater"
-            :on-change="handlehCangeUpload" :limit="1">
+          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater" :file-list="fileList" :class="{disabled:uploadClass}"
+            :on-preview="handlePreview" :on-remove="handleRemove" :on-change="handlehCangeUpload" :limit="1">
             <i class="el-icon-upload"></i>
             <div class="el-upload__tip" slot="tip">仅支持jpg、jpeg、png格式的图片</div>
           </el-upload>
@@ -66,7 +66,7 @@
       </div>
     </el-dialog>
     <el-dialog :visible.sync="dialogImage">
-      <img width="50%" :src="dialogImageUrl" alt="">
+      <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
   </el-card>
 </template>
@@ -116,15 +116,12 @@ export default {
             }
           }
         ],
-
-        ImgUrl: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
-        ],
         description: [
           { required: true, message: '请填写地点说明', trigger: 'blur' }
         ]
       },
       //上传图片
+      fileList: [],
       dialogImageUrl: '',
       dialogImage: false,
     }
@@ -154,6 +151,7 @@ export default {
         this.$message.success('更新成功')
       }, err => { })
     },
+    
     //删除地点
     deletFormInfo(data) {
       this.$confirm(`你确定删除 ${data.placeName} ?`, "提示", {
@@ -188,6 +186,7 @@ export default {
     // 编辑信息的回调
     updateDialog(data) {
       this.updateFormInfo = data
+      this.fileList=[{name:this.updateFormInfo.placeName,url:this.updateFormInfo.ImgUrl}]
       this.dialogVisible = true
       this.dialogType = 2
     },
@@ -214,6 +213,7 @@ export default {
         Link: 'https://www.720yun.com/t/d3vkb917r1m?scene_id=89960801',
       }
       this.dialogType = 1
+      this.fileList=[]
       this.$nextTick(() => {
         this.$refs[formName].clearValidate()
       })
@@ -224,20 +224,30 @@ export default {
       formData.append('file', file.raw);//键名要和后台一致
       this.upLoadImage(formData)
     },
-    uploadAvater(file,) {
-      // console.log(file,"覆盖上传事件")
-
+    uploadAvater(file) {
+    },
+     //触发图片预览
+     handlePreview(file) {
+      this.dialogImage = true;
+      this.dialogImageUrl = file.url;
+    },
+     //触发图片删除
+     handleRemove(file){
+       this.fileList=[]
     },
     //上传图片
     upLoadImage(data) {
-
       reqUpLoadImage(data).then((res) => {
-        console.log(res)
         this.updateFormInfo.ImgUrl = res.data.imgUrl
         this.$message.success('上传成功')
       })
     }
   },
+  computed:{
+    uploadClass(){
+      return this.fileList.length==1
+    },
+  }
 };
 </script>
 
@@ -249,4 +259,12 @@ export default {
 .el-table {
   margin: 10px 0;
 }
+::v-deep .disabled .el-upload.el-upload--picture-card {
+    display: none !important;
+}
+
+::v-deep  .disabled .el-button--success.is-plain {
+    display: none !important;
+}
+
 </style>

@@ -31,7 +31,7 @@
           <el-input v-model="updateFormInfo.nickName"></el-input>
         </el-form-item>
         <el-form-item label="头像">
-          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater" :file-list="fileList" :class="{disabled:uploadDisabled}"
+          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater" :file-list="fileList" :class="{disabled:uploadClass}"
             :on-preview="handlePreview" :on-remove="handleRemove" :on-change="handlehCangeUpload" :limit="1">
             <i class="el-icon-upload"></i>
             <div class="el-upload__tip" slot="tip">仅支持jpg、jpeg、png格式的图片</div>
@@ -67,28 +67,21 @@ export default {
         ],
       },
       //上传图片
-      fileList: [
-        { name: 'food.jpeg', 
-          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, 
-          
-        ],
+      fileList: [],
       dialogImageUrl: '',
       dialogImage: false,
-      uploadDisabled:false
     };
   },
   methods: {
     editUserData() {
       this.updateFormInfo = lodash.cloneDeep(this.userInfo)
       this.fileList=[{name:this.updateFormInfo.nickName,url:this.updateFormInfo.userAvater}]
-      this.uploadDisabled=true
       this.dialogVisible = true
     },
     //更新用户信息
     updateUserInfo() {
       reqUpdateUserInfo(this.updateFormInfo).then(() => {
         this.$store.dispatch('getUserInfo')
-        this.$emit('reqGetUserInfo')
         this.$message.success('编辑成功')
       })
     },
@@ -121,7 +114,6 @@ export default {
       this.upLoadImage(formData)
     },
     uploadAvater(file) {
-      this.uploadDisabled=true
 
     },
     //触发图片预览
@@ -131,7 +123,7 @@ export default {
     },
     //触发图片删除
     handleRemove(file){
-       this.uploadDisabled=false
+       this.fileList=[]
     },
     //上传图片
     upLoadImage(data) {
@@ -148,9 +140,9 @@ export default {
     userInfo() {
       return this.$store.state.userInfo
     },
-    // uploadDisabled(){
-    //   return this.fileList.length==1
-    // },
+    uploadClass(){
+      return this.fileList.length==1
+    },
   },
 
 };

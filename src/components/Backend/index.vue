@@ -47,7 +47,7 @@
           </div>
           <div class="right_main">
             <transition :name="SkipSwitchName">
-              <router-view @getUserInfo="getUserInfo"></router-view>
+              <router-view ></router-view>
             </transition>
           </div>
         </div>
@@ -58,7 +58,6 @@
 
 <script>
 import { removeToken } from "@/api/token"
-import { reqGetUserInfo } from "@/api/user";
 import { reqGetRouterList } from "@/api/router"
 export default {
   data() {
@@ -71,20 +70,11 @@ export default {
     };
   },
   created() {
-    this.getRouterList()
-    this.getUserInfo()
-  },
-  mounted() {
-
     this.getBreadcrumb()
   },
+
   methods: {
-    //获取信息
-    getUserInfo() {
-      reqGetUserInfo().then((result) => {
-        this.userInfo = result.data
-      })
-    },
+
     //跳转前台
     jumpHome() {
       this.$router.push('/home')
@@ -93,12 +83,6 @@ export default {
     LoginOut() {
       removeToken()
       this.$router.push({ path: "/login" })
-    },
-    //获取权限信息
-    getRouterList() {
-      reqGetRouterList().then(result => {
-        this.permissionsInfo = result.data
-      })
     },
     //改变面包屑
     getBreadcrumb() {

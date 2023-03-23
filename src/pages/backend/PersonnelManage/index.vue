@@ -20,8 +20,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout=" ->,total, prev, pager, next" :total="total"
-      @current-change="handleCurrentChange">
+    <el-pagination background layout=" ->,total, prev, pager, next" :total="total" @current-change="handleCurrentChange">
     </el-pagination>
     <el-dialog :title="dialogType == 1 ? '新增' : '编辑'" :visible.sync="dialogVisible" @close="dialogClose('ruleForm')">
       <el-form :model="updateFormInfo" :rules="rules" ref="ruleForm" label-position="left" label-width="120px">
@@ -29,11 +28,15 @@
           <el-input v-model="updateFormInfo.userName"></el-input>
         </el-form-item>
 
-        <el-form-item label="昵称">
+        <el-form-item label="昵称" prop="nickName">
           <el-input v-model="updateFormInfo.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="头像地址" prop="userAvater">
-          <el-input v-model="updateFormInfo.userAvater"></el-input>
+        <el-form-item label="头像" >
+          <el-upload class="upload-demo" list-type="picture-card" action="#" :http-request="uploadAvater" :file-list="fileList" :class="{disabled:uploadClass}"
+            :on-preview="handlePreview" :on-remove="handleRemove" :on-change="handlehCangeUpload" :limit="1">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__tip" slot="tip">仅支持jpg、jpeg、png格式的图片</div>
+          </el-upload>
         </el-form-item>
 
 
@@ -43,11 +46,15 @@
         <el-button type="primary" @click="updateForm('ruleForm')">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="dialogImage">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
   </el-card>
 </template>
 
 <script>
-import { reqGetUserList, reqUserRegister,reqDeleteUserInfo, reqResetUserPassword, reqUpdateUserInfo } from "@/api/user";
+import { reqGetUserList, reqUserRegister, reqDeleteUserInfo, reqResetUserPassword, reqUpdateUserInfo } from "@/api/user";
+import { reqUpLoadImage } from "@/api/upLoad"
 export default {
   data() {
     return {
@@ -64,12 +71,17 @@ export default {
       },
       //表单校验规则
       rules: {
-
-        userAvater: [
-          { required: true, message: '请填写头像地址', trigger: 'blur' }
+        userName: [
+          { required: true, message: '请填写用户账户', trigger: 'blur' }
         ],
-
-      }
+        nickName: [
+          { required: true, message: '请填写用户昵称', trigger: 'blur' }
+        ],
+      },
+      //上传图片
+      fileList: [],
+      dialogImageUrl: '',
+      dialogImage: false,
     };
   },
   mounted() {
@@ -84,15 +96,15 @@ export default {
       });
     },
     //增加用户
-    addUser(){
-      reqUserRegister(this.updateFormInfo).then(()=>{
+    addUser() {
+      reqUserRegister(this.updateFormInfo).then(() => {
         this.getUserList()
         this.$message.success('新增成功')
       })
     },
     //更新用户信息
     updateUserInfo() {
-      reqUpdateUserInfo(this.updateFormInfo).then(()=>{
+      reqUpdateUserInfo(this.updateFormInfo).then(() => {
         this.getUserList()
         this.$message.success('编辑成功')
       })
@@ -117,6 +129,7 @@ export default {
     // 编辑信息的回调
     updateDialog(data) {
       this.updateFormInfo = data
+      this.fileList=[{name:this.updateFormInfo.nickName,url:this.updateFormInfo.userAvater}]
       this.dialogVisible = true
       this.dialogType = 2
     },
@@ -190,7 +203,36 @@ export default {
       })
 
     },
+    handlehCangeUpload(file) {
+      let formData = new FormData();
+      formData.append('file', file.raw);//键名要和后台一致
+      this.upLoadImage(formData)
+    },
+    uploadAvater(file) {
+    },
+     //触发图片预览
+     handlePreview(file) {
+      this.dialogImage = true;
+      this.dialogImageUrl = file.url;
+    },
+     //触发图片删除
+     handleRemove(file){
+       this.fileList=[]
+    },
+    //上传图片
+    upLoadImage(data) {
+      reqUpLoadImage(data).then((res) => {
+        this.updateFormInfo.ImgUrl = res.data.imgUrl
+        this.$message.success('上传成功')
+      })
+    }
+    
   },
+  computed:{
+    uploadClass(){
+      return this.fileList.length==1
+    },
+  }
 };
 </script>
 
@@ -202,4 +244,12 @@ export default {
 .el-table {
   margin: 10px 0;
 }
+::v-deep .disabled .el-upload.el-upload--picture-card {
+    display: none !important;
+}
+
+::v-deep  .disabled .el-button--success.is-plain {
+    display: none !important;
+}
+
 </style>
