@@ -58,7 +58,6 @@
 
 <script>
 import { removeToken } from "@/api/token"
-import { reqGetRouterList } from "@/api/router"
 export default {
   data() {
     return {
@@ -134,7 +133,7 @@ export default {
 
 /* 头部区域 */
 .el-header {
-  width: 100vw;
+ 
   height: 76px !important;
   padding: 0px;
   background-color: #ffffff;
@@ -234,28 +233,28 @@ export default {
 
 /* 右侧主内容盒子 */
 .main_right {
-  flex: 1;
+
   height: 650px;
 }
 
 .right_top {
-  width: 100%;
   height: 76px;
   line-height: 76px;
-  padding-right: 50px;
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .el-breadcrumb {
   line-height: 76px;
-  display: inline-block;
-  float: left;
+
 }
 
 .head_user {
   margin-right: 20px;
-  display: inline;
+ 
   font-size: 14px;
-  float: right;
+
 }
 
 .user_img {
