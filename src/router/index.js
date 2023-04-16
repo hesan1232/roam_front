@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
+  // 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
+  const originalPush = VueRouter.prototype.push
+  VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+  }
 
 import store from '@/store'
 const router=  new VueRouter({
@@ -99,8 +104,10 @@ router.beforeEach(async (to,from,next)=>{
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    console.log(localStorage.getItem('isLogin'),'是否登录')
+    console.log(localStorage.getItem('isLogin'),isToken,'是否登录')
     if(isToken){
+        store.dispatch('getUserInfo')
+        
         store.dispatch('getPermissionsInfo').then(()=>{
             const dynamicRouteses =store.state.permissionsInfo
            

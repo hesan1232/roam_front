@@ -116,7 +116,6 @@ export default {
     return {
       userInfo: {},
       activeIndex: '1',
-      isLogin: getToken(),
       //分类
       placeTypeList: {},
       //工作台

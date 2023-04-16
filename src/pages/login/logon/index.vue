@@ -87,12 +87,12 @@
                         class="logon_info" show-password >
                     </el-input>
                 </el-form-item>
-                <el-form-item>
+                <!-- <el-form-item>
                     <el-input placeholder="验证码" prefix-icon="el-icon-document-checked" v-model="loginFormInfo.code"
                         class="logon_info" style="width: 233px;">
                     </el-input>
                     <img src="@/assets/login/验证码.jpg" alt="加载失败" class="Verification_code" />
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="" style="margin-left: -270px">
                     <el-checkbox v-model="agree">记住密码</el-checkbox>
                 </el-form-item>
@@ -151,12 +151,12 @@ export default {
         reqLogin() {
             reqUserLogin(this.loginFormInfo).then(
                 (res) => {
-                    setToken(res.token)
-                    localStorage.setItem('isLogin',true)
+                    console.log("登录成功")
                     this.$message.success('登录成功')
-                    this.$store.dispatch('getUserInfo')
-                    this.$store.dispatch('getPermissionsInfo')
+                    setToken(res.token)
                     this.$router.push({ path: "/home" })
+                    
+                   
                 },
                 () => {
                     this.$message.error("登录失败，请确认用户名和密码");
