@@ -3,21 +3,21 @@
     <div class="contreole">
       <span class="ct_item">
         <el-checkbox v-model="mapMarkerWindow.iconVisible">地标</el-checkbox>
-        </span><span style="color: rgb(207, 203, 203);">|</span>    
+      </span><span style="color: rgb(207, 203, 203);">|</span>
       <span class="ct_item">
         <el-checkbox v-model="mapMarkerWindow.textVisible">地名</el-checkbox>
       </span><span style="color: rgb(207, 203, 203);">|</span>
       <span class="ct_item">
         <el-checkbox v-model="commentsVisible">评论</el-checkbox>
-        </span><span style="color:rgb(207, 203, 203);">|</span> 
-        <span class="ct_item">
-        <el-checkbox v-model="mapMarkerWindow.contreoleVisible">工具</el-checkbox>
-        </span><span style="color: rgb(207, 203, 203);">|</span>   
+      </span><span style="color:rgb(207, 203, 203);">|</span>
       <span class="ct_item">
-        <a href="https://720yun.com/t/d3vkb917r1m?scene_id=89960801" target="_blank"> 
+        <el-checkbox v-model="mapMarkerWindow.contreoleVisible">工具</el-checkbox>
+      </span><span style="color: rgb(207, 203, 203);">|</span>
+      <span class="ct_item">
+        <a href="https://720yun.com/t/d3vkb917r1m?scene_id=89960801" target="_blank">
           全景漫游
-          </a>
-          </span>
+        </a>
+      </span>
     </div>
     <div class="addComments" v-if="commentsVisible">
       <el-input v-model="comments" @keyup.enter.native="addInteract" placeholder="输入评论信息"></el-input>
@@ -33,10 +33,10 @@
       <!-- 地图指南针 -->
       <el-amap-control-control-bar :offset="[0, 100]" position="RB" :visible="mapMarkerWindow.contreoleVisible" />
       <!-- 地图缩放控制 -->
-      <el-amap-control-tool-bar :offset="[30, 30]" position="RB" :visible="mapMarkerWindow.contreoleVisible"/>
+      <el-amap-control-tool-bar :offset="[30, 30]" position="RB" :visible="mapMarkerWindow.contreoleVisible" />
       <!-- 地图标记点 -->
-      <el-amap-marker v-for="marker in placeList" :key="marker.id" :position="[marker.placeX, marker.placeY]"  :visible="mapMarkerWindow.iconVisible"
-        @click="clickArrayMarker(marker)" />
+      <el-amap-marker v-for="marker in placeList" :key="marker.id" :position="[marker.placeX, marker.placeY]"
+        :visible="mapMarkerWindow.iconVisible" @click="clickArrayMarker(marker)" />
       <!-- 地点名字标记 -->
       <el-amap-marker v-for="marker in placeList" :key="marker.placeName" :position="[marker.placeX, marker.placeY]"
         :visible="mapMarkerWindow.textVisible" @click="clickArrayMarker(marker)" :offset="[-30, 0]">
@@ -58,7 +58,9 @@
 <script>
 
 import mapUrl from '@/assets/map.png'
-import { reqGetInteractList,reqAddInteract } from '@/api/interact'
+import { reqGetInteractList, reqAddInteract } from '@/api/interact'
+import indexedDB from '@/tools/indexedDB'
+import { imgDBConfig } from '@/tools/db.config'
 export default {
 
   props: ["placeList", "mapPlaceInfo"],
@@ -72,24 +74,26 @@ export default {
       bounds: [113.179513, 33.768828, 113.19891, 33.775999],
       map: null,
       mapMarkerWindow: {
-        iconVisible:true,
+        iconVisible: true,
         textVisible: false,
-        contreoleVisible:true,
+        contreoleVisible: true,
       },
-      commentsVisible:false,
+      commentsVisible: false,
       //评论定时器
-      notifyTimer:{},
+      notifyTimer: {},
       //评论内容
-      comments:'',
+      comments: '',
       //用户信息
-      userInfo:this.$store.state.userInfo,
+      userInfo: this.$store.state.userInfo,
     };
   },
   created() {
-    // this.getInteractList()
+    this.changeImgBlob()
+  },
+  mounted() {
 
   },
-  beforeDestroy(){
+  beforeDestroy() {
     clearInterval(this.notifyTimer)
   },
   methods: {
@@ -99,13 +103,6 @@ export default {
 
     },
     initMap(map) {
-      //   navigator.geolocation.getCurrentPosition((position) =>{
-      //   console.log(position.coords,'0000')
-
-      //     },()=>{},{
-      //       enableHighAcuracy :true
-      //     }
-      //  )
       this.map = map
       console.log('init map: ', this.map);
     },
@@ -139,58 +136,102 @@ export default {
         iframeInfoWindow: false,
       })
     },
-     //分页获取评论信息
-     getInteractList() {
+    //分页获取评论信息
+    getInteractList() {
       reqGetInteractList({
         page: 1,
         size: 20,
       }).then((res) => {
         this.interactList = res.data.interactList
-        let i=0
-        let j=this.interactList.length
-        this.notifyTimer=setInterval(()=>{
-          if(i==j) i=0
-        this.$notify({
-          title: `${ this.interactList[i].nickName}`,
-          duration:1000,
-          dangerouslyUseHTMLString: true,
-          message: `${ this.interactList[i].comments}`,
-          position:'bottom-right',
-          offset:200,
-          customClass:' notification'
-        });
-        i++
-      },
-      800)
+        let i = 0
+        let j = this.interactList.length
+        this.notifyTimer = setInterval(() => {
+          if (i == j) i = 0
+          this.$notify({
+            title: `${this.interactList[i].nickName}`,
+            duration: 1000,
+            dangerouslyUseHTMLString: true,
+            message: `${this.interactList[i].comments}`,
+            position: 'bottom-right',
+            offset: 200,
+            customClass: ' notification'
+          });
+          i++
+        },
+          800)
       })
     },
     //增加评价信息
-    addInteract(){
-      
-      reqAddInteract({comments:this.comments}).then((result)=>{
+    addInteract() {
+
+      reqAddInteract({ comments: this.comments }).then((result) => {
         this.$notify({
-          title: `${ this.userInfo.nickName}`,
-          duration:1000,
+          title: `${this.userInfo.nickName}`,
+          duration: 1000,
           dangerouslyUseHTMLString: true,
-          message: `${ this.comments}`,
-          position:'bottom-right',
-          offset:200,
-          customClass:' notification'
+          message: `${this.comments}`,
+          position: 'bottom-right',
+          offset: 200,
+          customClass: ' notification'
         });
         this.interactList.push({
-          nickName:this.userInfo.nickName,
-          comments:this.comments
+          nickName: this.userInfo.nickName,
+          comments: this.comments
         })
-        this.comments=''
-         
+        this.comments = ''
+
       })
     },
+    //改变文件为二进制文件
+    changeImgBlob() {
+      // 获取所有需要存储的图片路径
+      const imageInfo = { id: 0, path: mapUrl }
+
+      // 将图片转换为二进制文件并存储到IndexedDB
+      const xhr = new XMLHttpRequest()
+      xhr.open('GET', imageInfo.path, true);
+      xhr.responseType = 'blob';
+
+      xhr.onload = (event) => {
+        if (xhr.status === 200) {
+          const blob = xhr.response;
+          indexedDB.openDB(imgDBConfig.storeName, imgDBConfig.keyPath, imgDBConfig.index).then(res => {
+            indexedDB.getItem(imgDBConfig.storeName, imageInfo.id).then(getIitem => {
+              if (!getIitem) {
+              indexedDB.update('images', { id: imageInfo.id, path: imageInfo.path, blob })
+            } else {
+              console.log(getIitem,'niah')
+            }
+            })
+          }, err => {
+            this.url = mapUrl
+          })
+          // const transaction = this.db.transaction(['imageStore'], 'readwrite');
+          // const objectStore = transaction.objectStore('imageStore');
+          // const request = objectStore.add({ image: blob });
+
+
+        }
+      };
+      xhr.send();
+      ;
+    },
+    //获取地图页面并重载
+    // getImageUrl() {
+    //   console.log("_________________")
+    //   fetch(mapUrl)
+    //     .then(response => response.arrayBuffer())
+    //     .then(buffer => {
+    //       // 处理二进制数据
+    //       console.log(buffer)
+    //     });
+    // }
   },
   watch: {
-    commentsVisible(newItem,oldItem){
-      if(newItem) {
+    commentsVisible(newItem, oldItem) {
+      if (newItem) {
         this.getInteractList()
-      }else{
+      } else {
         clearInterval(this.notifyTimer)
       }
     }
@@ -254,9 +295,10 @@ export default {
 .ct_item {
   padding: 5px;
   /* border-right: 1px solid rgb(207, 203, 203); */
-  
+
 }
-.addComments{
+
+.addComments {
   width: 180px;
   height: 60px;
   position: absolute;
