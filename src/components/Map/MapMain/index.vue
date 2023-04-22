@@ -88,7 +88,7 @@ export default {
     };
   },
   created() {
-    this.changeImgBlob()
+    this.changeImgBlob({ id: 0, path: mapUrl })
   },
   mounted() {
 
@@ -183,10 +183,7 @@ export default {
       })
     },
     //改变文件为二进制文件
-    changeImgBlob() {
-      // 获取所有需要存储的图片路径
-      const imageInfo = { id: 0, path: mapUrl }
-
+    changeImgBlob(imageInfo) {
       // 将图片转换为二进制文件并存储到IndexedDB
       const xhr = new XMLHttpRequest()
       xhr.open('GET', imageInfo.path, true);
@@ -200,32 +197,21 @@ export default {
               if (!getIitem) {
               indexedDB.update('images', { id: imageInfo.id, path: imageInfo.path, blob })
             } else {
-              console.log(getIitem,'niah')
+              console.log(getIitem.blob,'niah')
+              let blobUrl=window.URL.createObjectURL(getIitem.blob)
+              this.url =blobUrl
+
+              console.log(this.url)
             }
             })
           }, err => {
             this.url = mapUrl
           })
-          // const transaction = this.db.transaction(['imageStore'], 'readwrite');
-          // const objectStore = transaction.objectStore('imageStore');
-          // const request = objectStore.add({ image: blob });
-
-
         }
       };
       xhr.send();
       ;
     },
-    //获取地图页面并重载
-    // getImageUrl() {
-    //   console.log("_________________")
-    //   fetch(mapUrl)
-    //     .then(response => response.arrayBuffer())
-    //     .then(buffer => {
-    //       // 处理二进制数据
-    //       console.log(buffer)
-    //     });
-    // }
   },
   watch: {
     commentsVisible(newItem, oldItem) {
