@@ -46,11 +46,16 @@ export default {
   color: #c2c2c2;
   line-height: 22px;
   font-size: 12px;
+  width: 100%;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .main_footer_content {
   width: 1000px;
-  height: 100px;
+  height: 80px;
 
   display: block;
   overflow: hidden;

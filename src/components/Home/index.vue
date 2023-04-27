@@ -1,117 +1,121 @@
 <template>
-  <div class="main">
-    <div class="main_head main_center">
-      <div class="head_logo"></div>
-      <div class="head_user">
-        <el-avatar :src="userInfo.userAvater" class="user_avater">
-        </el-avatar>
-        <el-dropdown trigger="click" click="user-dropdown">
-          <span class="el-dropdown-link" style="color:white">
-            {{ userInfo.nickName }}
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
+    <div class="main">
+      <div class="main_head main_center">
+        <div class="head_logo"></div>
+        <div class="head_user">
+          <el-avatar :src="userInfo.userAvater" class="user_avater">
+          </el-avatar>
+          <el-dropdown trigger="click" click="user-dropdown">
+            <span class="el-dropdown-link" style="color:white">
+              {{ userInfo.nickName }}
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
 
-          <el-dropdown-menu slot="dropdown" class="user_dropdown">
-            <el-dropdown-item>
-              <p @click="goBackend">工作台</p>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <p @click="goMap()">新生指引</p>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <p @click="LoginOut">退出登录</p>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+            <el-dropdown-menu slot="dropdown" class="user_dropdown">
+              <el-dropdown-item>
+                <p @click="goBackend">工作台</p>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <p @click="goMap()">新生指引</p>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <p @click="LoginOut">退出登录</p>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
 
+        </div>
       </div>
-    </div>
-    <div class="search"><el-input v-model="search" placeholder="输入您感兴趣的的地点信息回车查看"
-        @keyup.enter.native="goMap(search)"></el-input></div>
-    <div class="bddy_t">
-      <ul class="t_list">
-        <li class="t_item" v-for="item in placeTypeList" :key="item.id" @click="goMap(item.placeType)">
-          <div style="background-color: white;border-radius: 5px;"> <img
-              :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
-          </div>
-          <p>{{ item.placeType }}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="main_body main_center">
-      <div class="body_left">
-        
-        <el-card class="body_lb" shadow="hover">
-          <h5>系统管理</h5>
-          <ul class="bd_list">
-            <li class="bd_item" @click="goMap()">
-              <img src="@/assets/icon/map-road.png" alt="">
-              <p>新生指引</p>
-            </li>
-            <li class="bd_item" @click="goBackend">
-              <img src="@/assets/icon/system.png" alt="">
-              <p>工作台</p>
-            </li>
-            <li class="bd_item" @click="LoginOut">
-              <img src="@/assets/icon/power.png" alt="">
-              <p>退出登录</p>
-            </li>
-          </ul>
-
-        </el-card>
-        <el-card class="body_lt" shadow="hover">
-          <h5>友情链接
-          </h5>
-          <ul class="lt_list">
-            <li class="lt_item">
-              <a href="https://hncj.edu.cn/" target="_blank" rel="noopener noreferrer">
-                <img src="@/assets/hncjLogo.png" alt="">
-                河南城建学院
-              </a>
-            </li>
-            <li class="lt_item">
-              <a href="https://hesan1232.github.io/" target="_blank" rel="noopener noreferrer">
-                <img src="@/assets/hexo.png" alt="">
-                个人博客
-              </a>
-            </li>
-            <li class="lt_item">
-              <a href="https://github.com/hesan1232" target="_blank" rel="noopener noreferrer">
-                <img src="@/assets/github.png" alt="">
-                github
-              </a>
-            </li>
-            <li></li>
-          </ul>
-        </el-card>
+      <div class="search"><el-input v-model="search" placeholder="输入您感兴趣的的地点信息回车查看"
+          @keyup.enter.native="goMap(search)"></el-input></div>
+      <div class="bddy_t">
+        <ul class="t_list">
+          <li class="t_item" v-for="item in placeTypeList" :key="item.id" @click="goMap(item.placeType)">
+            <div style="background-color: white;border-radius: 5px;"> <img
+                :src="require('@/assets/icon/' + `${item.url}.png`)" alt="">
+            </div>
+            <p>{{ item.placeType }}</p>
+          </li>
+        </ul>
       </div>
-      <div class="body_right">
-        <el-card class="body_rb" shadow="hover">
-          <div slot="header" class="clearfix">
-            <h5>热门搜索</h5>
-            <el-button style="float: right; font-size: 20px; padding: 3px 0;border: none;"
-              icon="el-icon-refresh-right"></el-button>
-          </div>
-          <div v-for="item, index in hotSearch" :key="item.id" class="list"
-            :class="{ last: index + 1 == hotSearch.length }" @click="goMap(item.placeName)">
-            <span class="index" :class="'index' + (index + 1)">{{ index + 1 }}</span>
-            <div class="label">{{ item.placeName }}</div>
-            <div class="value">{{ item.number || 0 }}人</div>
+      <div class="main_body main_center">
+        <div class="body_left">
 
-          </div>
-          <el-empty v-if="!hotSearch.length" description="描述文字"></el-empty>
-        </el-card>
+          <el-card class="body_lb" shadow="hover">
+            <h5>系统管理</h5>
+            <ul class="bd_list">
+              <li class="bd_item" @click="goMap()">
+                <img src="@/assets/icon/map-road.png" alt="">
+                <p>新生指引</p>
+              </li>
+              <li class="bd_item" @click="goBackend">
+                <img src="@/assets/icon/system.png" alt="">
+                <p>工作台</p>
+              </li>
+              <li class="bd_item" @click="LoginOut">
+                <img src="@/assets/icon/power.png" alt="">
+                <p>退出登录</p>
+              </li>
+            </ul>
+
+          </el-card>
+          <el-card class="body_lt" shadow="hover">
+            <h5>友情链接
+            </h5>
+            <ul class="lt_list">
+              <li class="lt_item">
+                <a href="https://hncj.edu.cn/" target="_blank" rel="noopener noreferrer">
+                  <img src="@/assets/hncjLogo.png" alt="">
+                  河南城建学院
+                </a>
+              </li>
+              <li class="lt_item">
+                <a href="https://hesan1232.github.io/" target="_blank" rel="noopener noreferrer">
+                  <img src="@/assets/hexo.png" alt="">
+                  个人博客
+                </a>
+              </li>
+              <li class="lt_item">
+                <a href="https://github.com/hesan1232" target="_blank" rel="noopener noreferrer">
+                  <img src="@/assets/github.png" alt="">
+                  github
+                </a>
+              </li>
+              <li></li>
+            </ul>
+          </el-card>
+        </div>
+        <div class="body_right">
+          <el-card class="body_rb" shadow="hover">
+            <div slot="header" class="clearfix">
+              <h5>热门搜索</h5>
+              <el-button style="float: right; font-size: 20px; padding: 3px 0;border: none;"
+                icon="el-icon-refresh-right"></el-button>
+            </div>
+            <div v-for="item, index in hotSearch" :key="item.id" class="list"
+              :class="{ last: index + 1 == hotSearch.length }" @click="goMap(item.placeName)">
+              <span class="index" :class="'index' + (index + 1)">{{ index + 1 }}</span>
+              <div class="label">{{ item.placeName }}</div>
+              <div class="value">{{ item.number || 0 }}人</div>
+
+            </div>
+            <el-empty v-if="!hotSearch.length" description="描述文字"></el-empty>
+          </el-card>
+        </div>
       </div>
+      <homeFooter></homeFooter>
     </div>
-
-</div>
+   
+ 
 </template>
 <script>
 
 import { getToken, removeToken } from '@/api/token'
 import { reqGetUserInfo } from "@/api/user"
 import { reqGetPlaceTypeList } from "@/api/place"
+import homeFooter from "@/pages/home/homeFooter";
 export default {
+  components: { homeFooter },
   data() {
     return {
       userInfo: {},
@@ -148,7 +152,7 @@ export default {
           number: 5
         }
       ],
-      search: []
+      search: ''
     };
   },
   created() {
@@ -200,12 +204,14 @@ export default {
 };
 </script>
 <style scoped >
+
 .main {
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw; */
+  height: 850px;
   background: url(@/assets/login/login_bg1.jpg);
   background-size: cover;
   overflow: hidden;
+  position: relative;
 }
 
 .main_center {
@@ -252,7 +258,7 @@ export default {
 .search {
   width: 800px;
   margin: 0 auto;
-  margin-top: 200px;
+  margin-top: 150px;
 }
 
 .body_left {
@@ -407,4 +413,5 @@ export default {
 .value {
   flex: 1;
   text-align: right;
-}</style>
+}
+</style>

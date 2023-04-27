@@ -22,7 +22,7 @@
     <div class="addComments" v-if="commentsVisible">
       <el-input v-model="comments" @keyup.enter.native="addInteract" placeholder="输入评论信息"></el-input>
     </div>
-    <el-amap id="map" ref="map" map-style="amap://styles/f1d5cbfe47ddfc9f831d4a923df04a03" :opacity="1"
+    <el-amap id="map" ref="map" map-style="amap://styles/f1d5cbfe47ddfc9f831d4a923df04a03" :opacity="1"  :plugin="plugin" 
       :center.sync="mapPlaceInfo.mapCenter" :zoom="zoom" :zooms="[17, 20]" view-mode="2D" @init="initMap"
       :jogEnable="false" @click="clickMap" class="amap-demo">
 
@@ -52,6 +52,7 @@
         </div>
       </el-amap-info-window>
     </el-amap>
+    
   </div>
 </template>
 
@@ -59,6 +60,8 @@
 
 import mapUrl from '@/assets/map.png'
 import { reqGetInteractList, reqAddInteract } from '@/api/interact'
+import { AMapManager, lazyAMapApiLoaderInstance } from '@vuemap/vue-amap'
+
 import indexedDB from '@/tools/indexedDB'
 import { imgDBConfig } from '@/tools/db.config'
 export default {
@@ -68,6 +71,7 @@ export default {
   data() {
 
     return {
+      
       visible: true,
       zoom: 18,
       url: mapUrl,
@@ -85,6 +89,7 @@ export default {
       comments: '',
       //用户信息
       userInfo: this.$store.state.userInfo,
+      plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor', 'AMap.Geocoder', 'AMap.Geolocation', 'AMap.InfoWindow'],
     };
   },
   created() {
