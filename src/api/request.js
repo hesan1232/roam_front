@@ -17,9 +17,7 @@ requests.interceptors.request.use((config)=>{
 })
 //响应拦截器
 requests.interceptors.response.use((res)=>{
-    if(res.data.status==401){
-        router.push('/login')
-    }
+   
     return res.data
 },()=>{
     //响应失败的回调
