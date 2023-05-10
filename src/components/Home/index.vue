@@ -1,11 +1,12 @@
 <template>
     <div class="main">
       <div class="main_head main_center">
-        <div class="head_logo"></div>
-        <div class="head_user">
-          <el-avatar :src="userInfo.userAvater" class="user_avater">
+        <div class="head_logo" @click="jumpRouter('/login')"></div>
+        <div class="head_user" v-if="islogin">
+          
+          <el-avatar  :src="userInfo.userAvater" class="user_avater">
           </el-avatar>
-          <el-dropdown trigger="click" click="user-dropdown">
+          <el-dropdown  trigger="click" click="user-dropdown">
             <span class="el-dropdown-link" style="color:white">
               {{ userInfo.nickName }}
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -13,7 +14,7 @@
 
             <el-dropdown-menu slot="dropdown" class="user_dropdown">
               <el-dropdown-item>
-                <p @click="goBackend">工作台</p>
+                <p @click="jumpRouter('/backend')">工作台</p>
               </el-dropdown-item>
               <el-dropdown-item>
                 <p @click="goMap()">新生指引</p>
@@ -48,7 +49,7 @@
                 <img src="@/assets/icon/map-road.png" alt="">
                 <p>新生指引</p>
               </li>
-              <li class="bd_item" @click="goBackend">
+              <li class="bd_item" @click="jumpRouter('/backend')">
                 <img src="@/assets/icon/system.png" alt="">
                 <p>工作台</p>
               </li>
@@ -110,15 +111,14 @@
 </template>
 <script>
 
-import { getToken, removeToken } from '@/api/token'
-import { reqGetUserInfo } from "@/api/user"
+import { getToken, removeToken ,getIslogin} from '@/api/token'
 import { reqGetPlaceTypeList } from "@/api/place"
 import homeFooter from "@/pages/home/homeFooter";
 export default {
   components: { homeFooter },
   data() {
     return {
-      userInfo: {},
+      islogin:getIslogin(),
       activeIndex: '1',
       //分类
       placeTypeList: {},
@@ -153,23 +153,18 @@ export default {
         }
       ],
       search: ''
+
     };
   },
   created() {
     this.getPlaceTypeList()
-    this.getUserInfo()
     this.$store.dispatch('getUserInfo')
   },
   mounted() {
 
   },
   methods: {
-    //获取信息
-    getUserInfo() {
-      reqGetUserInfo().then((result) => {
-        this.userInfo = result.data
-      })
-    },
+   
     //获取分类列表
     getPlaceTypeList() {
       reqGetPlaceTypeList().then(res => {
@@ -195,11 +190,21 @@ export default {
     //退出登录
     LoginOut() {
       removeToken()
-      this.$router.push({ path: "/login" })
+      this.islogin=false
+      this.$store.commit('GETUserInfo',{})
+      // this.$router.push({ path: "/login" })
     },
-    goBackend() {
-      this.$router.push('/backend')
+   
+    jumpRouter(path){
+      this.$router.push(path)
     }
+  },
+  computed: {
+    //这里需要把store 
+    userInfo() {
+      return this.$store.state.userInfo
+    },
+    
   },
 };
 </script>

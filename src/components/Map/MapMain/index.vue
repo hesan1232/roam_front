@@ -22,11 +22,11 @@
     <div class="addComments" v-if="commentsVisible">
       <el-input v-model="comments" @keyup.enter.native="addInteract" placeholder="输入评论信息"></el-input>
     </div>
-    <el-amap id="map" ref="map" map-style="amap://styles/f1d5cbfe47ddfc9f831d4a923df04a03" :opacity="1"  :plugin="plugin" 
-      :center.sync="mapPlaceInfo.mapCenter" :zoom="zoom" :zooms="[17, 20]" view-mode="2D" @init="initMap"
+    <el-amap id="map" resizeEnable ref="map" map-style="amap://styles/f1d5cbfe47ddfc9f831d4a923df04a03" 
+      :center.sync="mapPlaceInfo.mapCenter" :zoom="zoom" :zooms="[10, 20]" view-mode="2D" @init="initMap" :opacity="1"
       :jogEnable="false" @click="clickMap" class="amap-demo">
 
-      <el-amap-layer-image ref="imageLayer" :url="url" :bounds="bounds" :visible="visible">
+      <el-amap-layer-image ref="imageLayer"  opacity="1" :url="url" :bounds="bounds" :visible="visible">
       </el-amap-layer-image>
       <!-- 地图比例尺 -->
       <el-amap-control-scale :visible="visible" />
@@ -35,8 +35,8 @@
       <!-- 地图缩放控制 -->
       <el-amap-control-tool-bar :offset="[30, 30]" position="RB" :visible="mapMarkerWindow.contreoleVisible" />
       <!-- 地图标记点 -->
-      <el-amap-marker v-for="marker in placeList" :key="marker.id" :position="[marker.placeX, marker.placeY]"
-        :visible="mapMarkerWindow.iconVisible" @click="clickArrayMarker(marker)" />
+      <!-- <el-amap-marker v-for="marker in placeList" :key="marker.id" :position="[marker.placeX, marker.placeY]"
+        :visible="mapMarkerWindow.iconVisible" @click="clickArrayMarker(marker)" /> -->
       <!-- 地点名字标记 -->
       <el-amap-marker v-for="marker in placeList" :key="marker.placeName" :position="[marker.placeX, marker.placeY]"
         :visible="mapMarkerWindow.textVisible" @click="clickArrayMarker(marker)" :offset="[-30, 0]">
@@ -52,7 +52,7 @@
         </div>
       </el-amap-info-window>
     </el-amap>
-    
+
   </div>
 </template>
 
@@ -60,7 +60,8 @@
 
 import mapUrl from '@/assets/map.png'
 import { reqGetInteractList, reqAddInteract } from '@/api/interact'
-import { AMapManager, lazyAMapApiLoaderInstance } from '@vuemap/vue-amap'
+import { lazyAMapApiLoaderInstance } from '@vuemap/vue-amap'
+
 
 import indexedDB from '@/tools/indexedDB'
 import { imgDBConfig } from '@/tools/db.config'
@@ -71,11 +72,11 @@ export default {
   data() {
 
     return {
-      
+
       visible: true,
       zoom: 18,
       url: mapUrl,
-      bounds: [113.179513, 33.768828, 113.19891, 33.775999],
+      bounds: [113.17886,33.76837, 113.1991, 33.7767],
       map: null,
       mapMarkerWindow: {
         iconVisible: true,
@@ -89,7 +90,8 @@ export default {
       comments: '',
       //用户信息
       userInfo: this.$store.state.userInfo,
-      plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor', 'AMap.Geocoder', 'AMap.Geolocation', 'AMap.InfoWindow'],
+      routes: []
+
     };
   },
   created() {
@@ -103,13 +105,38 @@ export default {
   },
   methods: {
     clickMap(e) {
-      let text = e.lnglat.lng + '  ' + e.lnglat.lat
+      let text = e.lnglat.lng + ',' + e.lnglat.lat
       navigator.clipboard.writeText(text)
-
+      console.log(text)
     },
     initMap(map) {
-      this.map = map
-      console.log('init map: ', this.map);
+      this.$map = map
+
+      //  // 起点经纬度
+      //  const origin = [116.397428, 39.90923]
+      // // 终点经纬度
+      // const destination = [116.39788, 39.90848]
+      // this.$amap.getWalkingRoute({ origin, destination }).then(data => {
+      //   // 处理路线数据
+      //   const route = {
+      //     name: data.paths[0].steps[0].instruction,
+      //     distance: data.paths[0].distance
+      //   }
+      //   this.routes.push(route)
+      // })
+
+      //绘制初始路径
+      var path = [];
+      path.push(new AMap.LngLat(113.18761,33.772724));
+      path.push(new AMap.LngLat(113.19089,33.773731));
+      map.plugin("AMap.DragRoute", function () {
+        // let route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE); //构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
+        // route.search(); //查询导航路径并开启拖拽导航
+        const dragRoute = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE)
+        dragRoute.search(); //查询导航路径并开启拖拽导航
+      });
+      console.log('init map: ', this.$map);
+      console.log(AMap)
     },
 
     //点击标记
@@ -200,14 +227,14 @@ export default {
           indexedDB.openDB(imgDBConfig.storeName, imgDBConfig.keyPath, imgDBConfig.index).then(res => {
             indexedDB.getItem(imgDBConfig.storeName, imageInfo.id).then(getIitem => {
               if (!getIitem) {
-              indexedDB.update('images', { id: imageInfo.id, path: imageInfo.path, blob })
-            } else {
-              console.log(getIitem.blob,'niah')
-              let blobUrl=window.URL.createObjectURL(getIitem.blob)
-              this.url =blobUrl
+                indexedDB.update('images', { id: imageInfo.id, path: imageInfo.path, blob })
+              } else {
+                console.log(getIitem.blob, 'niah')
+                let blobUrl = window.URL.createObjectURL(getIitem.blob)
+                this.url = blobUrl
 
-              console.log(this.url)
-            }
+                console.log(this.url)
+              }
             })
           }, err => {
             this.url = mapUrl

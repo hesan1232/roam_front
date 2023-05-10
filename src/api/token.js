@@ -7,9 +7,13 @@ export const setToken=(Authorization)=>{
 //获取token
 export const getToken=()=>{
     return localStorage.getItem('AUTHORIZATION')
+    
 }
 //清除token
 export const removeToken=()=>{
     localStorage.removeItem('AUTHORIZATION')
     localStorage.setItem('isLogin',false)
+}
+export const getIslogin=()=>{
+    return localStorage.getItem('isLogin')=='true'
 }

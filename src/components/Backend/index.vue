@@ -88,10 +88,10 @@ export default {
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
       const first = matched[0]
       if (!this.isIndex(first)) {
-        matched = [{ path: '/backend', meta: { title: '后台' } }].concat(matched)
+        matched = [{ path: '/backend', meta: { title: '工作台' } }].concat(matched)
         this.levelList = matched
       } else {
-        this.levelList = [{ path: '/backendme', meta: { title: '后台' } }]
+        this.levelList = [{ path: '/backendme', meta: { title: '工作台' } }]
       }
     },
     isIndex(route) {

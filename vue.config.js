@@ -9,7 +9,8 @@ module.exports = defineConfig({
   devServer: {   //配置代理
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1',
+        target: 'http://82.157.161.21:10000',
+        changeOrigin: true,
       },
       '/images': {
         target: 'https://z4a.net',

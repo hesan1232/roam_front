@@ -271,7 +271,7 @@ export default {
 }
 
 .Login_phone {
-    width: 140px;
+    width: 160px;
     height: 32px;
     text-align: center;
     margin: 141px 105px;

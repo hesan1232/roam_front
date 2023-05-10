@@ -26,6 +26,7 @@ const actions={
 }
 const mutations={
     GETUserInfo(state,data){
+        console.log(data)
        state.userInfo=data
     },
     GETPermissionsInfo(state,data){

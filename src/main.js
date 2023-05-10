@@ -16,7 +16,7 @@ import '@vuemap/vue-amap/dist/style.css'
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
   key: '4d2b3c833bb4bebd9726f61801d6fb91',
-  plugin: ['AMap.MouseTool', 'AMap.PolyEditor', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PlaceSearch', 'AMap.Geolocation', 'AMap.Geocoder', 'AMap.DistrictSearch', 'AMap.InfoWindow'],
+  plugin: ['AMap.Walking','AMap.MouseTool', 'AMap.PolyEditor', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PlaceSearch', 'AMap.Geolocation', 'AMap.Geocoder', 'AMap.DistrictSearch', 'AMap.InfoWindow'],
   securityJsCode:'8e36784df1a2d2c10e295a02875646dd',
 });
 import VueRout from 'vue-router'
