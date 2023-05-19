@@ -30,6 +30,11 @@
       </el-tab-pane>
       <el-tab-pane label="搜索结果" name="searchResult" class="tab_pane searchResult">
         <template>
+           <div style="overflow: hidden;padding: 10px 0;">
+            <h3 class="type_title" style="float: left;">搜索结果</h3>
+            <el-button style="float: right;" class="el-icon-close" circle @click="tabChange('searchHost')"></el-button>
+           </div>
+             
           <ul>
             <li v-for="item in searchPlaceList" :key="item.id" @click="clickPlaceResult(item)">
               <i><img class="sr_icon" src="@/assets/icon/mark.png"></i>
@@ -41,24 +46,6 @@
           </ul>
         </template></el-tab-pane>
       <el-tab-pane label="地点分类" name="searchHost" class="tab_pane typePane">
-        <ul class="type">
-          <li class="type_item">
-            <img src="@/assets/icon/book.png" alt="">
-            <p>学院专业</p>
-          </li>
-          <li class="type_item">
-            <img src="@/assets/icon/home.png" alt="">
-            <p>校园教学</p>
-          </li>
-          <li class="type_item">
-            <img src="@/assets/icon/school.png" alt="">
-            <p>校园宿舍</p>
-          </li>
-          <li class="type_item">
-            <img src="@/assets/icon/bowl.png" alt="">
-            <p>校园美食</p>
-          </li>
-        </ul>
         <div>
           <h3 class="type_title">分类</h3>
           <ul class="type">
@@ -253,7 +240,9 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-
+::v-deep  .el-tabs__header{
+  display: none;
+}
 ::v-deep .el-tabs__item {
   width: 34%;
   text-align: center;
@@ -348,4 +337,5 @@ export default {
 [v-cloak] {
   display: none;
 }
+
 </style>

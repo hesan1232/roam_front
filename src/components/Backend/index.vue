@@ -69,6 +69,7 @@ export default {
     };
   },
   created() {
+    this.$store.dispatch('getPermissionsInfo')
     this.getBreadcrumb()
   },
 
@@ -81,6 +82,8 @@ export default {
     //退出登录
     LoginOut() {
       removeToken()
+      this.$store.commit('GETUserInfo',{})
+      this.$store.commit('GETPermissionsInfo',{})
       this.$router.push({ path: "/login" })
     },
     //改变面包屑

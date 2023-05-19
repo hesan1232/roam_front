@@ -104,7 +104,7 @@ router.beforeEach(async (to,from,next)=>{
     if (to.meta.title) {
         document.title = to.meta.title
     }
-   
+    console.log(to,from)
     if(isToken){
         store.dispatch('getUserInfo')
         console.log(localStorage.getItem('isLogin'),isToken,'是否登录')

@@ -117,22 +117,14 @@ import { reqUserLogin } from "@/api/user";
 import { setToken } from "@/api/token";
 export default {
     data() {
-        let validatePass2 = (rule, value, callback) => {
-            if (value === "") {
-                callback(new Error("请再次输入密码"));
-            } else if (value !== this.registerFormInfo.password) {
-                callback(new Error("两次输入密码不一致!"));
-            } else {
-                callback();
-            }
-        };
+        
         return {
             loginFormInfo: {},
             agree: false,
             rules: {
                 userName: { required: true, message: " ", trigger: "change" },
                 password: { required: true, message: " ", trigger: "change" },
-                checkPass: { validator: validatePass2, trigger: "change" },
+              
             },
         };
     },

@@ -192,6 +192,7 @@ export default {
       removeToken()
       this.islogin=false
       this.$store.commit('GETUserInfo',{})
+      this.$store.commit('GETPermissionsInfo',{})
       // this.$router.push({ path: "/login" })
     },
    

@@ -4,6 +4,11 @@
     <el-table :data="placeList" border style="width: 100%" height="450"
       :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
       <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
+      <el-table-column prop="ImgUrl" label="图片地址" width="180" align="center" show-overflow-tooltip> 
+        <template slot-scope="scope">
+        <img class="placeImg" :src="scope.row.ImgUrl" alt="图片地址">
+      </template>
+      </el-table-column>
       <el-table-column prop="placeName" label="地点名" width="100" align="center">
       </el-table-column>
       <el-table-column prop="placeType" label="类型" width="100" align="center">
@@ -12,9 +17,9 @@
       </el-table-column>
       <el-table-column prop="placeY" label="纬度" width="100" align="center">
       </el-table-column>
-      <el-table-column prop="description" label="描述信息" width="160" align="center" show-overflow-tooltip>
+      <el-table-column prop="description" label="描述信息" width="200"  align="center" show-overflow-tooltip>
       </el-table-column>
-      <el-table-column prop="ImgUrl" label="图片地址" align="center" show-overflow-tooltip> </el-table-column>
+
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click="updateDialog(scope.row)">编辑</el-button>&nbsp;&nbsp;|
@@ -255,7 +260,9 @@ export default {
 .card {
   height: 600px;
 }
-
+.placeImg{
+  width: 100px;
+}
 .el-table {
   margin: 10px 0;
 }
