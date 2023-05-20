@@ -193,7 +193,7 @@ export default {
       this.islogin=false
       this.$store.commit('GETUserInfo',{})
       this.$store.commit('GETPermissionsInfo',{})
-      // this.$router.push({ path: "/login" })
+      this.$router.push({ path: "/login" })
     },
    
     jumpRouter(path){
