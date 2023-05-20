@@ -106,8 +106,27 @@ export default {
   methods: {
     clickMap(e) {
       let text = e.lnglat.lng + ',' + e.lnglat.lat
-      navigator.clipboard.writeText(text)
+      this.copyValue(text)
       console.log(text)
+    },
+    async copyValue(val) {
+      if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard 向剪贴板写文本
+        return navigator.clipboard.writeText(val)
+      } else {
+        // 创建text area
+        const textArea = document.createElement('textarea')
+        textArea.value = val
+        // 使text area不在viewport，同时设置不可见
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        return new Promise((res, rej) => {
+          // 执行复制命令并移除文本框
+          document.execCommand('copy') ? res() : rej()
+          textArea.remove()
+        })
+      }
     },
     initMap(map) {
       this.$map = map
