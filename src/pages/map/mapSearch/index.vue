@@ -1,16 +1,23 @@
 <template>
   <div>
     <div class="search_top">
-      <el-input class="inline-input" v-model="searchText" placeholder="请输入地点名称" clearable @keyup.enter.native="searchPlaceInfo"
-        style="width: 320px;"></el-input>
+      <el-input class="inline-input" v-model="searchText" placeholder="请输入地点名称" clearable
+        @keyup.enter.native="searchPlaceInfo" style="width: 320px;"></el-input>
       <el-button type="primary" @click="searchPlaceInfo">搜索</el-button>
     </div>
-    <el-tabs v-model="activePane" type="border-card" @tab-click="handleClick" class="tab">
+    <el-tabs v-model="activePane" type="border-card" class="tab">
       <el-tab-pane label="详细信息" name="searchData" class="tab_pane">
         <template>
           <el-descriptions title="地点信息" size="mini" :column="1">
             <template slot="extra">
+
               <el-button class="el-icon-close" circle @click="tabChange('searchHost')"></el-button>
+              <div class="setPlace">
+                <el-button class="el-icon-place" size="mini" type="primary" plain round
+                  @click="setPlace({startPlace:placeInfo})">起点</el-button>
+                <el-button class="el-icon-place" size="mini" type="danger" round plain
+                  @click="setPlace({endPlace:placeInfo})">终点</el-button>
+              </div>
             </template>
             <el-descriptions-item label="地点名">{{ placeInfo.placeName }}</el-descriptions-item>
             <el-descriptions-item label="类型" :span="2">
@@ -30,11 +37,11 @@
       </el-tab-pane>
       <el-tab-pane label="搜索结果" name="searchResult" class="tab_pane searchResult">
         <template>
-           <div style="overflow: hidden;padding: 10px 0;">
+          <div style="overflow: hidden;padding: 10px 0;">
             <h3 class="type_title" style="float: left;">搜索结果</h3>
             <el-button style="float: right;" class="el-icon-close" circle @click="tabChange('searchHost')"></el-button>
-           </div>
-             
+          </div>
+
           <ul>
             <li v-for="item in searchPlaceList" :key="item.id" @click="clickPlaceResult(item)">
               <i><img class="sr_icon" src="@/assets/icon/mark.png"></i>
@@ -179,20 +186,20 @@ export default {
       this.getPlaceListByPlaceType(placeType)
       this.activePane = "searchResult"
     },
-
     //向后端请求具体地点信息
     searchPlaceInfo() {
       this.getPlaceByPlaceName(this.searchText);
     },
-    //tab栏切回调
-    handleClick(tab, event) {
-      console.log('切换');
-    },
+
     tabChange(name) {
       this.activePane = name
-      if(name=='searchHost') this.searchPlaceList=[]
+      if (name == 'searchHost'){
+        this.searchPlaceList = []
+      }
+    },
+    setPlace(data) {
+      this.$emit('updateNavPlace', data)
     }
-
   },
   computed: {
     //判断dataInfo是否为空，控制详情显示
@@ -240,9 +247,11 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-::v-deep  .el-tabs__header{
+
+::v-deep .el-tabs__header {
   display: none;
 }
+
 ::v-deep .el-tabs__item {
   width: 34%;
   text-align: center;
@@ -338,4 +347,9 @@ export default {
   display: none;
 }
 
-</style>
+.setPlace {
+  position: absolute;
+  width: 150px;
+  top: 75px;
+  right: 10px;
+}</style>

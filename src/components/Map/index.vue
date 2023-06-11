@@ -3,8 +3,8 @@
     <mapHead/>
     <div class="map">
      
-     <mapSearch @updateMapPlaceInfo="updateMapPlaceInfo"/>
-      <MapMain :placeList="placeList" :mapPlaceInfo="mapPlaceInfo" @updateMapPlaceInfo="updateMapPlaceInfo" />
+     <mapSearch @updateMapPlaceInfo="updateMapPlaceInfo" @updateNavPlace="updateNavPlace"/>
+      <MapMain :placeList="placeList" :mapPlaceInfo="mapPlaceInfo" :navPlaceInfo="navPlaceInfo" @updateMapPlaceInfo="updateMapPlaceInfo" />
     </div>
 
   </div>
@@ -39,6 +39,11 @@ export default {
         mapZoom: 18,
         iframeInfoWindow: false,
       },
+      //导航地点的信息
+      navPlaceInfo:{
+        startPlace:null,
+        endPlace:null,
+      }
     };
   },
   created() {
@@ -55,8 +60,15 @@ export default {
     },
     //修改标记点和嵌入网页的数据
     updateMapPlaceInfo(data){
-     console.log('修改了值',data)
      this.mapPlaceInfo=Object.assign(this.mapPlaceInfo,data)
+    },
+    //修改导航起点和终点
+    updateNavPlace(data){
+      if(data==null){
+      this.navPlaceInfo={startPlace:null,endPlace:null}
+       return
+     }
+     this.navPlaceInfo=Object.assign(this.navPlaceInfo,data)
     },
   },
  
