@@ -260,16 +260,16 @@ export default {
     //清除路径
     clearRoute() {
       console.log('置空', this.dragRoute)
-      // if (this.dragRoute) {
-      //   AMap.plugin('AMap.DragRoute', () => {
-      //     this.dragRoute = new AMap.DragRoute(map, [], AMap.DrivingPolicy.LEAST_TIME, {
-      //       showTraffic: true,
-      //       polylineOptions: {}
-      //     })
-      //     this.dragRoute.search()
-      //   })
+      if (this.dragRoute) {
+        AMap.plugin('AMap.DragRoute', () => {
+          this.dragRoute = new AMap.DragRoute(map, [], AMap.DrivingPolicy.LEAST_TIME, {
+            showTraffic: true,
+            polylineOptions: {}
+          })
+          this.dragRoute.search()
+        })
 
-      // }
+      }
       if (this.map) { // 加上地图对象存在的判断
         // this.map.clearMap()
       }

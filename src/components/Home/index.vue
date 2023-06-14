@@ -159,6 +159,7 @@ export default {
   created() {
     this.getPlaceTypeList()
     this.$store.dispatch('getUserInfo')
+    this.$store.dispatch('getPermissionsInfo')
   },
   mounted() {
 

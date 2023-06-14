@@ -147,8 +147,6 @@ export default {
                     this.$message.success('登录成功')
                     setToken(res.token)
                     this.$router.push({ path: "/home" })
-                    
-                   
                 },
                 () => {
                     this.$message.error("登录失败，请确认用户名和密码");
